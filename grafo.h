@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 
+
 int tamanhoAresta;
 int tamanhoVertice;
 int totalAresta;
@@ -9,9 +10,9 @@ int totalVertice;
 
 
 typedef struct{
-	int id;	
+	int id;
 	int quantidadeFormigas;
-	formiga *listaFormiga;	
+	formiga *listaFormiga;
 } Vertice;
 
 struct Aresta {
@@ -34,9 +35,9 @@ void iniciaAresta(aresta *lista){
 
 int vaziaAresta(aresta *lista){
 	if(lista->proximaAresta == NULL)
-		return 1;
+	return 1;
 	else
-		return 0;
+	return 0;
 }
 
 aresta *alocaAresta(int vertice1, int vertice2){
@@ -81,7 +82,7 @@ void mostraAresta(aresta *lista){
 		tmp = tmp->proximaAresta;
 	}
 	
-		
+	
 	printf("\n\n");
 }
 

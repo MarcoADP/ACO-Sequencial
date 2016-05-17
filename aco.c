@@ -9,6 +9,8 @@
 #include "grafo.h"
 #include "leituraArquivo.h"
 
+//#define edge(x,y) (bitmap[y/CHARBITS][x] & (1<<(y%CHARBITS)))
+
 //TAXONOMIAS
 
 //it			:	iteração/ciclo
@@ -17,7 +19,7 @@
 //custo			:	custo das arestas
 //visibilidade	:	1/custo
 //x, y			:	numeros pré definidos
-//soma(fer)		:	soma de todos os fer dos vertices nao visitados		
+//soma(fer)		:	soma de todos os fer dos vertices nao visitados
 //prob			:	probabilidade de escolha de uma aresta (fer/custo)
 //				=	(fer^x * visibilidade^y/[somatorio(fer(nao visitados)^x * custo(nao visitados)^y)]
 
@@ -31,19 +33,19 @@
 
 //ANT COLONY OPTIMIZATION
 void buscaLocal(){
-
+	
 }
 
 void atualizarFeromonio(){
-
+	
 }
 
 void gerarSolucoes(){
-
+	
 }
 
 void inicializaAlgoritmo(){
-
+	
 }
 
 void coloniaSystem(formiga *listaFormigas){
@@ -55,19 +57,19 @@ void coloniaSystem(formiga *listaFormigas){
 	while(it < criterioPorIteracao){
 		for(i = 1; i <= numFormigas; i++){
 			gerarSolucoes();
-		}	
+		}
 		it++;
 	}
-
+	
 	atualizarFeromonio();
-
+	
 	buscaLocal();
 }
 
 void leituraEntrada(aresta *listaAresta){
 	FILE* arq;
-
-	arq = fopen("entrada1.txt", "r"); 
+	
+	arq = fopen("entrada1.txt", "r");
 	if(arq == NULL){
 		printf("Arquivo nao encontrado!\n");
 		exit(1);
@@ -82,7 +84,7 @@ void leituraEntrada(aresta *listaAresta){
 		}
 	}
 	//mostraAresta(listaAresta);
-
+	
 }
 
 char nome_arquivo[60];
@@ -91,66 +93,74 @@ int main(int argc, char *argv[]){
 	//printf("%s\n", argv[0]);
 	strcpy(nome_arquivo, argv[1]);
 	leituraArquivo(nome_arquivo);
-
-	//printf("%s\n", nome_arquivo);
-	//printf("%s\n", argv[2]);
+	/*int i, j;
+	for(i = 1; i <= nVertice; i++){
+	for(j = 1; j <= nVertice; j++){
+	if(edge(i, j)){
+	printf("%d -- %d\n", i, j);
+}
+}
+}*/
+//printf("%s\n", nome_arquivo);
+//printf("%s\n", argv[2]);
+return 0;
 }
 
 /*
 int main(int argc, char **argv){
-	int opt;
-	printf("Iniciou o programa!\n");
-	if(argc < 2){
-		printf("Entre	 com as entradas... \n");
-		return 0;
-	}
-	int oi;
-	while( (opt = getopt(argc, argv, "hn:i:e:c:a")) > 0 ) {
-		switch(opt){
-			case 'a':
-			oi = (int) getopt;
-			break;
-		}
-	}
+int opt;
+printf("Iniciou o programa!\n");
+if(argc < 2){
+printf("Entre	 com as entradas... \n");
+return 0;
+}
+int oi;
+while( (opt = getopt(argc, argv, "hn:i:e:c:a")) > 0 ) {
+switch(opt){
+case 'a':
+oi = (int) getopt;
+break;
+}
+}
 
-	printf("%d\n", oi);
+printf("%d\n", oi);
 
-	//vertice *vert = (vertice *) malloc(sizeof(vertice));
-	//vert->listaFormiga = (formiga *) malloc(sizeof(formiga));
-	formiga *lista = (formiga *) malloc(sizeof(formiga));
-	/ *if(!lista){
-		printf("Sem memoria disponivel!\n");
-		exit(1);
-	}else{
-		inicialista(vert->listaFormiga);
-	}
-	
-	int i;
-	for(i = 0; i < 10; i++){
-		dadosFormiga novaFormiga;
-		novaFormiga.id = 2 * i;
-		insereFormigaFim(vert->listaFormiga, novaFormiga);
-	}
+//vertice *vert = (vertice *) malloc(sizeof(vertice));
+//vert->listaFormiga = (formiga *) malloc(sizeof(formiga));
+formiga *lista = (formiga *) malloc(sizeof(formiga));
+/ *if(!lista){
+printf("Sem memoria disponivel!\n");
+exit(1);
+}else{
+inicialista(vert->listaFormiga);
+}
 
-	mostralista(vert->listaFormiga);
+int i;
+for(i = 0; i < 10; i++){
+dadosFormiga novaFormiga;
+novaFormiga.id = 2 * i;
+insereFormigaFim(vert->listaFormiga, novaFormiga);
+}
 
-	free(vert->listaFormiga); tem '* /' aqui
-	
-	aresta *arestasOriginais = (aresta * ) malloc(sizeof(aresta));
+mostralista(vert->listaFormiga);
 
-	leituraEntrada(arestasOriginais);
-	mostraAresta(arestasOriginais);
-	//printf("Procura 1 => %d\n", existeAresta(arestasOriginais, 0, 1));
-	//printf("Procura 2 => %d\n", existeAresta(arestasOriginais, 1, 0));
-	//printf("Procura 3 => %d\n", existeAresta(arestasOriginais, 0, 0));
-	//printf("Procura 4 => %d\n", existeAresta(arestasOriginais, 4, 1));
-	//printf("Procura 5 => %d\n", existeAresta(arestasOriginais, 1, 4));
-	//printf("Procura 6 => %d\n", existeAresta(arestasOriginais, 5, 4));
+free(vert->listaFormiga); tem '* /' aqui
 
-	coloniaSystem(lista);
-	
-	free(lista);
-	printf("Programa Encerrado!\n");
-	return 0;
+aresta *arestasOriginais = (aresta * ) malloc(sizeof(aresta));
+
+leituraEntrada(arestasOriginais);
+mostraAresta(arestasOriginais);
+//printf("Procura 1 => %d\n", existeAresta(arestasOriginais, 0, 1));
+//printf("Procura 2 => %d\n", existeAresta(arestasOriginais, 1, 0));
+//printf("Procura 3 => %d\n", existeAresta(arestasOriginais, 0, 0));
+//printf("Procura 4 => %d\n", existeAresta(arestasOriginais, 4, 1));
+//printf("Procura 5 => %d\n", existeAresta(arestasOriginais, 1, 4));
+//printf("Procura 6 => %d\n", existeAresta(arestasOriginais, 5, 4));
+
+coloniaSystem(lista);
+
+free(lista);
+printf("Programa Encerrado!\n");
+return 0;
 }
 */
