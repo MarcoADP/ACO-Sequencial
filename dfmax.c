@@ -279,13 +279,13 @@ FILE *fp;
 	int ii, jj, total = 0;
 	for(ii = 1; ii <= Nr_vert; ii++){
 		for(jj = 1; jj <= Nr_vert; jj++){
-			if(edge(ii, jj)){
+			if(edge(ii, jj) && ii > jj){
 				printf("%d -- %d\n", ii, jj);
 				total++;
 			}
 		}
 	}
-	printf("%d -- %d\n", total, 2*Nr_edges);
+	printf("%d -- %d\n", total, Nr_edges);
 }
 
 int get_params()

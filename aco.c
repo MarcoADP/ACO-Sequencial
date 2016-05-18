@@ -7,92 +7,158 @@
 
 #include "formiga.h"
 #include "grafo.h"
-#include "leituraArquivo.h"
+//#include "leituraArquivo.h"
 
 //#define edge(x,y) (bitmap[y/CHARBITS][x] & (1<<(y%CHARBITS)))
+#define INT 32		/* computer word size */
+#define CHARBITS 8
+#define edge(x,y) (bitmap[y/CHARBITS][x] & (1<<(y%CHARBITS)))
 
-//TAXONOMIAS
+#define NMAX 3600		/* maximum number of vertices handles */
+#define MAX_NR_VERTICES		3600	/* = NMAX */
+#define MAX_NR_VERTICESdiv8	450	/* = NMAX/8 */
+#define BOOL	char
+#define MAX_PREAMBLE 10000
+#define REORDER
 
-//it			:	iteração/ciclo
+/*
+A LEITURA DAS INSTANCIAS FOI BASEADA NAS SOLUCOES DISPONIVEIS EM:
+	ftp://dimacs.rutgers.edu/pub/challenge/graph/solvers/
+*/
 
-//fer 			:	quantidade de feromonio
-//custo			:	custo das arestas
-//visibilidade	:	1/custo
-//x, y			:	numeros pré definidos
-//soma(fer)		:	soma de todos os fer dos vertices nao visitados
-//prob			:	probabilidade de escolha de uma aresta (fer/custo)
-//				=	(fer^x * visibilidade^y/[somatorio(fer(nao visitados)^x * custo(nao visitados)^y)]
+unsigned mask[INT] =
+   {
+   1, 1<<31, 1<<30, 1<<29, 1<<28, 1<<27, 1<<26, 1<<25, 1<<24,
+   1<<23, 1<<22, 1<<21, 1<<20, 1<<19, 1<<18, 1<<17, 1<<16,
+   1<<15, 1<<14, 1<<13, 1<<12, 1<<11, 1<<10, 1<<9, 1<<8,
+   1<<7, 1<<6, 1<<5, 1<<4, 1<<3, 1<<2, 1<<1
+   };  /* CAUTION - assumes 32 bit machine */
 
-//taxa 			:	taxa de evaporação, taxa < 1
-//quantia 		:	quantidade de feromonio depositada ao passar pela aresta
-//				=	Q/L => Q constante e L comprimento do tour da formiga
+  /* graph input parameters */
 
+int Nr_vert, Nr_edges;
+BOOL Bitmap[MAX_NR_VERTICES][MAX_NR_VERTICESdiv8];
+static char Preamble[MAX_PREAMBLE];
+char masks[ 8 ] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
 
-//ESTRUTURAS
+unsigned char bitmap[NMAX/CHARBITS+1][NMAX+1];
+int N;			/* number of vertices in graph */
 
+BOOL get_edge(int i, int j ){
+	int byte, bit;
+	char mask;
+	int k;
 
-//ANT COLONY OPTIMIZATION
-void buscaLocal(){
-	
-}
-
-void atualizarFeromonio(){
-	
-}
-
-void gerarSolucoes(){
-	
-}
-
-void inicializaAlgoritmo(){
-	
-}
-
-void coloniaSystem(formiga *listaFormigas){
-	int it = 0;
-	int criterioPorIteracao = 100;
-	int numFormigas = 2;
-	int i;
-	inicializaAlgoritmo();
-	while(it < criterioPorIteracao){
-		for(i = 1; i <= numFormigas; i++){
-			gerarSolucoes();
-		}
-		it++;
+	if (i<j) {
+		k = i;
+		i = j;
+		j = k;
 	}
 	
-	atualizarFeromonio();
+	bit  = 7-(j & 0x00000007);
+	byte = j >> 3;
 	
-	buscaLocal();
+	mask = masks[bit];
+	return( (Bitmap[i][byte] & mask)==mask );
 }
 
-void leituraEntrada(aresta *listaAresta){
-	FILE* arq;
+int get_params(){
+
+	char c, *tmp;
+	char * pp = Preamble;
+	int stop = 0;
+	tmp = (char *)calloc(100, sizeof(char));
 	
-	arq = fopen("entrada1.txt", "r");
-	if(arq == NULL){
-		printf("Arquivo nao encontrado!\n");
-		exit(1);
-	} else {
-		fscanf(arq, "%d %d", &totalVertice, &totalAresta);
-		//printf("Vertice => %d \nAresta  => %d \n\n", totalVertice, totalAresta);
-		int i, origem, destino;
-		for(i = 0; i < totalAresta; i++){
-			fscanf(arq, "%d %d", &origem, &destino);
-			//printf("Origem  => %d \nDestino => %d \n\n", origem, destino);
-			insereArestaFim(listaAresta, origem, destino);
+	Nr_vert = Nr_edges = 0;
+	
+	while (!stop && (c = *pp++) != '\0'){
+		switch (c)
+		  {
+			case 'c':
+			  while ((c = *pp++) != '\n' && c != '\0');
+			  break;
+			  
+			case 'p':
+			  sscanf(pp, "%s %d %d\n", tmp, &Nr_vert, &Nr_edges);
+			  stop = 1;
+			  break;
+			  
+			default:
+			  break;
+		  }
+	}
+	
+	free(tmp);
+	
+	if (Nr_vert == 0 || Nr_edges == 0)
+	  return 0;  /* error */
+	else
+	  return 1;
+}
+
+
+
+
+void readgraph(FILE* fp){
+   int i,j;
+   int length = 0;
+
+	if (!fscanf(fp, "%d\n", &length))
+	  { printf("ERROR: Corrupted preamble.\n"); exit(10); }
+
+	if(length >= MAX_PREAMBLE)
+	  { printf("ERROR: Too long preamble.\n"); exit(10); }
+		   
+	fread(Preamble, 1, length, fp);
+	Preamble[length] = '\0';
+	
+	if (!get_params())
+		  { printf("ERROR: Corrupted preamble.\n"); exit(10); }
+
+	if (Nr_vert >NMAX) {
+		printf("Too many vertices! Recompile with NMAX > %d\n",
+			Nr_vert);
+		exit(0);
+	}
+
+	for ( i = 0
+		 ; i < Nr_vert && fread(Bitmap[i], 1, (int)((i + 8)/8), fp)
+		 ; i++ );
+
+	fclose(fp);
+
+   N = Nr_vert;
+
+   for (i = 0; i < N; i++)
+       for (j = 0; j < N; j++)
+	   if (get_edge(i, j)){
+	       bitmap[(j+1)/CHARBITS][i+1] |= (1 << ((j+1) % CHARBITS));
+		}
+		
+	int ii, jj, total = 0;
+	for(ii = 1; ii <= Nr_vert; ii++){
+		for(jj = 1; jj <= Nr_vert; jj++){
+			if(edge(ii, jj) && ii > jj){
+				printf("%d -- %d\n", ii, jj);
+				total++;
+			}
 		}
 	}
-	//mostraAresta(listaAresta);
-	
+	printf("%d -- %d\n", total, Nr_edges);
 }
 
-char nome_arquivo[60];
+
 
 int main(int argc, char *argv[]){
+	char nome_arquivo[60];
+	FILE* fp;
 	//printf("%s\n", argv[0]);
 	strcpy(nome_arquivo, argv[1]);
-	leituraArquivo(nome_arquivo);
+	if((fp = fopen(nome_arquivo, "r")) == NULL){
+		printf("Arquivo inexistente\n");
+		return 0;
+	}
+	readgraph(fp);
 	/*int i, j;
 	for(i = 1; i <= nVertice; i++){
 	for(j = 1; j <= nVertice; j++){
