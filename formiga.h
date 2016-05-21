@@ -3,15 +3,19 @@
 
 int tamanhoFormiga;
 
-typedef struct{
+/*typedef struct{
 	int id;
-} dadosFormiga;
+} dadosFormiga;*/
 
-struct Formiga{
-	dadosFormiga membro;
-	struct Formiga *proximaFormiga;
-};
-typedef struct Formiga formiga;
+typedef struct{
+	int qtdVertice;
+	int qtdVerticeIndisponiveis;
+	int verticeRestantes;
+	int * listaVertice;
+} Formiga;
+
+
+/*
 
 //OPERACOES DE LISTA FORMIGA
 void inicialista(formiga *lista){
@@ -71,4 +75,4 @@ void mostralista(formiga *lista){
 	
 		
 	printf("\n\n");
-}
+}*/

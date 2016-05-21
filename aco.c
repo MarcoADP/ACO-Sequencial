@@ -4,6 +4,8 @@
 #include <time.h>
 #include <unistd.h>
 #include <string.h>
+#include <math.h>
+#include <limits.h>
 
 #include "formiga.h"
 #include "grafo.h"
@@ -25,6 +27,14 @@
 A LEITURA DAS INSTANCIAS FOI BASEADA NAS SOLUCOES DISPONIVEIS EM:
 	ftp://dimacs.rutgers.edu/pub/challenge/graph/solvers/
 */
+
+double *vetorVertice;
+int *vetorResposta;
+int NumeroFormigas = 100;
+Formiga *listaFormiga;
+
+double alpha = 0.5;
+double beta = 0.5;
 
 unsigned mask[INT] =
    {
@@ -96,9 +106,6 @@ int get_params(){
 	  return 1;
 }
 
-
-
-
 void readgraph(FILE* fp){
    int i,j;
    int length = 0;
@@ -135,7 +142,7 @@ void readgraph(FILE* fp){
 	       bitmap[(j+1)/CHARBITS][i+1] |= (1 << ((j+1) % CHARBITS));
 		}
 		
-	int ii, jj, total = 0;
+	/*int ii, jj, total = 0;
 	for(ii = 1; ii <= Nr_vert; ii++){
 		for(jj = 1; jj <= Nr_vert; jj++){
 			if(edge(ii, jj) && ii > jj){
@@ -143,11 +150,218 @@ void readgraph(FILE* fp){
 				total++;
 			}
 		}
-	}
-	printf("%d -- %d\n", total, Nr_edges);
+	}*/
+	//	printf("%d -- %d\n", total, Nr_edges);
 }
 
+void inicializarAlgoritmo(){
+	int i;
+	vetorResposta = (int *) calloc(Nr_vert, sizeof(int));
+	vetorVertice = (double *) calloc(Nr_vert, sizeof(double));
+	listaFormiga = (Formiga *) calloc(NumeroFormigas, sizeof(Formiga));
 
+	for(i = 0; i < NumeroFormigas; i++){
+		listaFormiga[i].qtdVertice = 0;
+		listaFormiga[i].qtdVerticeIndisponiveis = 0;
+		listaFormiga[i].verticeRestantes = Nr_vert;
+		listaFormiga[i].listaVertice = (int *) calloc(Nr_vert, sizeof(int));
+	}
+}
+
+void mostraFormiga(Formiga *formigaAtual){
+	int i;
+	printf("Vertices usados\n");
+	for(i = 0; i < Nr_vert; i++){
+		int vertice = i + 1;
+		if(formigaAtual->listaVertice[i] == 0){
+			printf("%d -- %d\n", vertice, formigaAtual->listaVertice[i]);
+		}
+	}
+	printf("Vertices Totais   => %d\n", Nr_vert);
+	printf("Vertices Na Resposta   => %d\n", formigaAtual->qtdVertice);
+	printf("Vertices Indisponiveis => %d\n", formigaAtual->qtdVerticeIndisponiveis);
+	printf("Vertices Restantes => %d\n\n", formigaAtual->verticeRestantes);
+}
+
+void atualizaFormiga(Formiga *formigaAtual, int indice){
+	vetorResposta[formigaAtual->qtdVertice] = indice;
+	formigaAtual->listaVertice[indice] = 1;
+	formigaAtual->qtdVertice++;
+	formigaAtual->verticeRestantes--;
+}
+
+void invalidaAdjacentes(Formiga *formigaAtual, int vertice){
+	int i;
+	//printf("Arestas:\n");
+	for(i = 1; i <= Nr_vert; i++){
+		if(edge(vertice, i)){
+			//printf("%d -- %d\n", vertice, i);
+			int indice = i - 1;
+			formigaAtual->listaVertice[indice] = -1;
+			formigaAtual->qtdVerticeIndisponiveis++;
+			formigaAtual->verticeRestantes--;
+		}
+	}
+}
+
+double calculaFeromonio(int vertice){
+	int indice = vertice - 1;
+	return vetorVertice[indice];
+}
+
+double calculaHeuristica(Formiga *formigaAtual, int vertice){
+	int i;
+	int tamanho = 0;
+	//printf("\n");
+	for(i = 1; i<= Nr_vert; i++){
+		int indice_i = i - 1;
+		if(formigaAtual->listaVertice[indice_i] == 0){ 
+			
+			//se for != é porque o Vertice ja foi usado
+			//1 se esta na resposta
+			//-1 se contem aresta com um vertice que esta na resposta
+
+			if(!edge(vertice, i) && vertice != i){
+				//printf("%d -- ", i);
+				tamanho++;
+			}
+
+		}
+	}
+	return (double) tamanho;
+}
+
+double calculaFuncao(Formiga *formigaAtual, int vertice){
+	double resultado = 0.0;
+	double resultadoFeromonio = calculaFeromonio(vertice);
+	double resultadoHeuristica = calculaHeuristica(formigaAtual, vertice);
+
+	resultadoFeromonio = pow(resultadoFeromonio, alpha);
+	resultadoHeuristica = pow(resultadoHeuristica, beta);
+
+	resultado = resultadoFeromonio + resultadoHeuristica;
+	return resultado;
+}
+
+int escolheVertice(Formiga *formigaAtual){
+	int i;
+	//int a = 0;
+	int indice;
+	int VerticeEscolhido = -1;
+	double valorMAX = 0.0;
+	for(i = 1; i <= Nr_vert; i++){
+		indice = i - 1;
+		if(formigaAtual->listaVertice[indice] == 0){
+			double valor = calculaFuncao(formigaAtual, i);
+			//printf("Vertice => %d -- Funcao => %lf\n", i, valor);
+			if(valor > valorMAX){
+				//printf("Vertice => %d -- Funcao => %lf\n", i, valor);
+				valorMAX = valor;
+				VerticeEscolhido = i;
+			}
+		} /*else {
+			printf("Indisponiveis => %d\n", i);
+			a++;
+		}*/
+	}
+	//printf("Vertice Escolhido => %d -- %lf\n", VerticeEscolhido, valorMAX);
+	//printf("Total => %d\n", a);
+	return VerticeEscolhido;
+}
+
+void construirSolucao(Formiga *formigaAtual){
+	/*int i, j, a = 0;
+	for(i = 1; i <= Nr_vert; i++){
+		for(j = i + 1; j <= Nr_vert; j++){
+			if(edge(i,j)){
+				printf("%d -- %d\n", i, j);
+				a++;
+			}
+		}
+	}
+	printf("%d -- %d\n", a, Nr_edges);*/
+	int numeroRandom = rand() %Nr_vert; // 0 a Nr_Vertices-1
+	int numeroReal = numeroRandom + 1; //Vertice Real Ex: Random = 20, Vertice = 21
+	//printf("NumeroRandom => %d --  NumeroReal => %d\n", numeroRandom, numeroReal);
+	atualizaFormiga(formigaAtual, numeroRandom); //Coloca 1 no indice do vertice, no caso [20]
+	invalidaAdjacentes(formigaAtual, numeroReal);
+	//mostraFormiga(formigaAtual);
+	while(formigaAtual->verticeRestantes != 0){
+		int vertice = escolheVertice(formigaAtual);
+		if(vertice == -1){
+			return;
+		}
+		int indice = vertice - 1;
+		atualizaFormiga(formigaAtual, indice);
+		invalidaAdjacentes(formigaAtual, vertice);
+	}
+	//mostraFormiga(formigaAtual);
+}
+
+void verificaResposta(Formiga *formigaAtual){
+	int i, j;
+	int fim = formigaAtual->qtdVertice;
+	for(i = 0; i < fim; i++){
+		for(j = i + 1; j < fim; j++){
+			if(edge(vetorResposta[i], vetorResposta[j])){
+				printf("%d -- %d \n", vetorResposta[i], vetorResposta[j]);
+				printf("Resposta Incorreta!\n");
+				return;
+			}
+		}
+	}
+	int soma = 0;
+	for(i = 1; i <= Nr_vert; i++){
+		soma = 0;
+		for(j = 0; j < fim; j++){
+			if(!edge(i, vetorResposta[j])){
+				soma++;
+			}
+		}
+		if(soma == fim){
+			printf("Resposta Errada!\n");
+		}
+	}
+}
+void mostraResposta(Formiga *formigaAtual){
+	int i;
+	printf("Nº Vertices => %d\n", formigaAtual->qtdVertice);
+	printf("Vertices => ");
+	for(i = 0; i < Nr_vert; i++){
+		if(formigaAtual->listaVertice[i] == 1){
+			printf(" %d ", i+1);
+		}
+	}
+	printf("\n\n");
+}
+
+void AntSystemColony(){
+	int i;
+	inicializarAlgoritmo();
+	int melhorFormiga;
+	int melhorConjunto = 0;
+	srand (time (NULL));
+	for(i = 0; i < 1; i++){
+		construirSolucao(&listaFormiga[i]);
+		//mostraResposta(&listaFormiga[i]);
+		verificaResposta(&listaFormiga[i]);
+		if(listaFormiga[i].qtdVertice > melhorConjunto){
+			printf("%d\n", i);
+			//mostraResposta(&listaFormiga[i]);
+			melhorConjunto = listaFormiga[i].qtdVertice;
+			melhorFormiga = i;
+		}
+	}
+	mostraResposta(&listaFormiga[melhorFormiga]);
+	/*printf("\nTotal => %d\n", listaFormiga[0].qtdVertice);
+	printf("Resposta => ");
+	for(i = 0; i < listaFormiga[0].qtdVertice; i++){	
+		
+		printf(" %d ", vetorResposta[i]+1);
+	}
+	printf("\n");*/
+
+}
 
 int main(int argc, char *argv[]){
 	char nome_arquivo[60];
@@ -159,74 +373,10 @@ int main(int argc, char *argv[]){
 		return 0;
 	}
 	readgraph(fp);
-	/*int i, j;
-	for(i = 1; i <= nVertice; i++){
-	for(j = 1; j <= nVertice; j++){
-	if(edge(i, j)){
-	printf("%d -- %d\n", i, j);
-}
-}
-}*/
+	AntSystemColony();
+	//mostraFormiga(&listaFormiga[0]);
+
 //printf("%s\n", nome_arquivo);
 //printf("%s\n", argv[2]);
 return 0;
 }
-
-/*
-int main(int argc, char **argv){
-int opt;
-printf("Iniciou o programa!\n");
-if(argc < 2){
-printf("Entre	 com as entradas... \n");
-return 0;
-}
-int oi;
-while( (opt = getopt(argc, argv, "hn:i:e:c:a")) > 0 ) {
-switch(opt){
-case 'a':
-oi = (int) getopt;
-break;
-}
-}
-
-printf("%d\n", oi);
-
-//vertice *vert = (vertice *) malloc(sizeof(vertice));
-//vert->listaFormiga = (formiga *) malloc(sizeof(formiga));
-formiga *lista = (formiga *) malloc(sizeof(formiga));
-/ *if(!lista){
-printf("Sem memoria disponivel!\n");
-exit(1);
-}else{
-inicialista(vert->listaFormiga);
-}
-
-int i;
-for(i = 0; i < 10; i++){
-dadosFormiga novaFormiga;
-novaFormiga.id = 2 * i;
-insereFormigaFim(vert->listaFormiga, novaFormiga);
-}
-
-mostralista(vert->listaFormiga);
-
-free(vert->listaFormiga); tem '* /' aqui
-
-aresta *arestasOriginais = (aresta * ) malloc(sizeof(aresta));
-
-leituraEntrada(arestasOriginais);
-mostraAresta(arestasOriginais);
-//printf("Procura 1 => %d\n", existeAresta(arestasOriginais, 0, 1));
-//printf("Procura 2 => %d\n", existeAresta(arestasOriginais, 1, 0));
-//printf("Procura 3 => %d\n", existeAresta(arestasOriginais, 0, 0));
-//printf("Procura 4 => %d\n", existeAresta(arestasOriginais, 4, 1));
-//printf("Procura 5 => %d\n", existeAresta(arestasOriginais, 1, 4));
-//printf("Procura 6 => %d\n", existeAresta(arestasOriginais, 5, 4));
-
-coloniaSystem(lista);
-
-free(lista);
-printf("Programa Encerrado!\n");
-return 0;
-}
-*/

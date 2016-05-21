@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 
-
+/*
 int tamanhoAresta;
 int tamanhoVertice;
 int totalAresta;
@@ -103,3 +103,4 @@ int existeAresta(aresta *lista, int vertice1, int vertice2){
 	}
 	return 0;
 }
+*/
