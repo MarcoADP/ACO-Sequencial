@@ -170,7 +170,7 @@ void inicializarAlgoritmo(){
 
 void mostraFormiga(Formiga *formigaAtual){
 	int i;
-	printf("Vertices usados\n");
+	printf("\n Sobre Vertices \n");
 	for(i = 0; i < Nr_vert; i++){
 		int vertice = i + 1;
 		if(formigaAtual->listaVertice[i] == 0){
@@ -184,7 +184,7 @@ void mostraFormiga(Formiga *formigaAtual){
 }
 
 void atualizaFormiga(Formiga *formigaAtual, int indice){
-	vetorResposta[formigaAtual->qtdVertice] = indice;
+	vetorResposta[formigaAtual->qtdVertice] = indice+1;
 	formigaAtual->listaVertice[indice] = 1;
 	formigaAtual->qtdVertice++;
 	formigaAtual->verticeRestantes--;
@@ -194,7 +194,8 @@ void invalidaAdjacentes(Formiga *formigaAtual, int vertice){
 	int i;
 	//printf("Arestas:\n");
 	for(i = 1; i <= Nr_vert; i++){
-		if(edge(vertice, i)){
+		int indice = i - 1;
+		if(edge(vertice, i) && formigaAtual->listaVertice[indice] == 0){
 			//printf("%d -- %d\n", vertice, i);
 			int indice = i - 1;
 			formigaAtual->listaVertice[indice] = -1;
@@ -249,12 +250,14 @@ int escolheVertice(Formiga *formigaAtual){
 	int indice;
 	int VerticeEscolhido = -1;
 	double valorMAX = 0.0;
+	//printf("\n DISPONIVEIS => ");
 	for(i = 1; i <= Nr_vert; i++){
 		indice = i - 1;
 		if(formigaAtual->listaVertice[indice] == 0){
+			//printf(" %d ", i);
 			double valor = calculaFuncao(formigaAtual, i);
 			//printf("Vertice => %d -- Funcao => %lf\n", i, valor);
-			if(valor > valorMAX){
+			if(valor >= valorMAX){
 				//printf("Vertice => %d -- Funcao => %lf\n", i, valor);
 				valorMAX = valor;
 				VerticeEscolhido = i;
@@ -288,9 +291,10 @@ void construirSolucao(Formiga *formigaAtual){
 	//mostraFormiga(formigaAtual);
 	while(formigaAtual->verticeRestantes != 0){
 		int vertice = escolheVertice(formigaAtual);
-		if(vertice == -1){
+		/*if(vertice == -1){
+			mostraFormiga(formigaAtual);
 			return;
-		}
+		}*/
 		int indice = vertice - 1;
 		atualizaFormiga(formigaAtual, indice);
 		invalidaAdjacentes(formigaAtual, vertice);
@@ -312,25 +316,46 @@ void verificaResposta(Formiga *formigaAtual){
 	}
 	int soma = 0;
 	for(i = 1; i <= Nr_vert; i++){
-		soma = 0;
+		//printf("I => %d\n", i);
+		//printf("\n\n");
+		soma = 0;	
+		for(j = 0; j <= fim; j++){
+			int vert = vetorResposta[j];
+			//printf("%d -- %d\n", i, vert);
+			if(i == vetorResposta[j]){
+				break;
+			}
+			if(edge(i, vert)){
+				//printf("TEM ARESTA!\n");
+				break;
+			} else {
+				soma++;
+			}
+			if(soma == fim){
+				printf("FUDEU %d\n", i);
+			}
+
+		}
+		/*soma = 0;
 		for(j = 0; j < fim; j++){
 			if(!edge(i, vetorResposta[j])){
 				soma++;
 			}
 		}
 		if(soma == fim){
+			printf("%d -- %d\n", i, j);
 			printf("Resposta Errada!\n");
-		}
+		}*/
 	}
 }
 void mostraResposta(Formiga *formigaAtual){
 	int i;
 	printf("Nº Vertices => %d\n", formigaAtual->qtdVertice);
 	printf("Vertices => ");
-	for(i = 0; i < Nr_vert; i++){
-		if(formigaAtual->listaVertice[i] == 1){
-			printf(" %d ", i+1);
-		}
+	for(i = 0; i < formigaAtual->qtdVertice; i++){
+		//if(formigaAtual->listaVertice[i] == 1){
+			printf(" %d ", vetorResposta[i]);
+		//}
 	}
 	printf("\n\n");
 }
@@ -341,8 +366,9 @@ void AntSystemColony(){
 	int melhorFormiga;
 	int melhorConjunto = 0;
 	srand (time (NULL));
-	for(i = 0; i < 1; i++){
+	for(i = 0; i < NumeroFormigas; i++){
 		construirSolucao(&listaFormiga[i]);
+		//mostraFormiga(&listaFormiga[i]);
 		//mostraResposta(&listaFormiga[i]);
 		verificaResposta(&listaFormiga[i]);
 		if(listaFormiga[i].qtdVertice > melhorConjunto){
@@ -363,6 +389,19 @@ void AntSystemColony(){
 
 }
 
+void mostraArestas(){
+	int i, j, tam = 0;
+	for(i = 0; i <= Nr_vert; i++){
+		for (j = i+1; j <= Nr_vert; j++){
+			if(edge(i, j)){
+				printf("%d -- %d\n", i, j);
+				tam++;
+			}
+		}
+	}
+	printf("%d -- %d\n", tam, Nr_edges);
+}
+
 int main(int argc, char *argv[]){
 	char nome_arquivo[60];
 	FILE* fp;
@@ -375,8 +414,8 @@ int main(int argc, char *argv[]){
 	readgraph(fp);
 	AntSystemColony();
 	//mostraFormiga(&listaFormiga[0]);
-
-//printf("%s\n", nome_arquivo);
-//printf("%s\n", argv[2]);
-return 0;
+	//mostraArestas();
+	//printf("%s\n", nome_arquivo);
+	//printf("%s\n", argv[2]);
+	return 0;
 }
