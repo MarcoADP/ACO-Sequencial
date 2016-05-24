@@ -22,7 +22,7 @@
 #define BOOL	char
 #define MAX_PREAMBLE 10000
 #define REORDER
-#define FEROMONIO_MAXIMO 0.3
+#define FEROMONIO_INICIAL 30
 /*
 A LEITURA DAS INSTANCIAS FOI BASEADA NAS SOLUCOES DISPONIVEIS EM:
 ftp://dimacs.rutgers.edu/pub/challenge/graph/solvers/
@@ -37,7 +37,7 @@ Formiga *listaFormiga;
 double alpha = 0.5;
 double beta = 0.5;
 int ciclos = 10;
-double rho = 0.1;
+double rho = 0.1; //taxa evaporação
 int num_threads = 1;
 
 unsigned mask[INT] =
@@ -163,9 +163,10 @@ void inicializarVertices(){
    //vetorResposta = (int *) calloc(Nr_vert, sizeof(int));
    int i;
    for(i = 0; i < Nr_vert; i++){
-      vetorVertice[i] = FEROMONIO_MAXIMO;
+      vetorVertice[i] = FEROMONIO_INICIAL;
    }
 }
+
 
 void inicializarAlgoritmo(){
    int i;
@@ -252,6 +253,9 @@ double calculaFuncao(Formiga *formigaAtual, int vertice){
    resultadoFeromonio = pow(resultadoFeromonio, alpha);
    resultadoHeuristica = pow(resultadoHeuristica, beta);
    
+   //printf("Feromonio => %lf\n", resultadoFeromonio);
+   //printf("Heuristica => %lf\n", resultadoHeuristica);
+
    resultado = resultadoFeromonio + resultadoHeuristica;
    return resultado;
 }
@@ -262,24 +266,40 @@ int escolheVertice(Formiga *formigaAtual){
    int indice;
    int VerticeEscolhido = -1;
    double valorMAX = 0.0;
+   int tam = 0;
+   int vetorIgual[Nr_vert];
    //printf("\n DISPONIVEIS => ");
    for(i = 1; i <= Nr_vert; i++){
       indice = i - 1;
       if(formigaAtual->listaVertice[indice] == 0){
          //printf(" %d ", i);
          double valor = calculaFuncao(formigaAtual, i);
-         //printf("Vertice => %d -- Funcao => %lf\n", i, valor);
-         if(valor >= valorMAX){
+         //printf("Vertice => %d -- Funcao => %lf\n\n", i, valor);
+         if(valor > valorMAX){
             //printf("Vertice => %d -- Funcao => %lf\n", i, valor);
+            vetorIgual[0] = i;
+            tam = 1;
             valorMAX = valor;
             VerticeEscolhido = i;
+         } else {
+            if(valor == valorMAX){
+               vetorIgual[tam] = i;
+               tam++;
+            }
          }
-      } /*else {
-         printf("Indisponiveis => %d\n", i);
-         a++;
-      }*/
+      }
    }
-   //printf("Vertice Escolhido => %d -- %lf\n", VerticeEscolhido, valorMAX);
+
+   //printf("\nMaximo: %lf\n", valorMAX);
+   //for(i = 0; i < tam; i++){
+   //   printf("ID => %d\n", vetorIgual[i]);
+   //}
+   //printf("\n");
+
+   int indiceEscolhido = rand() %tam;
+   VerticeEscolhido = vetorIgual[indiceEscolhido];
+
+   //printf("##Vertice Escolhido => %d -- %lf ##\n\n\n", VerticeEscolhido, valorMAX);
    //printf("Total => %d\n", a);
    return VerticeEscolhido;
 }
@@ -369,7 +389,7 @@ void mostraRespostaFinal(int **vetor, int vetorIndice[], int indice){
    printf("Melhor Ciclo: %d\n", indice);
    printf("Nº Vertices => %d\n", numero);
    printf("Vertices => ");
-    for(i = 0; i < numero; i++){
+   for(i = 0; i < numero; i++){
       printf(" %d ", vetor[indice][i]);
       //}
    }
@@ -378,68 +398,100 @@ void mostraRespostaFinal(int **vetor, int vetorIndice[], int indice){
 
 
 int selecionaFormiga(int **vetor, int c){
-	int maior = listaFormiga[0].qtdVertice;
-	Formiga formigaMaior;
-   	formigaMaior = listaFormiga[0];
-   	vetor[c] = (int *) calloc (Nr_vert, sizeof(int));
-   	int i;
-   	for(i = 1; i < NumeroFormigas; i++){
-   		if(listaFormiga[i].qtdVertice > maior){
-   			maior = listaFormiga[i].qtdVertice;
-   			formigaMaior = listaFormiga[i];
-   		}
-	}
-	int k = 0;
-	for(i = 0; i < Nr_vert; i++){
-		//printf("%d\n", formigaMaior.listaVertice[i]);
-		if(formigaMaior.listaVertice[i] == 1){
-
-			int vertice = i + 1;
-			vetor[c][k] = vertice;  
-			//printf("Vertice %d\n", vertice);
-			k++;
-		}
-	}	
-
-	return maior;
+   int maior = listaFormiga[0].qtdVertice;
+   Formiga formigaMaior;
+   formigaMaior = listaFormiga[0];
+   vetor[c] = (int *) calloc (Nr_vert, sizeof(int));
+   int i;
+   for(i = 1; i < NumeroFormigas; i++){
+      if(listaFormiga[i].qtdVertice > maior){
+         maior = listaFormiga[i].qtdVertice;
+         formigaMaior = listaFormiga[i];
+      }
+   }
+   int k = 0;
+   for(i = 0; i < Nr_vert; i++){
+      //printf("%d\n", formigaMaior.listaVertice[i]);
+      if(formigaMaior.listaVertice[i] == 1){
+         
+         int vertice = i + 1;
+         vetor[c][k] = vertice;
+         //printf("Vertice %d\n", vertice);
+         k++;
+      }
+   }
+   
+   return maior;
 }
 
 void selecionaFormigaGlobal(int **vetor, int vetorIndice[]){
-	int i;
-	int maior = vetorIndice[0];
-	int indice = 0;
+   int i;
+   int maior = vetorIndice[0];
+   int indice = 0;
+   
+   for(i = 1; i < ciclos; i++){
+      if(vetorIndice[i] > maior){
+         maior = vetorIndice[i];
+         indice = i;
+      }
+   }
+   mostraRespostaFinal(vetor, vetorIndice, indice);
+}
 
-	for(i = 1; i < ciclos; i++){
-		if(vetorIndice[i] > maior){
-			maior = vetorIndice[i];
-			indice = i;
-		}
-	}
-	mostraRespostaFinal(vetor, vetorIndice, indice);
+void atualizaFeromonio(int **vetor, int valor, int c){
+   int i;
+   //double num_vertice = (double) valor;
+   double taxa_feromonio = 1 + (2 * rho) ;
+   
+   for(i = 0; i < Nr_vert; i++){
+      //printf("Taxa [%d] = %lf\n", i, vetorVertice[i]);
+      vetorVertice[i] = vetorVertice[i] * (1 - rho);
+      //printf("Taxa [%d] = %lf\n\n", i, vetorVertice[i]);
+      
+   }
+   //printf("%d - %d Taxa %lf\n", valor, Nr_vert, taxa_feromonio);
+   //printf("aaaaaaaaa: ");
+   for(i = 0; i < valor; i++){
+      int indice = vetor[c][i] - 1;
+      vetorVertice[indice] = vetorVertice[indice] *  taxa_feromonio;
+      //printf("Taxa [%d] = %lf\n", indice, vetorVertice[indice]);
+   }
+   //printf("\n\n\n\n");
+}
+
+void mostraFeromonio(){
+   int i;
+   for(i = 0; i < Nr_vert; i++){
+      printf("Vertice %d => %lf\n", (i + 1), vetorVertice[i]);
+   }
+   printf("\n\n");
 }
 
 void AntSystemColony(){
-   	int i, c;
-	inicializarVertices();
-   	int **resposta;
- 	int indiceMaior[ciclos];  
-   	resposta = (int **) calloc (ciclos, sizeof (int *));
-
-   	for(i = 0; i < ciclos; i++){
-   		resposta[i] = (int *) calloc (Nr_vert, sizeof(int));
-   	}
-
+   int i, c;
+   inicializarVertices();
+   int **resposta;
+   int indiceMaior[ciclos];
+   resposta = (int **) calloc (ciclos, sizeof (int *));
+   
+   for(i = 0; i < ciclos; i++){
+      resposta[i] = (int *) calloc (Nr_vert, sizeof(int));
+   }
+   
    for(c = 0; c < ciclos; c++){
-      printf("Ciclo: %d\n", c);
+      //printf("\n\nCiclo: %d\n", c);
       inicializarAlgoritmo();
-      srand (time (NULL));
+      srand (time(0)+clock()+random());
       for(i = 0; i < NumeroFormigas; i++){
+         //printf("\n\nFormiga: %d\n", i);
          construirSolucao(&listaFormiga[i]);
          verificaResposta(&listaFormiga[i]);
          
       }
       indiceMaior[c] = selecionaFormiga(resposta, c);
       mostraRespostaColonia(resposta, c, indiceMaior[c]);
+      atualizaFeromonio(resposta, indiceMaior[c], c);
+      //mostraFeromonio();
    }
    selecionaFormigaGlobal(resposta, indiceMaior);
 }
