@@ -10,9 +10,9 @@
      
 \sloppy
 
-\title{Instructions for Authors of SBC Conferences\\ Papers and Abstracts}
+\title{Algoritmo Heurístico Otimização de Colônia de Formigas e Programação Paralela para a resolução do Problema do Máximo Conjunto Independente}
 
-\author{Luciana P. Nedel\inst{1}, Rafael H. Bordini\inst{2}, Flávio Rech
+\author{	Luciana P. Nedel\inst{1}, Rafael H. Bordini\inst{2}, Flávio Rech
   Wagner\inst{1}, Jomi F. Hübner\inst{3} }
 
 
@@ -59,7 +59,7 @@
   do inglês, Ant Colony Optimization (ACO), introduzido por Marco Dorigo /**Referencia**/. O ACO desde sua criação vem
   resolvendo diversos problemas difíceis, como -- citar problemas mais recentes --.
   
-  
+  //Falar de algortimos paralelos
   
   Este artigo é organizado da seguinte forma. Na Seção 2, será descrito de forma detalhada o Problema do Máximo Conjunto
   Independente. Na Seção 3, será apresentado trabalho relacionados, seja pela resolução do Problema do Máximo
