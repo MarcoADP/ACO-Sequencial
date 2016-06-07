@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.6)  6 JUN 2016 22:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.6)  6 JUN 2016 23:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -260,52 +260,51 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <13> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 53.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] <fig1.jpg, id=13, 254.3904
-pt x 232.2276pt>
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
+<fig1.jpg, id=16, 254.3904pt x 232.2276pt>
 File: fig1.jpg Graphic file (type jpg)
-
-<use fig1.jpg>
-Package pdftex.def Info: fig1.jpg used on input line 126.
+ <use fig1.jpg>
+Package pdftex.def Info: fig1.jpg used on input line 139.
 (pdftex.def)             Requested size: 213.39568pt x 194.81471pt.
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 127.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 140.
 
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 127.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 140.
 
-<fig2.jpg, id=14, 205.7286pt x 234.1548pt>
+<fig2.jpg, id=17, 205.7286pt x 234.1548pt>
 File: fig2.jpg Graphic file (type jpg)
  <use fig2.jpg>
-Package pdftex.def Info: fig2.jpg used on input line 133.
+Package pdftex.def Info: fig2.jpg used on input line 146.
 (pdftex.def)             Requested size: 128.0387pt x 145.73541pt.
 
-<table.jpg, id=15, 365.2044pt x 217.2918pt>
+<table.jpg, id=18, 365.2044pt x 217.2918pt>
 File: table.jpg Graphic file (type jpg)
  <use table.jpg>
-Package pdftex.def Info: table.jpg used on input line 151.
+Package pdftex.def Info: table.jpg used on input line 164.
 (pdftex.def)             Requested size: 298.75264pt x 177.75932pt.
- [2]
-(./artigo_MarcoADP.bbl) [3 <./fig1.jpg> <./fig2.jpg>] [4 <./table.jpg>]
-(./artigo_MarcoADP.aux) ) 
+ [3 <./fig1.jpg> <./fig2.jpg>] (./artigo_MarcoADP.bbl) [4 <./table.jpg>] (./art
+igo_MarcoADP.aux) ) 
 Here is how much of TeX's memory you used:
- 2721 strings out of 494929
- 38533 string characters out of 6180143
- 102474 words of memory out of 5000000
- 5964 multiletter control sequences out of 15000+600000
+ 2722 strings out of 494929
+ 38541 string characters out of 6180143
+ 104474 words of memory out of 5000000
+ 5965 multiletter control sequences out of 15000+600000
  21033 words of font info for 44 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
  37i,10n,28p,274b,319s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r
-.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/ti
-mes/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on artigo_MarcoADP.pdf (4 pages, 209557 bytes).
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}<
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/tex
+live/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/ut
+mbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on artigo_MarcoADP.pdf (4 pages, 211367 bytes).
 PDF statistics:
  53 PDF objects out of 1000 (max. 8388607)
  35 compressed objects within 1 object stream
