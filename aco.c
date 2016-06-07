@@ -350,7 +350,7 @@ void ajuda(){
    printf("O programa se destina a resolver o problema do Máximo Conjunto Independente utilizado Ant System Colony.\n\n");
    printf("A seguir os parâmetros que poderao ser atribuidos e seus valores padroes caso nao forem:\n\n");
    printf("-h: Seção Ajuda\n\n");
-   printf("-i: Nome do Arquivo. \nOBRIGATORIO!\n\n");
+   printf("-i: Nome do Arquivo. \nOBRIGATORIO! \n\nAs Instancias estao na pasta Instancias. Basta copiar a instancia desejada para a mesma pasta do codigo. \nAs instancias keller estao na mesma pasta do codigo. \nSao ao todo 68 instancias diferentes.\n\n");
    printf("-a: Valor de alpha. \nPadrão: 0.5\n\n");
    printf("-b: Valor de betha. \nPadrão: 0.5\n\n");
    printf("-c: Número de ciclos. \nPadrão: 10\n\n");
