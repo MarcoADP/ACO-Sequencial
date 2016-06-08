@@ -1,0 +1,28 @@
+keller6
+formigas = 100
+ciclo = 100
+
+thread = 1 
+real	9m39.612s
+user	9m39.316s
+sys	0m0.200s
+
+thread = 2
+real	5m29.507s
+user	10m45.776s
+sys	0m0.336s
+
+thread = 3
+real	4m58.650s
+user	13m22.180s
+sys	0m0.364s
+
+thread = 4 	
+real	4m22.137s
+user	15m44.688s
+sys	0m0.612s
+
+thread = 5
+real	4m14.127s
+user	15m53.060s
+sys	0m0.380s
