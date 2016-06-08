@@ -22,7 +22,12 @@
 #define FEROMONIO_INICIAL 30
 
 //Ver como paralelizar
+//Quando tem um vetor global, quando da malloc em cada thread, ele vira local para a thread?
+//Vetor Feromonio é global, logo precisa inicializar uma unica vez?
+//Atualizar Feromonio é área compartilhada, logo precisa de lock?
+//Quando printa o Id zoa, tipo dois 2 e nenhum 1
 
+int TESTE = 0;
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 //pthread_barrier_t barreira = PTHREAD_COND_INITIALIZER;
 pthread_barrier_t barreira;
@@ -172,13 +177,13 @@ void inicializarVertices(){
 */
 void inicializarAlgoritmo(int numero){
    int i;
-   vetorResposta = (int *) calloc(Nr_vert, sizeof(int));
    listaFormiga = (Formiga *) calloc(numero, sizeof(Formiga)); //ADP
    for(i = 0; i < NumeroFormigas; i++){
       listaFormiga[i].qtdVertice = 0;
       listaFormiga[i].qtdVerticeIndisponiveis = 0;
       listaFormiga[i].verticeRestantes = Nr_vert;
       listaFormiga[i].listaVertice = (int *) calloc(Nr_vert, sizeof(int));
+      listaFormiga[i].vetorResposta = (int *) calloc(Nr_vert, sizeof(int));
    }
 }
 
@@ -323,8 +328,8 @@ void verificaResposta(Formiga *formigaAtual){
    //Confere Principio 1)
    for(i = 0; i < fim; i++){
       for(j = i + 1; j < fim; j++){
-         if(edge(vetorResposta[i], vetorResposta[j])){
-            printf("Erro: Nao foi formado um conjunto independente! \nOs Vertices %d -- %d sao adjacentes!\n", vetorResposta[i], vetorResposta[j]);
+         if(edge(formigaAtual->vetorResposta[i], formigaAtual->vetorResposta[j])){
+            printf("Erro: Nao foi formado um conjunto independente! \nOs Vertices %d -- %d sao adjacentes!\n", formigaAtual->vetorResposta[i], formigaAtual->vetorResposta[j]);
             return;
          }
       }
@@ -335,8 +340,8 @@ void verificaResposta(Formiga *formigaAtual){
    for(i = 1; i <= Nr_vert; i++){
       soma = 0;
       for(j = 0; j <= fim; j++){
-         int vert = vetorResposta[j];
-         if(i == vetorResposta[j]){
+         int vert = formigaAtual->vetorResposta[j];
+         if(i == formigaAtual->vetorResposta[j]){
             break;
          }
          if(edge(i, vert)){
@@ -406,35 +411,38 @@ void mostraFeromonio(){
 /*
    ACO
 */
-void *AntSystemColony(void *vargp){
-   int i, c;
-   thread_arg *arg = (thread_arg *) vargp;
-   int threadId = arg->id;
-   inicializarVertices();
-   int **resposta;
-   //int indiceMaior[ciclos];
-   int formiga_thread = (int) NumeroFormigas / num_threads;
-   resposta = (int **) calloc (ciclos, sizeof (int *));
-   melhor_colonia = (Formiga *) calloc (ciclos, sizeof (Formiga *));
-   for(i = 0; i < ciclos; i++){
-      resposta[i] = (int *) calloc (Nr_vert, sizeof(int));
-   }
+void *AntSystemColony(void *args){
+   int c;
+   //thread_arg *arg = (thread_arg *) vargp;
+   int threadId = *(int *) args;
    
+   int formiga_thread = (int) NumeroFormigas / num_threads;
+   melhor_colonia = (Formiga *) calloc (ciclos, sizeof (Formiga *));
+   //printf("Antes dos ciclos\n");
+   //printf("ID => %d\n\n", threadId);
+
+   //pthread_t self;
+   //self = pthread_self();
+   //threadId = (int) self;
+
    for(c = 0; c < ciclos; c++){
-      printf("Thread: %d\n", threadId);
-      printf("Ciclo: %d\n", c);
-      inicializarAlgoritmo(formiga_thread);
+      //TESTE++;
+      //printf("Teste => %d\n", ++TESTE);
+      //printf("Thread: %d\n", threadId);
+      printf("\nThread: %d\nCiclo: %d\n", threadId, c);
+      //inicializarAlgoritmo(formiga_thread);
       srand (time(0)+clock()+random());
+      int i;
       for(i = 0; i < formiga_thread; i++){
-         //printf("\n\nFormiga: %d\n", i);
+         //printf("Formiga: %d\n", i);
          //printf("oi\n\n");
-         construirSolucao(&listaFormiga[i]);
-         //printf("oiiii\n\n");
-         verificaResposta(&listaFormiga[i]);
+         //construirSolucao(&listaFormiga[i]);
+         /*//printf("oiiii\n\n");
+         verificaResposta(&listaFormiga[i]);*/
          
       }
-      pthread_mutex_lock(&lock);
-      melhor_colonia[c] = selecionaFormigaP(resposta, c, threadId, formiga_thread);
+      /*pthread_mutex_lock(&lock);
+      melhor_colonia[c] = selecionaFormigaP( threadId, formiga_thread);
       if(melhor_colonia[c].qtdVertice > melhor_geral.qtdVertice){
          melhor_geral = melhor_colonia[c];
       }
@@ -447,7 +455,7 @@ void *AntSystemColony(void *vargp){
 
 
       atualizaFeromonioP(&melhor_colonia[c]);
-      mostraRespostaColoniaP(&melhor_colonia[c]);
+      mostraRespostaColoniaP(&melhor_colonia[c]);*/
 
       pthread_barrier_wait(&barreira);
    }
@@ -554,12 +562,15 @@ int main(int argc, char *argv[]){
    pthread_t threads[num_threads];
 
    //==================
+   inicializarVertices();
    int i;
    for(i = 0; i < num_threads; i++){
-      thread_arg arg[num_threads];
+      //thread_arg arg[num_threads];
       
-      arg[i].id = i;
-      pthread_create(&threads[i], NULL, AntSystemColony, (void *) &arg[i]);
+      //arg[i].id = i;
+      printf("i -> %d\n\n", i);
+      //printf("i -> %d -- id -> %d\n\n", i, arg[i].id);
+      pthread_create(&threads[i], NULL, AntSystemColony, (void *) &i);
    }
    for(i = 0; i < num_threads; i++){
       pthread_join(threads[i], NULL);

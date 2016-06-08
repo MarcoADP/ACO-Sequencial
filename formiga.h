@@ -8,10 +8,11 @@ typedef struct{
 	int qtdVerticeIndisponiveis;
 	int verticeRestantes;
 	int * listaVertice;
+   int *vetorResposta;
 } Formiga;
 
 int Nr_vert, Nr_edges;
-int *vetorResposta;
+//int *vetorResposta;
 double *vetorFeromonio;
 int numVerticeResposta = 0;
 int NumeroFormigas = 10;
@@ -50,7 +51,7 @@ void mostraFormiga(Formiga *formigaAtual){
 */
 void atualizaFormiga(Formiga *formigaAtual, int indice){
    //printf("entra atualiza");
-   vetorResposta[formigaAtual->qtdVertice] = indice+1;
+   formigaAtual->vetorResposta[formigaAtual->qtdVertice] = indice+1;
    formigaAtual->listaVertice[indice] = 1;
    formigaAtual->qtdVertice++;
    formigaAtual->verticeRestantes--;
@@ -84,11 +85,10 @@ int selecionaFormiga(int **vetor, int c){
    return maior;
 }
 
-Formiga selecionaFormigaP(int **vetor, int c, int id, int num_formiga){
+Formiga selecionaFormigaP(int id, int num_formiga){
    int maior = listaFormiga[0].qtdVertice;
    Formiga formigaMaior;
    formigaMaior = listaFormiga[0];
-   vetor[c] = (int *) calloc (Nr_vert, sizeof(int));
    int i;
    for(i = 1; i < num_formiga; i++){
       if(listaFormiga[i].qtdVertice > maior){
