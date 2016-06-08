@@ -85,7 +85,7 @@ int selecionaFormiga(Formiga listaFormiga[], int **vetor, int c){
    return maior;
 }
 
-Formiga selecionaFormigaP(Formiga listaFormiga[], int id, int num_formiga){
+Formiga selecionaFormigaP(Formiga listaFormiga[], int num_formiga){
    int maior = listaFormiga[0].qtdVertice;
    Formiga formigaMaior;
    formigaMaior = listaFormiga[0];

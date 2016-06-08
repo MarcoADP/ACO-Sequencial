@@ -417,7 +417,7 @@ void *AntSystemColony(void *args){
    int threadId = *(int *) args;
    
    int formiga_thread = (int) NumeroFormigas / num_threads;
-   melhor_colonia = (Formiga *) calloc (ciclos, sizeof (Formiga *));
+   //melhor_colonia = (Formiga *) calloc (ciclos, sizeof (Formiga *));
    //printf("Antes dos ciclos\n");
    //printf("ID => %d\n\n", threadId);
 
@@ -440,11 +440,12 @@ void *AntSystemColony(void *args){
          construirSolucao(&listaFormiga[i]);
          //printf("oiiii\n\n");
          verificaResposta(&listaFormiga[i]);
-         mostraRespostaColoniaP(&listaFormiga[i]);
+         //mostraRespostaColoniaP(&listaFormiga[i]);
          
       }
-      /*pthread_mutex_lock(&lock);
-      melhor_colonia[c] = selecionaFormigaP( threadId, formiga_thread);
+      pthread_mutex_lock(&lock);
+      melhor_colonia[c] = selecionaFormigaP(listaFormiga, formiga_thread);
+      //mostraRespostaColoniaP(&melhor_colonia[c]);
       if(melhor_colonia[c].qtdVertice > melhor_geral.qtdVertice){
          melhor_geral = melhor_colonia[c];
       }
@@ -457,11 +458,12 @@ void *AntSystemColony(void *args){
 
 
       atualizaFeromonioP(&melhor_colonia[c]);
-      mostraRespostaColoniaP(&melhor_colonia[c]);*/
+      //mostraRespostaColoniaP(&melhor_colonia[c]);
 
       pthread_barrier_wait(&barreira);
    }
    //selecionaFormigaGlobal(resposta, indiceMaior);
+   mostraRespostaColoniaP(&melhor_geral);
    int *ia = malloc(sizeof(int));
    return ia;
 }
@@ -565,6 +567,8 @@ int main(int argc, char *argv[]){
 
    //==================
    inicializarVertices();
+   melhor_geral.qtdVertice = 0;
+   melhor_colonia = (Formiga *) calloc (ciclos, sizeof (Formiga *));
    int i;
    for(i = 0; i < num_threads; i++){
       //thread_arg arg[num_threads];
