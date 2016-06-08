@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.6)  6 JUN 2016 23:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.6.7)  7 JUN 2016 19:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **artigo_MarcoADP.tex
 (./artigo_MarcoADP.tex
-LaTeX2e <2016/02/01>
-Babel <3.9q> and hyphenation patterns for 4 language(s) loaded.
+LaTeX2e <2014/05/01>
+Babel <3.9l> and hyphenation patterns for 79 languages loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
@@ -29,7 +29,7 @@ Package: sbc-template 2001/06/09
 Package: geometry 2010/09/12 v5.6 Page Geometry
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+Package: keyval 2014/05/08 v1.15 key=value parser (DPC)
 \KV@toks@=\toks14
 )
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
@@ -70,7 +70,7 @@ Package: times 2005/04/12 PSNFSS-v9.2a (SPQR)
 \c@instn=\count90
 
 (/usr/share/texlive/texmf-dist/tex/latex/titlesec/titlesec.sty
-Package: titlesec 2016/03/15 v2.10.1 Sectioning titles
+Package: titlesec 2011/12/15 v2.10.0 Sectioning titles
 \ttl@box=\box26
 \beforetitleunit=\skip43
 \aftertitleunit=\skip44
@@ -82,18 +82,18 @@ Package: titlesec 2016/03/15 v2.10.1 Sectioning titles
 \titlewidthfirst=\dimen119
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+Package: graphicx 2014/04/25 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2016/01/03 v1.0q Standard LaTeX Graphics (DPC,SPQR)
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
 
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
-Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
 File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
-Package graphics Info: Driver file: pdftex.def on input line 95.
+Package graphics Info: Driver file: pdftex.def on input line 91.
 
 (/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
@@ -114,12 +114,12 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
-Package: inputenc 2015/03/17 v1.2c Input encoding file
+Package: inputenc 2014/04/30 v1.2b Input encoding file
 \inpenc@prehook=\toks17
 \inpenc@posthook=\toks18
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/latin1.def
-File: latin1.def 2015/03/17 v1.2c Input encoding file
+File: latin1.def 2014/04/30 v1.2b Input encoding file
 ))
 (./artigo_MarcoADP.aux)
 \openout1 = `artigo_MarcoADP.aux'.
@@ -264,37 +264,37 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <13> not available
 <fig1.jpg, id=16, 254.3904pt x 232.2276pt>
 File: fig1.jpg Graphic file (type jpg)
  <use fig1.jpg>
-Package pdftex.def Info: fig1.jpg used on input line 139.
+Package pdftex.def Info: fig1.jpg used on input line 140.
 (pdftex.def)             Requested size: 213.39568pt x 194.81471pt.
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 140.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 141.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 140.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 141.
 
 <fig2.jpg, id=17, 205.7286pt x 234.1548pt>
 File: fig2.jpg Graphic file (type jpg)
  <use fig2.jpg>
-Package pdftex.def Info: fig2.jpg used on input line 146.
+Package pdftex.def Info: fig2.jpg used on input line 147.
 (pdftex.def)             Requested size: 128.0387pt x 145.73541pt.
 
 <table.jpg, id=18, 365.2044pt x 217.2918pt>
 File: table.jpg Graphic file (type jpg)
  <use table.jpg>
-Package pdftex.def Info: table.jpg used on input line 164.
+Package pdftex.def Info: table.jpg used on input line 165.
 (pdftex.def)             Requested size: 298.75264pt x 177.75932pt.
  [3 <./fig1.jpg> <./fig2.jpg>] (./artigo_MarcoADP.bbl) [4 <./table.jpg>] (./art
 igo_MarcoADP.aux) ) 
 Here is how much of TeX's memory you used:
- 2722 strings out of 494929
- 38541 string characters out of 6180143
- 104474 words of memory out of 5000000
- 5965 multiletter control sequences out of 15000+600000
+ 2718 strings out of 493105
+ 38491 string characters out of 6137073
+ 109727 words of memory out of 5000000
+ 6131 multiletter control sequences out of 15000+600000
  21033 words of font info for 44 fonts, out of 8000000 for 9000
- 16 hyphenation exceptions out of 8191
+ 1141 hyphenation exceptions out of 8191
  37i,10n,28p,274b,319s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}<
 /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/sha
@@ -304,7 +304,7 @@ st/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/ut
 mbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on artigo_MarcoADP.pdf (4 pages, 211367 bytes).
+Output written on artigo_MarcoADP.pdf (4 pages, 213544 bytes).
 PDF statistics:
  53 PDF objects out of 1000 (max. 8388607)
  35 compressed objects within 1 object stream
