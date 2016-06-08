@@ -134,14 +134,33 @@ void readgraph(FILE* fp){
       }
 }
 
+/*
+	Aloca Dinamicamente o Vetor de Feromonio
+	|Vetor de Feromonio| = Numero de Vertices
+	Cada posicao inicia com um valor Inicial -> 30
+
+*/
 void inicializarVertices(){
-   vetorVertice = (double *) calloc(Nr_vert, sizeof(double));
+   vetorFeromonio = (double *) calloc(Nr_vert, sizeof(double));
    int i;
    for(i = 0; i < Nr_vert; i++){
-      vetorVertice[i] = FEROMONIO_INICIAL;
+      vetorFeromonio[i] = FEROMONIO_INICIAL;
    }
 }
 
+/*
+	Inicializa o vetorResposta -> vetor que armazena a resposta
+	listaFormiga -> vetor de Formigas
+	Formiga armazena: (esta definida em formiga.h)
+		Quantidade Vertices na Resposta
+		Quantidade de Vertices que NÃO podem estar na Resposta
+		Quantidade de Vertices que AINDA não foram analisados
+		OBS: A soma deve ser igual ao numero de Vertices
+		Lista de Vertices: 
+			se o Vertice x esta na resposta, a posicao (x-1) = +1
+			se o vertice x nao esta na resp, a posicao (x-1) = -1
+			se o vertice X nao foi analisado, a posicao (x-1) = 0
+*/
 void inicializarAlgoritmo(){
    int i;
    vetorResposta = (int *) calloc(Nr_vert, sizeof(int));
@@ -154,6 +173,10 @@ void inicializarAlgoritmo(){
    }
 }
 
+/*
+	Assim que um Vertice é colocado na resposta, seus adjacentes NAO podem estar na resposta
+	por isso sao invalidados.
+*/
 void invalidaAdjacentes(Formiga *formigaAtual, int vertice){
    int i;
    for(i = 1; i <= Nr_vert; i++){
@@ -168,11 +191,20 @@ void invalidaAdjacentes(Formiga *formigaAtual, int vertice){
    }
 }
 
+/*
+	Retorna a quantidade de Feromonio do Vertice (v)
+*/
 double calculaFeromonio(int vertice){
    int indice = vertice - 1;
-   return vetorVertice[indice];
+   return vetorFeromonio[indice];
 }
 
+
+/*
+	Retorna o valor da Heuristica para um vertice (v)
+	para cada vertice (u) que nao tem aresta com v
+	Heur(v)++
+*/
 double calculaHeuristica(Formiga *formigaAtual, int vertice){
    int i;
    int tamanho = 0;
@@ -188,6 +220,9 @@ double calculaHeuristica(Formiga *formigaAtual, int vertice){
    return (double) tamanho;
 }
 
+/*
+	A partir do Feromonio Calculado e da Heuristica, é obtido o valor da fun-prob(v)
+*/
 double calculaFuncao(Formiga *formigaAtual, int vertice){
    double resultado = 0.0;
    double resultadoFeromonio = calculaFeromonio(vertice);
@@ -200,6 +235,10 @@ double calculaFuncao(Formiga *formigaAtual, int vertice){
    return resultado;
 }
 
+/*
+	Escolhe o Vertice de melhor func-prob
+	Caso empate, é feito um sorteio entre os empatados
+*/
 int escolheVertice(Formiga *formigaAtual){
    int i;
    int indice;
@@ -224,13 +263,17 @@ int escolheVertice(Formiga *formigaAtual){
          }
       }
    }
-
+   //Random entre os vertices de melhor func-prob
    int indiceEscolhido = rand() %tam;
    VerticeEscolhido = vetorIgual[indiceEscolhido];
 
    return VerticeEscolhido;
 }
-
+/*
+	Constroi a solucao
+	1º Vertice é random
+	Restante é pela funcao escolheVertice
+*/
 void construirSolucao(Formiga *formigaAtual){
    
    int numeroRandom = rand() %Nr_vert; // 0 a Nr_Vertices-1
@@ -249,9 +292,18 @@ void construirSolucao(Formiga *formigaAtual){
    }
 }
 
+/*
+	A Resposta deve respeitar 2 principios:
+
+	1) Principio do Conjunto Independente: Nao pode ter vertices com arestas entre si
+
+	2) Maximo Conjunto Independente: Entre os vertices que nao estao na resposta, nao pode haver vertice que poderia estar na resposta
+									 ja que estamos calculando o MAXIMO conjunto independente
+*/
 void verificaResposta(Formiga *formigaAtual){
    int i, j;
    int fim = formigaAtual->qtdVertice;
+   //Confere Principio 1)
    for(i = 0; i < fim; i++){
       for(j = i + 1; j < fim; j++){
          if(edge(vetorResposta[i], vetorResposta[j])){
@@ -260,6 +312,8 @@ void verificaResposta(Formiga *formigaAtual){
          }
       }
    }
+
+   //Confere Principio 2)
    int soma = 0;
    for(i = 1; i <= Nr_vert; i++){
       soma = 0;
@@ -281,58 +335,74 @@ void verificaResposta(Formiga *formigaAtual){
    }
 }
 
+/*
+	Seguindo a logica do ACO, eh preciso atualizar o feromonio.
+	Com o passar do tempo, o feromonio vai sumindo
+	Se o Vertice esta na resposta, o feromonio aumenta
+*/
 void atualizaFeromonio(int **vetor, int valor, int c){
-   int i;
-   double taxa_feromonio = 1 + (2 * rho) ;
-   
-   for(i = 0; i < Nr_vert; i++){
-      vetorVertice[i] = vetorVertice[i] * (1 - rho);   
-   }
- 
-   for(i = 0; i < valor; i++){
-      int indice = vetor[c][i] - 1;
-      vetorVertice[indice] = vetorVertice[indice] *  taxa_feromonio;
-   } 
+	int i;
+	double taxa_feromonio = 1 + (2 * rho) ;
+
+	//rho = definido pelo user ou padrão 0.1
+
+	for(i = 0; i < Nr_vert; i++){
+	  vetorFeromonio[i] = vetorFeromonio[i] * (1 - rho);   
+	}
+
+	//taxa - 2 * rho
+	for(i = 0; i < valor; i++){
+	  int indice = vetor[c][i] - 1;
+	  vetorFeromonio[indice] = vetorFeromonio[indice] *  taxa_feromonio;
+	} 
 }
 
+/*
+	Funcao auxiliar para mostrar o feromonio em cada vertice
+*/
 void mostraFeromonio(){
    int i;
    for(i = 0; i < Nr_vert; i++){
-      printf("Vertice %d => %lf\n", (i + 1), vetorVertice[i]);
+      printf("Vertice %d => %lf\n", (i + 1), vetorFeromonio[i]);
    }
    printf("\n\n");
 }
-
+/*
+	ACO
+*/
 void AntSystemColony(){
-   int i, c;
-   inicializarVertices();
-   int **resposta;
-   int indiceMaior[ciclos];
-   resposta = (int **) calloc (ciclos, sizeof (int *));
+	int i, c;
+	inicializarVertices();
+	int **resposta;
+   	int indiceMaior[ciclos];
+   	resposta = (int **) calloc (ciclos, sizeof (int *));
+
    
-   for(i = 0; i < ciclos; i++){
-      resposta[i] = (int *) calloc (Nr_vert, sizeof(int));
-   }
    
-   for(c = 0; c < ciclos; c++){
-      //printf("\n\nCiclo: %d\n", c);
-      inicializarAlgoritmo();
-      srand (time(0)+clock()+random());
-      for(i = 0; i < NumeroFormigas; i++){
-         //printf("\n\nFormiga: %d\n", i);
-         construirSolucao(&listaFormiga[i]);
-         verificaResposta(&listaFormiga[i]);
-         
-      }
-      indiceMaior[c] = selecionaFormiga(resposta, c);
-      //mostraRespostaColonia(resposta, c, indiceMaior[c]);
-      atualizaFeromonio(resposta, indiceMaior[c], c);
-      //mostraFeromonio();
+  	for(i = 0; i < ciclos; i++){
+		resposta[i] = (int *) calloc (Nr_vert, sizeof(int));
+   	}
+   
+	for(c = 0; c < ciclos; c++){
+  		printf("Ciclo: %d\n", c);
+		inicializarAlgoritmo();
+      	srand (time(0)+clock()+random());
+		for(i = 0; i < NumeroFormigas; i++){
+    		//printf("\n\nFormiga: %d\n", i);
+ 			construirSolucao(&listaFormiga[i]);
+     		verificaResposta(&listaFormiga[i]);   
+  		}
+		indiceMaior[c] = selecionaFormiga(resposta, c);
+      	//mostraRespostaColonia(resposta, c, indiceMaior[c]);
+      	atualizaFeromonio(resposta, indiceMaior[c], c);
+      	//mostraFeromonio();
    }
    selecionaFormigaGlobal(resposta, indiceMaior);
 }
 
-
+/*
+	Funcao para mostrar as Arestas
+*/
 void mostraArestas(){
    int i, j, tam = 0;
    for(i = 0; i <= Nr_vert; i++){
@@ -348,6 +418,7 @@ void mostraArestas(){
 
 void ajuda(){
    printf("O programa se destina a resolver o problema do Máximo Conjunto Independente utilizado Ant System Colony.\n\n");
+   printf("O programa se divide entre o aco.c (ou acoParalelo.c) e formiga.h\n\n");
    printf("A seguir os parâmetros que poderao ser atribuidos e seus valores padroes caso nao forem:\n\n");
    printf("-h: Seção Ajuda\n\n");
    printf("-i: Nome do Arquivo. \nOBRIGATORIO! \n\nAs Instancias estao na pasta Instancias. Basta copiar a instancia desejada para a mesma pasta do codigo. \nAs instancias keller estao na mesma pasta do codigo. \nSao ao todo 68 instancias diferentes.\n\n");
@@ -356,7 +427,7 @@ void ajuda(){
    printf("-c: Número de ciclos. \nPadrão: 10\n\n");
    printf("-f: Número de formigas. \nPadrão: 10\n\n");
    printf("-r: Valor de rho. \nPadrão: 0.1\n\n");
-   printf("-t: Número de Threads. \nPadrão: 1\n\n");
+   //printf("-t: Número de Threads. \nPadrão: 1\n\n");
 }
 
 int main(int argc, char *argv[]){

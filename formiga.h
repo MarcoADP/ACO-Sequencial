@@ -12,7 +12,7 @@ typedef struct{
 
 int Nr_vert, Nr_edges;
 int *vetorResposta;
-double *vetorVertice;
+double *vetorFeromonio;
 int numVerticeResposta = 0;
 int NumeroFormigas = 10;
 Formiga *listaFormiga;
@@ -21,9 +21,15 @@ double alpha = 0.5;
 double beta = 0.5;
 int tamanhoFormiga;
 
-double rho = 0.1; //taxa evaporação
-int num_threads = 1;
+Formiga *melhor_colonia;
+Formiga melhor_geral;
 
+double rho = 0.1; //taxa evaporação
+int num_threads = 2;
+
+/*
+   Mostra os dados de Formiga
+*/
 void mostraFormiga(Formiga *formigaAtual){
    int i;
    printf("\n Sobre Vertices \n");
@@ -39,14 +45,21 @@ void mostraFormiga(Formiga *formigaAtual){
    printf("Vertices Restantes => %d\n\n", formigaAtual->verticeRestantes);
 }
 
+/*
+   att dados de Formiga assim que seleciona um vertice
+*/
 void atualizaFormiga(Formiga *formigaAtual, int indice){
+   //printf("entra atualiza");
    vetorResposta[formigaAtual->qtdVertice] = indice+1;
    formigaAtual->listaVertice[indice] = 1;
    formigaAtual->qtdVertice++;
    formigaAtual->verticeRestantes--;
+   //printf("sai atualiza\n\n");
 }
 
-
+/*
+   retorna o indice da formiga com a melhor resposta
+*/
 int selecionaFormiga(int **vetor, int c){
    int maior = listaFormiga[0].qtdVertice;
    Formiga formigaMaior;
@@ -71,8 +84,24 @@ int selecionaFormiga(int **vetor, int c){
    return maior;
 }
 
+Formiga selecionaFormigaP(int **vetor, int c, int id, int num_formiga){
+   int maior = listaFormiga[0].qtdVertice;
+   Formiga formigaMaior;
+   formigaMaior = listaFormiga[0];
+   vetor[c] = (int *) calloc (Nr_vert, sizeof(int));
+   int i;
+   for(i = 1; i < num_formiga; i++){
+      if(listaFormiga[i].qtdVertice > maior){
+         maior = listaFormiga[i].qtdVertice;
+         formigaMaior = listaFormiga[i];
+      }
+   }
+   return formigaMaior;
+}
 
-
+/*
+   mostra melhor formiga da colonia
+*/
 void mostraRespostaColonia(int **vetor, int c, int numero){
    int i;
    printf("Melhor Resposta do Ciclo %d:\n", c);
@@ -84,6 +113,23 @@ void mostraRespostaColonia(int **vetor, int c, int numero){
    printf("\n\n");
 }
 
+void mostraRespostaColoniaP(Formiga* formiga){
+   int i, j;
+   int vert = formiga->qtdVertice;
+   printf("Nº Vertices => %d\n", vert);
+   printf("Vertices => ");
+   for(i = 0; i < Nr_vert; i++){
+      if(formiga->listaVertice[i] == 1){
+         j = i + 1;
+         printf(" %d ", j);
+      }
+   }
+   printf("\n\n");
+}
+
+/*
+   mostra melhor resposta total
+*/
 void mostraRespostaFinal(int **vetor, int vetorIndice[], int indice){
    int i;
    int numero = vetorIndice[indice];
@@ -98,6 +144,9 @@ void mostraRespostaFinal(int **vetor, int vetorIndice[], int indice){
    printf("\n\n");
 }
 
+/*
+   seleciona a melhor formiga no global
+*/
 void selecionaFormigaGlobal(int **vetor, int vetorIndice[]){
    int i;
    int maior = vetorIndice[0];

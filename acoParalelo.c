@@ -8,41 +8,33 @@
 #include <limits.h>
 
 #include "formiga.h"
-#include "grafo.h"
-//#include "leituraArquivo.h"
 
-//#define edge(x,y) (bitmap[y/CHARBITS][x] & (1<<(y%CHARBITS)))
-#define INT 32		/* computer word size */
+#define INT 32    /* computer word size */
 #define CHARBITS 8
 #define edge(x,y) (bitmap[y/CHARBITS][x] & (1<<(y%CHARBITS)))
 
-#define NMAX 3600		/* maximum number of vertices handles */
-#define MAX_NR_VERTICES		3600	/* = NMAX */
-#define MAX_NR_VERTICESdiv8	450	/* = NMAX/8 */
-#define BOOL	char
+#define NMAX 3600    /* maximum number of vertices handles */
+#define MAX_NR_VERTICES    3600  /* = NMAX */
+#define MAX_NR_VERTICESdiv8   450   /* = NMAX/8 */
+#define BOOL   char
 #define MAX_PREAMBLE 10000
 #define REORDER
-#define FEROMONIO_MAXIMO 0.3
+#define FEROMONIO_INICIAL 30
+
+//Ver como paralelizar
+
+pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
+//pthread_barrier_t barreira = PTHREAD_COND_INITIALIZER;
+pthread_barrier_t barreira;
+
+typedef struct{
+    int id;
+} thread_arg;
+
 /*
 A LEITURA DAS INSTANCIAS FOI BASEADA NAS SOLUCOES DISPONIVEIS EM:
 ftp://dimacs.rutgers.edu/pub/challenge/graph/solvers/
 */
-
-double *vetorVertice;
-int *vetorResposta;
-int numVerticeResposta = 0;
-int NumeroFormigas = 10;
-Formiga *listaFormiga;
-
-double alpha = 0.5;
-double beta = 0.5;
-int ciclos = 10;
-double rho = 0.1;
-int num_threads = 1;
-
-pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
-pthread_barrier_t* barreira;
-//pthread_barrier_t* barreira = PTHREAD_COND_INITIALIZER;
 
 unsigned mask[INT] =
 {
@@ -54,13 +46,13 @@ unsigned mask[INT] =
 
 /* graph input parameters */
 
-int Nr_vert, Nr_edges;
+//int Nr_vert, Nr_edges;
 BOOL Bitmap[MAX_NR_VERTICES][MAX_NR_VERTICESdiv8];
 static char Preamble[MAX_PREAMBLE];
 char masks[ 8 ] = { 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80 };
 
 unsigned char bitmap[NMAX/CHARBITS+1][NMAX+1];
-int N;			/* number of vertices in graph */
+int N;         /* number of vertices in graph */
 
 BOOL get_edge(int i, int j ){
    int byte, bit;
@@ -149,33 +141,39 @@ void readgraph(FILE* fp){
       if (get_edge(i, j)){
          bitmap[(j+1)/CHARBITS][i+1] |= (1 << ((j+1) % CHARBITS));
       }
-      
-      /*int ii, jj, total = 0;
-      for(ii = 1; ii <= Nr_vert; ii++){
-      for(jj = 1; jj <= Nr_vert; jj++){
-      if(edge(ii, jj) && ii > jj){
-      printf("%d -- %d\n", ii, jj);
-      total++;
-   }
-}
-}*/
-//	printf("%d -- %d\n", total, Nr_edges);
 }
 
+/*
+   Aloca Dinamicamente o Vetor de Feromonio
+   |Vetor de Feromonio| = Numero de Vertices
+   Cada posicao inicia com um valor Inicial -> 30
+
+*/
 void inicializarVertices(){
-   vetorVertice = (double *) calloc(Nr_vert, sizeof(double));
-   //vetorResposta = (int *) calloc(Nr_vert, sizeof(int));
+   vetorFeromonio = (double *) calloc(Nr_vert, sizeof(double));
    int i;
    for(i = 0; i < Nr_vert; i++){
-      vetorVertice[i] = FEROMONIO_MAXIMO;
+      vetorFeromonio[i] = FEROMONIO_INICIAL;
    }
 }
 
-void inicializarAlgoritmo(){
+/*
+   Inicializa o vetorResposta -> vetor que armazena a resposta
+   listaFormiga -> vetor de Formigas
+   Formiga armazena: (esta definida em formiga.h)
+      Quantidade Vertices na Resposta
+      Quantidade de Vertices que NÃO podem estar na Resposta
+      Quantidade de Vertices que AINDA não foram analisados
+      OBS: A soma deve ser igual ao numero de Vertices
+      Lista de Vertices: 
+         se o Vertice x esta na resposta, a posicao (x-1) = +1
+         se o vertice x nao esta na resp, a posicao (x-1) = -1
+         se o vertice X nao foi analisado, a posicao (x-1) = 0
+*/
+void inicializarAlgoritmo(int numero){
    int i;
-   //numVerticeRespostaColonia = 0;
    vetorResposta = (int *) calloc(Nr_vert, sizeof(int));
-   listaFormiga = (Formiga *) calloc(NumeroFormigas, sizeof(Formiga));
+   listaFormiga = (Formiga *) calloc(numero, sizeof(Formiga)); //ADP
    for(i = 0; i < NumeroFormigas; i++){
       listaFormiga[i].qtdVertice = 0;
       listaFormiga[i].qtdVerticeIndisponiveis = 0;
@@ -184,31 +182,13 @@ void inicializarAlgoritmo(){
    }
 }
 
-void mostraFormiga(Formiga *formigaAtual){
-   int i;
-   printf("\n Sobre Vertices \n");
-   for(i = 0; i < Nr_vert; i++){
-      int vertice = i + 1;
-      if(formigaAtual->listaVertice[i] == 0){
-         printf("%d -- %d\n", vertice, formigaAtual->listaVertice[i]);
-      }
-   }
-   printf("Vertices Totais   => %d\n", Nr_vert);
-   printf("Vertices Na Resposta   => %d\n", formigaAtual->qtdVertice);
-   printf("Vertices Indisponiveis => %d\n", formigaAtual->qtdVerticeIndisponiveis);
-   printf("Vertices Restantes => %d\n\n", formigaAtual->verticeRestantes);
-}
-
-void atualizaFormiga(Formiga *formigaAtual, int indice){
-   vetorResposta[formigaAtual->qtdVertice] = indice+1;
-   formigaAtual->listaVertice[indice] = 1;
-   formigaAtual->qtdVertice++;
-   formigaAtual->verticeRestantes--;
-}
-
+/*
+   Assim que um Vertice é colocado na resposta, seus adjacentes NAO podem estar na resposta
+   por isso sao invalidados.
+*/
 void invalidaAdjacentes(Formiga *formigaAtual, int vertice){
+   //printf("entra invalida ");
    int i;
-   //printf("Arestas:\n");
    for(i = 1; i <= Nr_vert; i++){
       int indice = i - 1;
       if(edge(vertice, i) && formigaAtual->listaVertice[indice] == 0){
@@ -219,27 +199,30 @@ void invalidaAdjacentes(Formiga *formigaAtual, int vertice){
          formigaAtual->verticeRestantes--;
       }
    }
+  // printf("sai invalida\n\n");
 }
 
+/*
+   Retorna a quantidade de Feromonio do Vertice (v)
+*/
 double calculaFeromonio(int vertice){
    int indice = vertice - 1;
-   return vetorVertice[indice];
+   return vetorFeromonio[indice];
 }
 
+
+/*
+   Retorna o valor da Heuristica para um vertice (v)
+   para cada vertice (u) que nao tem aresta com v
+   Heur(v)++
+*/
 double calculaHeuristica(Formiga *formigaAtual, int vertice){
    int i;
    int tamanho = 0;
-   //printf("\n");
    for(i = 1; i<= Nr_vert; i++){
       int indice_i = i - 1;
       if(formigaAtual->listaVertice[indice_i] == 0){
-         
-         //se for != é porque o Vertice ja foi usado
-         //1 se esta na resposta
-         //-1 se contem aresta com um vertice que esta na resposta
-         
          if(!edge(vertice, i) && vertice != i){
-            //printf("%d -- ", i);
             tamanho++;
          }
          
@@ -248,6 +231,9 @@ double calculaHeuristica(Formiga *formigaAtual, int vertice){
    return (double) tamanho;
 }
 
+/*
+   A partir do Feromonio Calculado e da Heuristica, é obtido o valor da fun-prob(v)
+*/
 double calculaFuncao(Formiga *formigaAtual, int vertice){
    double resultado = 0.0;
    double resultadoFeromonio = calculaFeromonio(vertice);
@@ -260,34 +246,46 @@ double calculaFuncao(Formiga *formigaAtual, int vertice){
    return resultado;
 }
 
+/*
+   Escolhe o Vertice de melhor func-prob
+   Caso empate, é feito um sorteio entre os empatados
+*/
 int escolheVertice(Formiga *formigaAtual){
+   //printf("antes do escolhe");
    int i;
-   //int a = 0;
    int indice;
    int VerticeEscolhido = -1;
    double valorMAX = 0.0;
-   //printf("\n DISPONIVEIS => ");
+   int tam = 0;
+   int vetorIgual[Nr_vert];
    for(i = 1; i <= Nr_vert; i++){
       indice = i - 1;
       if(formigaAtual->listaVertice[indice] == 0){
-         //printf(" %d ", i);
          double valor = calculaFuncao(formigaAtual, i);
-         //printf("Vertice => %d -- Funcao => %lf\n", i, valor);
-         if(valor >= valorMAX){
-            //printf("Vertice => %d -- Funcao => %lf\n", i, valor);
+         if(valor > valorMAX){
+            vetorIgual[0] = i;
+            tam = 1;
             valorMAX = valor;
             VerticeEscolhido = i;
+         } else {
+            if(valor == valorMAX){
+               vetorIgual[tam] = i;
+               tam++;
+            }
          }
-      } /*else {
-         printf("Indisponiveis => %d\n", i);
-         a++;
-      }*/
+      }
    }
-   //printf("Vertice Escolhido => %d -- %lf\n", VerticeEscolhido, valorMAX);
-   //printf("Total => %d\n", a);
+   //Random entre os vertices de melhor func-prob
+   int indiceEscolhido = rand() %tam;
+   VerticeEscolhido = vetorIgual[indiceEscolhido];
+   //printf("depois do escolhe\n\n");
    return VerticeEscolhido;
 }
-
+/*
+   Constroi a solucao
+   1º Vertice é random
+   Restante é pela funcao escolheVertice
+*/
 void construirSolucao(Formiga *formigaAtual){
    
    int numeroRandom = rand() %Nr_vert; // 0 a Nr_Vertices-1
@@ -295,23 +293,34 @@ void construirSolucao(Formiga *formigaAtual){
    //printf("NumeroRandom => %d --  NumeroReal => %d\n", numeroRandom, numeroReal);
    atualizaFormiga(formigaAtual, numeroRandom); //Coloca 1 no indice do vertice, no caso [20]
    invalidaAdjacentes(formigaAtual, numeroReal);
-   //mostraFormiga(formigaAtual);
+   //printf("Antes do while do construir\n\n");
    while(formigaAtual->verticeRestantes != 0){
+      //printf("dentro do while\n");
       int vertice = escolheVertice(formigaAtual);
       if(vertice == -1){
-         //mostraFormiga(formigaAtual);
          return;
       }
       int indice = vertice - 1;
       atualizaFormiga(formigaAtual, indice);
+      //printf("depois do atualiza!\n\n");
       invalidaAdjacentes(formigaAtual, vertice);
+      //printf("depois do invalida!!!!\n");
    }
-   //mostraFormiga(formigaAtual);
+   //printf("fora do while!!\n\n");
 }
 
+/*
+   A Resposta deve respeitar 2 principios:
+
+   1) Principio do Conjunto Independente: Nao pode ter vertices com arestas entre si
+
+   2) Maximo Conjunto Independente: Entre os vertices que nao estao na resposta, nao pode haver vertice que poderia estar na resposta
+                            ja que estamos calculando o MAXIMO conjunto independente
+*/
 void verificaResposta(Formiga *formigaAtual){
    int i, j;
    int fim = formigaAtual->qtdVertice;
+   //Confere Principio 1)
    for(i = 0; i < fim; i++){
       for(j = i + 1; j < fim; j++){
          if(edge(vetorResposta[i], vetorResposta[j])){
@@ -320,19 +329,17 @@ void verificaResposta(Formiga *formigaAtual){
          }
       }
    }
+
+   //Confere Principio 2)
    int soma = 0;
    for(i = 1; i <= Nr_vert; i++){
-      //printf("I => %d\n", i);
-      //printf("\n\n");
       soma = 0;
       for(j = 0; j <= fim; j++){
          int vert = vetorResposta[j];
-         //printf("%d -- %d\n", i, vert);
          if(i == vetorResposta[j]){
             break;
          }
          if(edge(i, vert)){
-            //printf("TEM ARESTA!\n");
             break;
          } else {
             soma++;
@@ -342,113 +349,116 @@ void verificaResposta(Formiga *formigaAtual){
          }
          
       }
-      /*soma = 0;
-      for(j = 0; j < fim; j++){
-      if(!edge(i, vetorResposta[j])){
-      soma++;
    }
 }
-if(soma == fim){
-printf("%d -- %d\n", i, j);
-printf("Resposta Errada!\n");
-}*/
-}
-}
-void mostraRespostaColonia(int **vetor, int c, int numero){
+
+/*
+   Seguindo a logica do ACO, eh preciso atualizar o feromonio.
+   Com o passar do tempo, o feromonio vai sumindo
+   Se o Vertice esta na resposta, o feromonio aumenta
+*/
+void atualizaFeromonio(int **vetor, int valor, int c){
    int i;
-   printf("Melhor Resposta do Ciclo %d:\n", c);
-   printf("Nº Vertices => %d\n", numero);
-   printf("Vertices => ");
-   for(i = 0; i < numero; i++){
-      printf(" %d ", vetor[c][i]);
-      //}
+   double taxa_feromonio = 1 + (2 * rho) ;
+
+   //rho = definido pelo user ou padrão 0.1
+
+   for(i = 0; i < Nr_vert; i++){
+     vetorFeromonio[i] = vetorFeromonio[i] * (1 - rho);   
+   }
+
+   //taxa - 2 * rho
+   for(i = 0; i < valor; i++){
+     int indice = vetor[c][i] - 1;
+     vetorFeromonio[indice] = vetorFeromonio[indice] *  taxa_feromonio;
+   } 
+}
+
+void atualizaFeromonioP(Formiga *formiga){
+   int i;
+   double taxa_feromonio = 1 + (2 * rho) ;
+   int valor = formiga->qtdVertice;
+
+   //rho = definido pelo user ou padrão 0.1
+
+   for(i = 0; i < Nr_vert; i++){
+      vetorFeromonio[i] = vetorFeromonio[i] * (1 - rho);   
+   }
+
+   //taxa - 2 * rho
+   for(i = 0; i < valor; i++){
+      int indice = formiga->listaVertice[i] - 1;
+      vetorFeromonio[indice] = vetorFeromonio[indice] *  taxa_feromonio;
+   } 
+}
+
+
+/*
+   Funcao auxiliar para mostrar o feromonio em cada vertice
+*/
+void mostraFeromonio(){
+   int i;
+   for(i = 0; i < Nr_vert; i++){
+      printf("Vertice %d => %lf\n", (i + 1), vetorFeromonio[i]);
    }
    printf("\n\n");
 }
-
-void mostraRespostaFinal(int **vetor, int vetorIndice[], int indice){
-   int i;
-   int numero = vetorIndice[indice];
-   printf("Melhor Resposta Final:\n");
-   printf("Melhor Ciclo: %d\n", indice);
-   printf("Nº Vertices => %d\n", numero);
-   printf("Vertices => ");
-    for(i = 0; i < numero; i++){
-      printf(" %d ", vetor[indice][i]);
-      //}
+/*
+   ACO
+*/
+void *AntSystemColony(void *vargp){
+   int i, c;
+   thread_arg *arg = (thread_arg *) vargp;
+   int threadId = arg->id;
+   inicializarVertices();
+   int **resposta;
+   //int indiceMaior[ciclos];
+   int formiga_thread = (int) NumeroFormigas / num_threads;
+   resposta = (int **) calloc (ciclos, sizeof (int *));
+   melhor_colonia = (Formiga *) calloc (ciclos, sizeof (Formiga *));
+   for(i = 0; i < ciclos; i++){
+      resposta[i] = (int *) calloc (Nr_vert, sizeof(int));
    }
-   printf("\n\n");
-}
-
-
-int selecionaFormiga(int **vetor, int c){
-	int maior = listaFormiga[0].qtdVertice;
-	Formiga formigaMaior;
-   	formigaMaior = listaFormiga[0];
-   	vetor[c] = (int *) calloc (Nr_vert, sizeof(int));
-   	int i;
-   	for(i = 1; i < NumeroFormigas; i++){
-   		if(listaFormiga[i].qtdVertice > maior){
-   			maior = listaFormiga[i].qtdVertice;
-   			formigaMaior = listaFormiga[i];
-   		}
-	}
-	int k = 0;
-	for(i = 0; i < Nr_vert; i++){
-		//printf("%d\n", formigaMaior.listaVertice[i]);
-		if(formigaMaior.listaVertice[i] == 1){
-
-			int vertice = i + 1;
-			vetor[c][k] = vertice;  
-			//printf("Vertice %d\n", vertice);
-			k++;
-		}
-	}	
-
-	return maior;
-}
-
-void selecionaFormigaGlobal(int **vetor, int vetorIndice[]){
-	int i;
-	int maior = vetorIndice[0];
-	int indice = 0;
-
-	for(i = 1; i < ciclos; i++){
-		if(vetorIndice[i] > maior){
-			maior = vetorIndice[i];
-			indice = i;
-		}
-	}
-	mostraRespostaFinal(vetor, vetorIndice, indice);
-}
-
-void AntSystemColony(){
-	int i, c;
-	inicializarVertices();
-	int **resposta;
- 	int indiceMaior[ciclos];  
-   	resposta = (int **) calloc (ciclos, sizeof (int *));
-
-	for(i = 0; i < ciclos; i++){
-		resposta[i] = (int *) calloc (Nr_vert, sizeof(int));
-	}
-
+   
    for(c = 0; c < ciclos; c++){
+      printf("Thread: %d\n", threadId);
       printf("Ciclo: %d\n", c);
-      inicializarAlgoritmo();
-      srand (time (NULL));
-      for(i = 0; i < NumeroFormigas; i++){
+      inicializarAlgoritmo(formiga_thread);
+      srand (time(0)+clock()+random());
+      for(i = 0; i < formiga_thread; i++){
+         //printf("\n\nFormiga: %d\n", i);
+         //printf("oi\n\n");
          construirSolucao(&listaFormiga[i]);
+         //printf("oiiii\n\n");
          verificaResposta(&listaFormiga[i]);
          
       }
-      indiceMaior[c] = selecionaFormiga(resposta, c);
-      mostraRespostaColonia(resposta, c, indiceMaior[c]);
+      pthread_mutex_lock(&lock);
+      melhor_colonia[c] = selecionaFormigaP(resposta, c, threadId, formiga_thread);
+      if(melhor_colonia[c].qtdVertice > melhor_geral.qtdVertice){
+         melhor_geral = melhor_colonia[c];
+      }
+      //indiceMaior[c] = selecionaFormiga(resposta, c);
+      //mostraRespostaColonia(resposta, c, indiceMaior[c]);
+      //atualizaFeromonio(resposta, indiceMaior[c], c);
+      //mostraFeromonio();
+
+      pthread_mutex_unlock(&lock);
+
+
+      atualizaFeromonioP(&melhor_colonia[c]);
+      mostraRespostaColoniaP(&melhor_colonia[c]);
+
+      pthread_barrier_wait(&barreira);
    }
-   selecionaFormigaGlobal(resposta, indiceMaior);
+   //selecionaFormigaGlobal(resposta, indiceMaior);
+   int *ia = malloc(sizeof(int));
+   return ia;
 }
 
-
+/*
+   Funcao para mostrar as Arestas
+*/
 void mostraArestas(){
    int i, j, tam = 0;
    for(i = 0; i <= Nr_vert; i++){
@@ -464,15 +474,16 @@ void mostraArestas(){
 
 void ajuda(){
    printf("O programa se destina a resolver o problema do Máximo Conjunto Independente utilizado Ant System Colony.\n\n");
+   printf("O programa se divide entre o aco.c (ou acoParalelo.c) e formiga.h\n\n");
    printf("A seguir os parâmetros que poderao ser atribuidos e seus valores padroes caso nao forem:\n\n");
    printf("-h: Seção Ajuda\n\n");
-   printf("-i: Nome do Arquivo. \nOBRIGATORIO!\n\n");
+   printf("-i: Nome do Arquivo. \nOBRIGATORIO! \n\nAs Instancias estao na pasta Instancias. Basta copiar a instancia desejada para a mesma pasta do codigo. \nAs instancias keller estao na mesma pasta do codigo. \nSao ao todo 68 instancias diferentes.\n\n");
    printf("-a: Valor de alpha. \nPadrão: 0.5\n\n");
    printf("-b: Valor de betha. \nPadrão: 0.5\n\n");
    printf("-c: Número de ciclos. \nPadrão: 10\n\n");
    printf("-f: Número de formigas. \nPadrão: 10\n\n");
    printf("-r: Valor de rho. \nPadrão: 0.1\n\n");
-   printf("-t: Número de Threads. \nPadrão: 1\n\n");
+   printf("-t: Número de Threads. \nPadrão: 2\n\n");
 }
 
 int main(int argc, char *argv[]){
@@ -536,10 +547,23 @@ int main(int argc, char *argv[]){
       return 0;
    }
    readgraph(fp);
-   AntSystemColony();
-   //mostraFormiga(&listaFormiga[0]);
-   //mostraArestas();
-   //printf("%s\n", nome_arquivo);
-   //printf("%s\n", argv[2]);
+
+   //==================
+   pthread_mutex_init(&lock, NULL);
+   pthread_barrier_init(&barreira, NULL, num_threads);
+   pthread_t threads[num_threads];
+
+   //==================
+   int i;
+   for(i = 0; i < num_threads; i++){
+      thread_arg arg[num_threads];
+      
+      arg[i].id = i;
+      pthread_create(&threads[i], NULL, AntSystemColony, (void *) &arg[i]);
+   }
+   for(i = 0; i < num_threads; i++){
+      pthread_join(threads[i], NULL);
+   }
+   //AntSystemColony();
    return 0;
 }
