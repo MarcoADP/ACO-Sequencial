@@ -175,10 +175,10 @@ void inicializarVertices(){
          se o vertice x nao esta na resp, a posicao (x-1) = -1
          se o vertice X nao foi analisado, a posicao (x-1) = 0
 */
-void inicializarAlgoritmo(int numero){
+void inicializarAlgoritmo(Formiga listaFormiga[], int numero){
    int i;
-   listaFormiga = (Formiga *) calloc(numero, sizeof(Formiga)); //ADP
-   for(i = 0; i < NumeroFormigas; i++){
+   //listaFormiga = (Formiga *) calloc(numero, sizeof(Formiga)); //ADP
+   for(i = 0; i < numero; i++){
       listaFormiga[i].qtdVertice = 0;
       listaFormiga[i].qtdVerticeIndisponiveis = 0;
       listaFormiga[i].verticeRestantes = Nr_vert;
@@ -424,21 +424,23 @@ void *AntSystemColony(void *args){
    //pthread_t self;
    //self = pthread_self();
    //threadId = (int) self;
+   Formiga listaFormiga[formiga_thread];
 
    for(c = 0; c < ciclos; c++){
       //TESTE++;
       //printf("Teste => %d\n", ++TESTE);
       //printf("Thread: %d\n", threadId);
       printf("\nThread: %d\nCiclo: %d\n", threadId, c);
-      //inicializarAlgoritmo(formiga_thread);
+      inicializarAlgoritmo(listaFormiga, formiga_thread);
       srand (time(0)+clock()+random());
       int i;
       for(i = 0; i < formiga_thread; i++){
          //printf("Formiga: %d\n", i);
          //printf("oi\n\n");
-         //construirSolucao(&listaFormiga[i]);
-         /*//printf("oiiii\n\n");
-         verificaResposta(&listaFormiga[i]);*/
+         construirSolucao(&listaFormiga[i]);
+         //printf("oiiii\n\n");
+         verificaResposta(&listaFormiga[i]);
+         mostraRespostaColoniaP(&listaFormiga[i]);
          
       }
       /*pthread_mutex_lock(&lock);

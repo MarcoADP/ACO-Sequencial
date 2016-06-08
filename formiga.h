@@ -16,7 +16,7 @@ int Nr_vert, Nr_edges;
 double *vetorFeromonio;
 int numVerticeResposta = 0;
 int NumeroFormigas = 10;
-Formiga *listaFormiga;
+//Formiga *listaFormiga;
 int ciclos = 10;
 double alpha = 0.5;
 double beta = 0.5;
@@ -61,7 +61,7 @@ void atualizaFormiga(Formiga *formigaAtual, int indice){
 /*
    retorna o indice da formiga com a melhor resposta
 */
-int selecionaFormiga(int **vetor, int c){
+int selecionaFormiga(Formiga listaFormiga[], int **vetor, int c){
    int maior = listaFormiga[0].qtdVertice;
    Formiga formigaMaior;
    formigaMaior = listaFormiga[0];
@@ -85,7 +85,7 @@ int selecionaFormiga(int **vetor, int c){
    return maior;
 }
 
-Formiga selecionaFormigaP(int id, int num_formiga){
+Formiga selecionaFormigaP(Formiga listaFormiga[], int id, int num_formiga){
    int maior = listaFormiga[0].qtdVertice;
    Formiga formigaMaior;
    formigaMaior = listaFormiga[0];
