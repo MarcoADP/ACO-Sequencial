@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 
+#define FEROMONIO_INICIAL 30
 
 typedef struct{
 	int qtdVertice;
@@ -27,6 +28,80 @@ Formiga melhor_geral;
 
 double rho = 0.1; //taxa evaporação
 int num_threads = 2;
+
+/*
+   Inicializa o vetorResposta -> vetor que armazena a resposta
+   listaFormiga -> vetor de Formigas
+   Formiga armazena: (esta definida em formiga.h)
+      Quantidade Vertices na Resposta
+      Quantidade de Vertices que NÃO podem estar na Resposta
+      Quantidade de Vertices que AINDA não foram analisados
+      OBS: A soma deve ser igual ao numero de Vertices
+      Lista de Vertices: 
+         se o Vertice x esta na resposta, a posicao (x-1) = +1
+         se o vertice x nao esta na resp, a posicao (x-1) = -1
+         se o vertice X nao foi analisado, a posicao (x-1) = 0
+*/
+void inicializarAlgoritmo(Formiga listaFormiga[], int numero){
+   int i;
+   //listaFormiga = (Formiga *) calloc(numero, sizeof(Formiga)); //ADP
+   for(i = 0; i < numero; i++){
+      listaFormiga[i].qtdVertice = 0;
+      listaFormiga[i].qtdVerticeIndisponiveis = 0;
+      listaFormiga[i].verticeRestantes = Nr_vert;
+      listaFormiga[i].listaVertice = (int *) calloc(Nr_vert, sizeof(int));
+      listaFormiga[i].vetorResposta = (int *) calloc(Nr_vert, sizeof(int));
+   }
+}
+
+/*
+   Aloca Dinamicamente o Vetor de Feromonio
+   |Vetor de Feromonio| = Numero de Vertices
+   Cada posicao inicia com um valor Inicial -> 30
+
+*/
+void inicializarVertices(){
+   vetorFeromonio = (double *) calloc(Nr_vert, sizeof(double));
+   int i;
+   for(i = 0; i < Nr_vert; i++){
+      vetorFeromonio[i] = FEROMONIO_INICIAL;
+   }
+}
+
+/*
+   Seguindo a logica do ACO, eh preciso atualizar o feromonio.
+   Com o passar do tempo, o feromonio vai sumindo
+   Se o Vertice esta na resposta, o feromonio aumenta
+*/
+void atualizaFeromonio(Formiga *formiga){
+   int i;
+   double taxa_feromonio = 1 + (2 * rho) ;
+   int valor = formiga->qtdVertice;
+
+   //rho = definido pelo user ou padrão 0.1
+
+   for(i = 0; i < Nr_vert; i++){
+      vetorFeromonio[i] = vetorFeromonio[i] * (1 - rho);   
+   }
+
+   //taxa - 2 * rho
+   for(i = 0; i < valor; i++){
+      int indice = formiga->listaVertice[i] - 1;
+      vetorFeromonio[indice] = vetorFeromonio[indice] *  taxa_feromonio;
+   } 
+}
+
+/*
+   Funcao auxiliar para mostrar o feromonio em cada vertice
+*/
+void mostraFeromonio(){
+   int i;
+   for(i = 0; i < Nr_vert; i++){
+      printf("Vertice %d => %lf\n", (i + 1), vetorFeromonio[i]);
+   }
+   printf("\n\n");
+}
+
 
 /*
    Mostra os dados de Formiga
@@ -61,31 +136,7 @@ void atualizaFormiga(Formiga *formigaAtual, int indice){
 /*
    retorna o indice da formiga com a melhor resposta
 */
-int selecionaFormiga(Formiga listaFormiga[], int **vetor, int c){
-   int maior = listaFormiga[0].qtdVertice;
-   Formiga formigaMaior;
-   formigaMaior = listaFormiga[0];
-   vetor[c] = (int *) calloc (Nr_vert, sizeof(int));
-   int i;
-   for(i = 1; i < NumeroFormigas; i++){
-      if(listaFormiga[i].qtdVertice > maior){
-         maior = listaFormiga[i].qtdVertice;
-         formigaMaior = listaFormiga[i];
-      }
-   }
-   int k = 0;
-   for(i = 0; i < Nr_vert; i++){
-      if(formigaMaior.listaVertice[i] == 1){   
-         int vertice = i + 1;
-         vetor[c][k] = vertice;
-         k++;
-      }
-   }
-   
-   return maior;
-}
-
-Formiga selecionaFormigaP(Formiga listaFormiga[], int num_formiga){
+Formiga selecionaFormiga(Formiga listaFormiga[], int num_formiga){
    int maior = listaFormiga[0].qtdVertice;
    Formiga formigaMaior;
    formigaMaior = listaFormiga[0];
@@ -102,18 +153,7 @@ Formiga selecionaFormigaP(Formiga listaFormiga[], int num_formiga){
 /*
    mostra melhor formiga da colonia
 */
-void mostraRespostaColonia(int **vetor, int c, int numero){
-   int i;
-   printf("Melhor Resposta do Ciclo %d:\n", c);
-   printf("Nº Vertices => %d\n", numero);
-   printf("Vertices => ");
-   for(i = 0; i < numero; i++){
-      printf(" %d ", vetor[c][i]);
-   }
-   printf("\n\n");
-}
-
-void mostraRespostaColoniaP(Formiga* formiga){
+void mostraRespostaColonia(Formiga* formiga){
    int i, j;
    int vert = formiga->qtdVertice;
    printf("Nº Vertices => %d\n", vert);
@@ -125,38 +165,4 @@ void mostraRespostaColoniaP(Formiga* formiga){
       }
    }
    printf("\n\n");
-}
-
-/*
-   mostra melhor resposta total
-*/
-void mostraRespostaFinal(int **vetor, int vetorIndice[], int indice){
-   int i;
-   int numero = vetorIndice[indice];
-   printf("Melhor Resposta Final:\n");
-   printf("Melhor Ciclo: %d\n", indice);
-   printf("Nº Vertices => %d\n", numero);
-   printf("Vertices => ");
-   for(i = 0; i < numero; i++){
-      printf(" %d ", vetor[indice][i]);
-      //}
-   }
-   printf("\n\n");
-}
-
-/*
-   seleciona a melhor formiga no global
-*/
-void selecionaFormigaGlobal(int **vetor, int vetorIndice[]){
-   int i;
-   int maior = vetorIndice[0];
-   int indice = 0;
-   
-   for(i = 1; i < ciclos; i++){
-      if(vetorIndice[i] > maior){
-         maior = vetorIndice[i];
-         indice = i;
-      }
-   }
-   mostraRespostaFinal(vetor, vetorIndice, indice);
 }

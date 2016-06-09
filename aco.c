@@ -19,7 +19,6 @@
 #define BOOL   char
 #define MAX_PREAMBLE 10000
 #define REORDER
-#define FEROMONIO_INICIAL 30
 
 
 /*
@@ -134,44 +133,8 @@ void readgraph(FILE* fp){
       }
 }
 
-/*
-	Aloca Dinamicamente o Vetor de Feromonio
-	|Vetor de Feromonio| = Numero de Vertices
-	Cada posicao inicia com um valor Inicial -> 30
 
-*/
-void inicializarVertices(){
-   vetorFeromonio = (double *) calloc(Nr_vert, sizeof(double));
-   int i;
-   for(i = 0; i < Nr_vert; i++){
-      vetorFeromonio[i] = FEROMONIO_INICIAL;
-   }
-}
 
-/*
-	Inicializa o vetorResposta -> vetor que armazena a resposta
-	listaFormiga -> vetor de Formigas
-	Formiga armazena: (esta definida em formiga.h)
-		Quantidade Vertices na Resposta
-		Quantidade de Vertices que NÃO podem estar na Resposta
-		Quantidade de Vertices que AINDA não foram analisados
-		OBS: A soma deve ser igual ao numero de Vertices
-		Lista de Vertices: 
-			se o Vertice x esta na resposta, a posicao (x-1) = +1
-			se o vertice x nao esta na resp, a posicao (x-1) = -1
-			se o vertice X nao foi analisado, a posicao (x-1) = 0
-*/
-void inicializarAlgoritmo(){
-   int i;
-   vetorResposta = (int *) calloc(Nr_vert, sizeof(int));
-   listaFormiga = (Formiga *) calloc(NumeroFormigas, sizeof(Formiga));
-   for(i = 0; i < NumeroFormigas; i++){
-      listaFormiga[i].qtdVertice = 0;
-      listaFormiga[i].qtdVerticeIndisponiveis = 0;
-      listaFormiga[i].verticeRestantes = Nr_vert;
-      listaFormiga[i].listaVertice = (int *) calloc(Nr_vert, sizeof(int));
-   }
-}
 
 /*
 	Assim que um Vertice é colocado na resposta, seus adjacentes NAO podem estar na resposta
@@ -306,8 +269,8 @@ void verificaResposta(Formiga *formigaAtual){
    //Confere Principio 1)
    for(i = 0; i < fim; i++){
       for(j = i + 1; j < fim; j++){
-         if(edge(vetorResposta[i], vetorResposta[j])){
-            printf("Erro: Nao foi formado um conjunto independente! \nOs Vertices %d -- %d sao adjacentes!\n", vetorResposta[i], vetorResposta[j]);
+         if(edge(formigaAtual->vetorResposta[i], formigaAtual->vetorResposta[j])){
+            printf("Erro: Nao foi formado um conjunto independente! \nOs Vertices %d -- %d sao adjacentes!\n", formigaAtual->vetorResposta[i], formigaAtual->vetorResposta[j]);
             return;
          }
       }
@@ -318,8 +281,8 @@ void verificaResposta(Formiga *formigaAtual){
    for(i = 1; i <= Nr_vert; i++){
       soma = 0;
       for(j = 0; j <= fim; j++){
-         int vert = vetorResposta[j];
-         if(i == vetorResposta[j]){
+         int vert = formigaAtual->vetorResposta[j];
+         if(i == formigaAtual->vetorResposta[j]){
             break;
          }
          if(edge(i, vert)){
@@ -335,69 +298,33 @@ void verificaResposta(Formiga *formigaAtual){
    }
 }
 
-/*
-	Seguindo a logica do ACO, eh preciso atualizar o feromonio.
-	Com o passar do tempo, o feromonio vai sumindo
-	Se o Vertice esta na resposta, o feromonio aumenta
-*/
-void atualizaFeromonio(int **vetor, int valor, int c){
-	int i;
-	double taxa_feromonio = 1 + (2 * rho) ;
 
-	//rho = definido pelo user ou padrão 0.1
-
-	for(i = 0; i < Nr_vert; i++){
-	  vetorFeromonio[i] = vetorFeromonio[i] * (1 - rho);   
-	}
-
-	//taxa - 2 * rho
-	for(i = 0; i < valor; i++){
-	  int indice = vetor[c][i] - 1;
-	  vetorFeromonio[indice] = vetorFeromonio[indice] *  taxa_feromonio;
-	} 
-}
-
-/*
-	Funcao auxiliar para mostrar o feromonio em cada vertice
-*/
-void mostraFeromonio(){
-   int i;
-   for(i = 0; i < Nr_vert; i++){
-      printf("Vertice %d => %lf\n", (i + 1), vetorFeromonio[i]);
-   }
-   printf("\n\n");
-}
 /*
 	ACO
 */
 void AntSystemColony(){
 	int i, c;
-	inicializarVertices();
-	int **resposta;
-   	int indiceMaior[ciclos];
-   	resposta = (int **) calloc (ciclos, sizeof (int *));
-
+	
+   Formiga listaFormiga[NumeroFormigas];
    
-   
-  	for(i = 0; i < ciclos; i++){
-		resposta[i] = (int *) calloc (Nr_vert, sizeof(int));
-   	}
    
 	for(c = 0; c < ciclos; c++){
-  		printf("Ciclo: %d\n", c);
-		inicializarAlgoritmo();
-      	srand (time(0)+clock()+random());
+  		//printf("Ciclo: %d\n", c);
+		inicializarAlgoritmo(listaFormiga, NumeroFormigas);
+   	srand (time(0)+clock()+random());
 		for(i = 0; i < NumeroFormigas; i++){
     		//printf("\n\nFormiga: %d\n", i);
  			construirSolucao(&listaFormiga[i]);
      		verificaResposta(&listaFormiga[i]);   
   		}
-		indiceMaior[c] = selecionaFormiga(resposta, c);
-      	//mostraRespostaColonia(resposta, c, indiceMaior[c]);
-      	atualizaFeromonio(resposta, indiceMaior[c], c);
-      	//mostraFeromonio();
+		melhor_colonia[c] = selecionaFormiga(listaFormiga, NumeroFormigas);
+      if(melhor_colonia[c].qtdVertice > melhor_geral.qtdVertice){
+         melhor_geral = melhor_colonia[c];
+      }
+   	atualizaFeromonio(&melhor_colonia[c]);
+
    }
-   selecionaFormigaGlobal(resposta, indiceMaior);
+   
 }
 
 /*
@@ -491,6 +418,14 @@ int main(int argc, char *argv[]){
       return 0;
    }
    readgraph(fp);
+
+   inicializarVertices();
+   melhor_geral.qtdVertice = 0;
+   melhor_colonia = (Formiga *) calloc (ciclos, sizeof (Formiga));
+
    AntSystemColony();
+
+   mostraRespostaColonia(&melhor_geral);
+
    return 0;
 }
