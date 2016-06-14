@@ -66,8 +66,58 @@
   Conjunto Independente, a utilização da Otimização de Colônia de Formigas ou por trabalhos utilizando algoritmo paralelos.
 
 \section{Problema}
+  Dado um Grafo G = (V, E), em V representa o conjunto de vértices e E representa o conjunto de arestas do grafo. O Problema 
+  do Máximo Conjunto Independente tem como objetivo encontrar um subconjunto V* $\subseteq$ V, em que $\forall$i, j $\in$ V*, 
+  a aresta (i, j) $\notin$ E, além de que V* deve ser máximo.
   
+  A formulação da programação inteira para o trabalho, pode ser definido da seguinte maneira:
+  
+  \begin{center}
+  max $\sum_{i = 1}^{|V|}$ ci*xi
+  
+  $x_{i}$ + $x_{i}$ $\leq$1, \hspace{10mm} $\forall$ (i, j) $\in$ E
+  
+  $x_{i}$ $in$ {0, 1}, \hspace{10mm} i = 1, 2, ..., $|V|$
+  \end{center}
+  
+  Para a resolução do problema, poderíamos utilizar algoritmos determinísticos, porém ao utilizar algoritmos heurísticos provavelmente
+  encontraremos boas soluções com menor tempo em relação aos algoritmos determinísticos e com o uso de heurísticas adequadas a queda na 
+  qualidade das soluções não será tão sentida.
+  
+  O único conhecimento que temos para resolver o problema é o grafo, e assim temos acesso a sua constituição, como por exemplo, 
+  o número de vértices e arestas, densidade e quantidade de cada vértices adjacentes de cada vértice.
+  
+  Para resolvermos o problema, precisamos utilizar três conjuntos ao longo do algoritmo, os conjuntos são: 
+  
+  
+  \begin{center}
+   S(t): Conjunto de Vértices presente na resposta em um determinado tempo t.
+    
+    I(t): Conjunto de Vértices que \textbf{não} podem estar mais na solução em um determinado tempo t.
+    
+    D(t): Conjunto de Vértices que \textbf{ainda} podem estar solução em um determinado tempo t.
+  \end{center}
 
+  Com nos três conjuntos, sabemos que S(t) + I(t) + D(t) = V para qualquer instante de tempo, e que a S(t) $\subseteq$ V*.
+  //Figuras com os três conjuntos dentro de V e da figura de S(t) dentro de V*
+  
+  A partir do grafo abaixo, explicaremos como funciona a heurística utilizada, que foi abstraída do trabalho /*REFERÊNCIA*/.
+  
+  //Grafo
+  
+  //explicar que pega o vertice com mais vert não adjacentes
+  
+  O MISP é um problema muito similar ao problema do clique máximo, que resumidamente, busca encontrar o maior subconjunto de vértices adjacentes, 
+  em outras palavras, a cada par de vértices dentro do subconjunto, é necessário que haja uma aresta os interligando. É possível resolver o MISP através
+  do clique máximo, dado o grafo de entrada no MISP, basta acharmos o seu complemento e utilizá-lo como entra para o clique máximo. Também é válido a operação
+  inversa, utilizarmos o MISP para resolvermos o clique máximo. Com isso, dado um grafo G qualquer e seu complemento o grafo X, temos que:
+  
+  
+  \begin{center}
+    MISP(G) = CliqueMaximo(X) ou então CliqueMaximo(G) = MISP(X)
+  \end{center}
+  //falar do clique
+  
 \section{Trabalhos Relacionados}
 
 \section{Proposta}
