@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.6.7)  14 JUN 2016 19:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2016.6.7)  20 JUN 2016 18:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -113,10 +113,125 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Urlmuskip=\muskip10
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xy.sty
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xy.tex Bootstrap'ing:
+catcodes, docmode, (/usr/share/texlive/texmf-dist/tex/generic/xypic/xyrecat.tex
+) (/usr/share/texlive/texmf-dist/tex/generic/xypic/xyidioms.tex)
+
+ Xy-pic version 3.8.9 <2013/10/06>
+ Copyright (c) 1991-2013 by Kristoffer H. Rose <krisrose@tug.org> and others
+ Xy-pic is free software: see the User's Guide for details.
+
+Loading kernel: messages; fonts; allocations: state,
+\X@c=\dimen122
+\Y@c=\dimen123
+\U@c=\dimen124
+\D@c=\dimen125
+\L@c=\dimen126
+\R@c=\dimen127
+\Edge@c=\toks17
+\X@p=\dimen128
+\Y@p=\dimen129
+\U@p=\dimen130
+\D@p=\dimen131
+\L@p=\dimen132
+\R@p=\dimen133
+\Edge@p=\toks18
+\X@origin=\dimen134
+\Y@origin=\dimen135
+\X@xbase=\dimen136
+\Y@xbase=\dimen137
+\X@ybase=\dimen138
+\Y@ybase=\dimen139
+\X@min=\dimen140
+\Y@min=\dimen141
+\X@max=\dimen142
+\Y@max=\dimen143
+\lastobjectbox@=\box27
+\zerodotbox@=\box28
+\almostz@=\dimen144
+ direction,
+\d@X=\dimen145
+\d@Y=\dimen146
+\K@=\count92
+\KK@=\count93
+\Direction=\count94
+\K@dXdY=\dimen147
+\K@dYdX=\dimen148
+\xyread@=\read1
+\xywrite@=\write3
+\csp@=\count95
+\quotPTK@=\dimen149
+
+utility macros; pictures: \xy, positions,
+\swaptoks@@=\toks19
+\connectobjectbox@@=\box29
+ objects,
+\styletoks@=\toks20
+ decorations;
+kernel objects: directionals, circles, text; options; algorithms: directions,
+edges, connections;  Xy-pic loaded)
+Package: xy 2013/10/06 Xy-pic version 3.8.9
+
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xyall.tex
+ Xy-pic option: All features v.3.8
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xycurve.tex
+ Xy-pic option: Curve and Spline extension v.3.12 curve,
+\crv@cnt@=\count96
+\crvpts@=\toks21
+\splinebox@=\box30
+\splineval@=\dimen150
+\splinedepth@=\dimen151
+\splinetol@=\dimen152
+\splinelength@=\dimen153
+ circles,
+\L@=\dimen154
+ loaded)
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xyframe.tex
+ Xy-pic option: Frame and Bracket extension v.3.14 loaded)
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xycmtip.tex
+ Xy-pic option: Computer Modern tip extension v.3.7
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xytips.tex
+ Xy-pic option: More Tips extension v.3.11 loaded) loaded)
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xyline.tex
+ Xy-pic option: Line styles extension v.3.10
+\xylinethick@=\dimen155
+ loaded)
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xyrotate.tex
+ Xy-pic option: Rotate and Scale extension v.3.8 loaded)
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xycolor.tex
+ Xy-pic option: Colour extension v.3.11 loaded)
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xymatrix.tex
+ Xy-pic option: Matrix feature v.3.14
+\Row=\count97
+\Col=\count98
+\queue@=\toks22
+\queue@@=\toks23
+\qcount@=\count99
+\qcount@@=\count100
+\matrixsize@=\count101
+ loaded)
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xyarrow.tex
+ Xy-pic option: Arrow and Path feature v.3.9 path, \ar, loaded)
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xygraph.tex
+ Xy-pic option: Graph feature v.3.11 loaded) loaded)
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xy2cell.tex
+ Xy-pic option: Two-cell feature v.3.7 two-cells, loaded)
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xypdf.tex
+ Xy-pic option: PDF driver v.1.7 Xy-pic pdf driver: `color' extension support
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xypdf-co.tex loaded)
+Xy-pic pdf driver: `curve' extension support
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xypdf-cu.tex loaded)
+Xy-pic pdf driver: `frame' extension support
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xypdf-fr.tex loaded)
+Xy-pic pdf driver: `line' extension support
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xypdf-li.tex loaded)
+Xy-pic pdf driver: `rotate' extension support
+(/usr/share/texlive/texmf-dist/tex/generic/xypic/xypdf-ro.tex loaded) loaded))
 (/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
 Package: inputenc 2014/04/30 v1.2b Input encoding file
-\inpenc@prehook=\toks17
-\inpenc@posthook=\toks18
+\inpenc@prehook=\toks24
+\inpenc@posthook=\toks25
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/latin1.def
 File: latin1.def 2014/04/30 v1.2b Input encoding file
@@ -177,17 +292,17 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count92
-\scratchdimen=\dimen122
-\scratchbox=\box27
-\nofMPsegments=\count93
-\nofMParguments=\count94
-\everyMPshowfont=\toks19
-\MPscratchCnt=\count95
-\MPscratchDim=\dimen123
-\MPnumerator=\count96
-\makeMPintoPDFobject=\count97
-\everyMPtoPDFconversion=\toks20
+\scratchcounter=\count102
+\scratchdimen=\dimen156
+\scratchbox=\box31
+\nofMPsegments=\count103
+\nofMParguments=\count104
+\everyMPshowfont=\toks26
+\MPscratchCnt=\count105
+\MPscratchDim=\dimen157
+\MPnumerator=\count106
+\makeMPintoPDFobject=\count107
+\everyMPtoPDFconversion=\toks27
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -232,16 +347,17 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 32.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 32.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 32.
+Package xypdf Info: Line width: 0.39998pt on input line 32.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <16> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 34.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 34.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 34.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 34.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 34.
 LaTeX Font Info:    Try loading font information for OT1+pcr on input line 34.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
@@ -260,42 +376,42 @@ LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <13> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 53.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-<fig1.jpg, id=23, 254.3904pt x 232.2276pt>
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3] [4]
+<fig1.jpg, id=26, 254.3904pt x 232.2276pt>
 File: fig1.jpg Graphic file (type jpg)
  <use fig1.jpg>
-Package pdftex.def Info: fig1.jpg used on input line 190.
+Package pdftex.def Info: fig1.jpg used on input line 231.
 (pdftex.def)             Requested size: 213.39568pt x 194.81471pt.
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 191.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 232.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 191.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 232.
 
-<fig2.jpg, id=24, 205.7286pt x 234.1548pt>
+<fig2.jpg, id=27, 205.7286pt x 234.1548pt>
 File: fig2.jpg Graphic file (type jpg)
  <use fig2.jpg>
-Package pdftex.def Info: fig2.jpg used on input line 197.
+Package pdftex.def Info: fig2.jpg used on input line 238.
 (pdftex.def)             Requested size: 128.0387pt x 145.73541pt.
 
-<table.jpg, id=25, 365.2044pt x 217.2918pt>
+<table.jpg, id=28, 365.2044pt x 217.2918pt>
 File: table.jpg Graphic file (type jpg)
  <use table.jpg>
-Package pdftex.def Info: table.jpg used on input line 215.
+Package pdftex.def Info: table.jpg used on input line 256.
 (pdftex.def)             Requested size: 298.75264pt x 177.75932pt.
- [4 <./fig1.jpg> <./fig2.jpg>] (./artigo_MarcoADP.bbl) [5 <./table.jpg>] (./art
+ [5 <./fig1.jpg> <./fig2.jpg>] (./artigo_MarcoADP.bbl) [6 <./table.jpg>] (./art
 igo_MarcoADP.aux) ) 
 Here is how much of TeX's memory you used:
- 2720 strings out of 493105
- 38507 string characters out of 6137073
- 108727 words of memory out of 5000000
- 6133 multiletter control sequences out of 15000+600000
- 21033 words of font info for 44 fonts, out of 8000000 for 9000
+ 5564 strings out of 493105
+ 73527 string characters out of 6137073
+ 197242 words of memory out of 5000000
+ 8903 multiletter control sequences out of 15000+600000
+ 22482 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,10n,28p,274b,319s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,10n,28p,3285b,319s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}<
 /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/s
 hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/t
@@ -308,10 +424,10 @@ c/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texl
 ive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/urw/times/utmri8a.pfb>
-Output written on artigo_MarcoADP.pdf (5 pages, 249228 bytes).
+Output written on artigo_MarcoADP.pdf (6 pages, 252613 bytes).
 PDF statistics:
- 72 PDF objects out of 1000 (max. 8388607)
- 49 compressed objects within 1 object stream
+ 75 PDF objects out of 1000 (max. 8388607)
+ 51 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

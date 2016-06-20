@@ -1,0 +1,4426 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Package `VauCanSon-G'  version 0.4
+%%
+%% This is file `VCManual-080612.tex'.
+%%
+%% IMPORTANT NOTICE:
+%%
+%% Copyright (C) 2002-2008 Sylvain Lombardy and Jacques Sakarovitch
+%%
+%% This package may be distributed under the terms of the LaTeX Project
+%% Public License, as described in lppl.txt in the base LaTeX distribution.
+%% Either version 1.0 or, at your option, any later version.
+%%
+%% DESCRIPTION:
+%%
+%%   `VCManual-080612.tex' is the tex file for VauCanSon-G user's and 
+%%   reference manual. 
+%%  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt,twoside]{article}
+%
+\textheight=220mm  % mieux vaut mettre ces
+\textwidth=150mm   % valeurs en ``parametres''
+%%%%% output control flags 
+\newif\ifdraft  \draftfalse % \drafttrue  %% visualise columns
+\newif\ifital \italfalse % \italtrue %% "italian" printing
+%%%%% package calls
+\usepackage{latexsym,ifthen}
+\usepackage{theorem}
+\usepackage{xspace}        
+\usepackage{amsmath,amsfonts,amscd,amssymb}
+\usepackage{makeidx}
+\usepackage{subfigure}   
+\usepackage{vaucanson-g}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    layout
+\topmargin=297mm
+\advance \topmargin by -\textheight 
+\divide  \topmargin by 2
+\advance \topmargin by -1in 
+%
+\advance \topmargin by -\headheight
+\advance \topmargin by -\headsep
+%
+\leftmargin=210mm
+\advance \leftmargin by -\textwidth 
+\divide  \leftmargin by 2
+\advance \leftmargin by -1in 
+%
+\oddsidemargin=\leftmargin
+\evensidemargin=\leftmargin 
+%
+\abovedisplayskip=3mm 
+\belowdisplayskip=3mm 
+\abovedisplayshortskip=0mm
+\belowdisplayshortskip=2mm 
+\unitlength=1mm 
+%%%%%
+\addtolength{\parskip}{0.3\baselineskip}
+\renewcommand{\baselinestretch}{1.1} 
+%%%%%%%%%%%%%%%% colonne + figure %%%%%%%%%%%%%%%%%
+\newlength{\ExtendedTextWidth} % largeur du dbordement
+%                              % pour les figure qui dbordent
+\newlength{\ColoText}% largeur de la colonne "de texte"
+\newlength{\ColoFigu}% largeur de la colonne "de figure"
+\newlength{\fboxseptemp} % pour pouvoir restituerla valeur normale
+\setlength{\fboxseptemp}{\fboxsep}% parce qu'on va coller le cadre
+%                        % pour le draft
+\newlength{\parindenttemp} % pour mettre une indentation 
+%                          % dans les minipages
+\setlength{\parindenttemp}{\parindent}
+%\setlength{\fboxsep}{\fboxseptemp}
+\setlength{\ExtendedTextWidth}{\marginparwidth}    
+% \addtolength{\ExtendedTextWidth}{\marginparsep} % \retraita 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\TextFigu}[3][.66]{%
+% \setlength{\fboxsep}{0pt}% mod 000912
+%      annul seulement en draft
+\setlength{\ColoText}{#1\textwidth}%    
+\setlength{\ColoFigu}{\textwidth}%    
+\addtolength{\ColoFigu}{-\ColoText}%    
+\addtolength{\ColoText}{-.6em}%    
+\addtolength{\ColoFigu}{-.6em}%    
+\noi
+\ifdraft
+\setlength{\fboxsep}{0pt}% mod 000912
+\fbox{%
+\begin{minipage}[t]{\ColoText}
+\setlength{\parindent}{\parindenttemp}%
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        #2
+\end{minipage}}%
+\hspace*{1.2em}% 
+\fbox{%
+\begin{minipage}[t]{\ColoFigu}%
+\par\vspace*{0mm}%
+#3%
+\end{minipage}}
+\else
+\begin{minipage}[t]{\ColoText}
+\setlength{\parindent}{\parindenttemp}%
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        #2
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+#3%
+\end{minipage}%
+\fi%
+\setlength{\fboxsep}{\fboxseptemp}%
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Modifications pour le header et le footer 
+\makeatletter 
+\def\ps@jsheadings%
+{\let\@mkboth\@gobbletwo
+\def\@oddhead{\hbox{} {\jsoddheadleft}   \hfil 
+                      {\jsoddheadcenter} \hfil 
+                      {\jsoddheadright}  \hbox{}}%  
+\def\@oddfoot{\hbox{} {\jsoddfootleft}   \hfil 
+                      {\jsoddfootcenter} \hfil 
+                      {\jsoddfootright}  \hbox{}}%
+\def\@evenhead{\hbox{} {\jsevenheadleft}   \hfil 
+                      {\jsevenheadcenter} \hfil 
+                      {\jsevenheadright}  \hbox{}}%
+\def\@evenfoot{\hbox{} {\jsevenfootleft}   \hfil 
+                      {\jsevenfootcenter} \hfil 
+                      {\jsevenfootright}  \hbox{}}%
+}
+\makeatother
+%
+\newcommand{\jsoddheadleft}{\makebox[0pt][l]{\teteimpgauche}}
+\newcommand{\jsoddheadcenter}{\makebox{\teteimpcentre}} 
+\newcommand{\jsoddheadright}{\makebox[0pt][r]{\teteimpdroit}}   
+\newcommand{\jsoddfootleft}{\makebox[0pt][l]{\piedimpgauche}}   
+\newcommand{\jsoddfootcenter}{\makebox{\piedimpcentre}} 
+\newcommand{\jsoddfootright}{\makebox[0pt][r]{\piedimpdroit}}  
+\newcommand{\jsevenheadleft}{\makebox[0pt][l]{\tetepairgauche}}   
+\newcommand{\jsevenheadcenter}{\makebox{\tetepaircentre}} 
+\newcommand{\jsevenheadright}{\makebox[0pt][r]{\tetepairdroit}} 
+\newcommand{\jsevenfootleft}{\makebox[0pt][l]{\piedpairgauche}}   
+\newcommand{\jsevenfootcenter}{\makebox{\piedpaircentre}} 
+\newcommand{\jsevenfootright}{\makebox[0pt][r]{\piedpairdroit}} 
+%
+\newcommand{\teteimpgauche}{}
+\newcommand{\teteimpcentre}{{\footnotesize \textsl{\tetedroit}}} 
+\newcommand{\teteimpdroit}{}   
+\newcommand{\piedimpgauche}{{\scriptsize \piedgauche }}   
+\newcommand{\piedimpcentre}{\rm \thepage} 
+\newcommand{\piedimpdroit}{{\scriptsize \pieddroit }}  
+\newcommand{\tetepairgauche}{}   
+\newcommand{\tetepaircentre}{{\footnotesize \textsl{\tetegauche}}} 
+\newcommand{\tetepairdroit}{} 
+\newcommand{\piedpairgauche}{{\scriptsize \piedgauche }}   
+\newcommand{\piedpaircentre}{\rm \thepage} 
+\newcommand{\piedpairdroit}{{\scriptsize \pieddroit }} 
+%
+\newcommand{\tetegauche}{}   % ATTENTION tete de la page de gauche
+\newcommand{\tetedroit}{}    % ATTENTION tete de la page de droite
+\newcommand{\piedgauche}{}   % ATTENTION gauche du pied de page 
+\newcommand{\pieddroit}{}    % ATTENTION droite du pied de page 
+%
+\pagestyle{jsheadings}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Modifications pour  sections
+\makeatletter
+\def\thesection {\arabic{section}}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Modifications pour les figures 
+\makeatletter
+\def\thefigure{\@arabic\c@figure}
+\def\fps@figure{ht}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Macros pour la mise en page
+%  espaces de lignes negatifs
+\newcommand{\bigskipneg}{\vspace*{-5ex}} %960728
+\newcommand{\medskipneg}{\vspace*{-2ex}} %960728
+\newcommand{\smallskipneg}{\vspace*{-1ex}} %960728
+\newcommand{\miniskipneg}{\vspace*{-0.25ex}} %960728
+\newcommand{\skipneg}{\vspace*{-0.5cm}}
+% indentation
+\newcommand{\noi}{\noindent}
+\newlength{\retraita}           % retrait pour i),  ii),  a),  etc.
+\setlength{\retraita}{2.4em}    % retrait pour i),  ii),  a),  etc.
+%
+\newcommand{\jsreta}{\hspace*{-.5\retraita}}
+\newcommand{\e}{\text{\quad}}                 % un moins petit espace
+\newcommand{\ee}{\text{\qquad}}               % un espace
+\newcommand{\eee}{\text{\qquad \qquad}} % et un grand
+% separateurs
+\newcommand{\tristar}{{\begin{center} * \qquad * \\\ * \ \ \end{center}}}
+\newcommand{\jsetoile}{{\begin{center} * \end{center}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% \section{abr. latines}
+\newcommand{\acontrario}{{\itshape a contrario}\xspace } % 
+\newcommand{\ah}{{\itshape ad hoc}\xspace } % pour compatibilit
+\newcommand{\adhoc}{{\itshape ad hoc}\xspace }
+\newcommand{\apriorinosp}{{\itshape a priori}\xspace } % pas de blanc final 
+\newcommand{\apriori}{{\itshape a priori}\xspace } % 
+\newcommand{\afortiori}{{\itshape a fortiori}\xspace }
+\newcommand{\artcit}{{\itshape art. cit.}\xspace }
+\newcommand{\cf}{{\itshape cf.}\xspace }
+\newcommand{\Cf}{{\itshape Cf.}\xspace }
+\newcommand{\eg}{{\itshape e.g.}\xspace }
+\newcommand{\etalii}{{\itshape et~al.}\xspace }
+\newcommand{\etc}{{\itshape etc.}\xspace } % pas de blanc laiss aprs etc.
+\newcommand{\ibid}{{\itshape ibid.}\xspace }
+\newcommand{\idem}{{\itshape idem}\xspace }
+\newcommand{\ie}{{\itshape i.e.}\xspace }
+\newcommand{\infra}{{\itshape infra}\xspace }
+\newcommand{\ipsofacto}{{\itshape ipso facto}\xspace }
+\newcommand{\itin}{{\itshape in}\xspace }
+\newcommand{\modulo}{{\itshape modulo}\xspace }
+\newcommand{\mutmat}{{\itshape mutatis mutandis}\xspace } % pas de blanc final
+\newcommand{\nb}{\noindent \mbox{\sc nota bene.}\xspace }
+\newcommand{\opcit}{{\itshape op. cit.}\xspace }
+\newcommand{\opcitnosp}{{\itshape op. cit.}}
+\newcommand{\sed}{{\itshape sed}\xspace }
+\newcommand{\sqq}{{\itshape sqq.}\xspace }
+\newcommand{\supra}{{\itshape supra}\xspace }
+\newcommand{\via}{{\itshape via}\xspace }
+\newcommand{\vv}{{\itshape vice versa}\xspace } %960728 enlev le blanc final
+\newcommand{\verbat}{{\itshape verbatim}\xspace } % pas de blanc final
+\newcommand{\jsleq}{\leqslant }
+\newcommand{\jsgeq}{\geqslant }
+%%%%% tuning of two column macros
+\newlength{\jsIndent}% largeur de la colonne "de figure"
+\setlength{\jsIndent}{1.8cm}%    
+\setlength{\ColoText}{.3\textwidth}%    
+\setlength{\ColoFigu}{\textwidth}%    
+\addtolength{\ColoFigu}{-\ColoText}%    
+\addtolength{\ColoText}{-.6em}%    
+\addtolength{\ColoFigu}{-.6em}%    
+\addtolength{\ColoText}{\jsIndent}
+%
+\newlength{\ColSource}% largeur de la colonne "de texte"
+\newlength{\ColFigur}% largeur de la colonne "de figure"
+\setlength{\ColSource}{.7\textwidth}%    
+\setlength{\ColFigur}{\textwidth}%    
+\addtolength{\ColFigur}{-\ColSource}%    
+\addtolength{\ColSource}{-.6em}%    
+\addtolength{\ColFigur}{-.6em}%    
+\addtolength{\ColFigur}{\jsIndent}
+%
+\renewcommand{\tetegauche}{\VCSG  manual}                %ATTN tete de la page de gauche
+\renewcommand{\tetedroit}{\VCSG  manual}                %ATTN tete de la page de droite
+\renewcommand{\piedgauche}{Version 0.4}%ATTN gauche du pied de page
+\renewcommand{\pieddroit}{October 27.,  2008}   %ATTN droite du pied de page
+\renewcommand{\piedimpcentre}{--~~\rm \thepage ~~--} 
+\renewcommand{\piedpaircentre}{--~~\rm \thepage ~~--} 
+%%%%% 
+\newcommand{\sep}%
+{\begin{center}
+       --- $\circ$ ---
+ \end{center}} 
+\newcommand{\PSTricks}{\texttt{PSTricks}\xspace}
+\newcommand{\URLtilde}{${\scriptstyle\pmb{\sim}}$}
+\makeindex
+%%%%% 
+%\ShowFrame
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%
+\ifital \thispagestyle{empty}\mbox{ }\clearpage%
+       \addtocounter{page}{-1}\fi
+%       
+\title{{\LARGE \VCSG}\\
+A package for drawing automata and graphs\\
+\smallskip
+{\large User's  manual}}
+\author{%
+\textsl{Sylvain Lombardy}\\[0.5ex]
+{\normalsize IGM-LabInfo , Univ. Paris-Est}%
+\and 
+\textsl{Jacques Sakarovitch}\\[0.5ex]
+{\normalsize LTCI, CNRS / TELECOM ParisTech}%
+}
+
+\date{October 27.,  2008}
+\maketitle 
+        
+\begin{center}
+{\large Version 0.4}
+\end{center}
+\sep
+%
+\VCSG is a package that allows to draw automata within 
+texts written using \LaTeX.
+It is a set of macros that uses commands of the beautiful \PSTricks package,
+due to Timothy van Zandt\footnote{%
+   The maintenance and evolution of \PSTricks has now been taken over by H.~Voss.}
+and which is part of 
+the current \LaTeX\ distribution.
+\VCSG is the result of the experience gained in composing the several
+hundreds of 
+figures in the book \emph{El\'ements de th\'eorie des automates} 
+(\cite{Sak01}) and in several other papers and conferences slides
+of the authors.
+
+The design of \VCSG implements the following
+underlying philosophy:
+\begin{enumerate}
+    \item  `simple' automata should be 
+described with simple commands.
+
+    \item Every element of a figure can easily be given a style 
+    (which differs from the implicit one).
+
+    \item  The complexity of commands (or the number of things to be remembered 
+to use them) should gradually grow with the complexity of the figure 
+composed by these commands.
+
+    \item  It should be possible to handle the figures both in size and 
+        appearance without modifying them.
+\end{enumerate}
+
+The following example\footnote{%
+    somewhat artificial but which exhibits most of the simple commands.}
+shows how a simple automaton can be drawn 
+with commands, in which only the minimal information needed (position 
+and label of states, shape and label of transitions) is made explicit.
+
+
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\bigskip 
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[p]{(0,0)}{A}\State{(3,0)}{B}
+\State[r]{(6,0)}{C}
+%
+\Initial{A}\Final{C}
+% transitions 
+\EdgeL{A}{B}{a}
+\ArcL{B}{C}{b}\ArcL{C}{B}{b}
+\LoopN{A}{a}\LoopS{C}{d}
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[p]{(0,0)}{A} \State{(3,0)}{B} \State[r]{(6,0)}{C}
+% initial--final
+\Initial{A} \Final{C}
+% transitions 
+\EdgeL{A}{B}{a} \ArcL{B}{C}{b} \ArcL{C}{B}{b}
+\LoopN{A}{a} \LoopS{C}{d}
+%
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+\bigskip \bigskip
+
+The objectives of \VCSG are achieved by the implicit definition of a 
+large number of  
+parameters that control the geometry of the figure: size of states, 
+width of lines, \etc 
+and by the definition of commands that allow to 
+handle and modify these parameters.
+
+The following pages gives a presentation of \VCSG that 
+gradually introduces the commands from the basic ones that allow 
+to draw already a good deal of automata to the more 
+sophisticated ones that are used to modify the internal parameters.
+
+
+
+\setcounter{tocdepth}{1}
+~
+{\small
+\tableofcontents      
+}
+
+
+\newpage
+\addtocounter{section}{-1}
+%%%%%%%%%%%%%%%%%%%%%%
+\section{Downloading and using the package}\label{sec.d}
+
+
+The \VCSG package is downloadable from the URL:
+
+\texttt{/igm.univ-mlv.fr/\URLtilde lombardy/Vaucanson-G/}
+
+\noindent
+and consists, beside the present manual, in seven files:
+the wrapper \texttt{vaucanson-g.sty}, 
+the main macro file \texttt{VauCanSon-G.tex}, 
+and five other ancillary files\footnote{%
+   {\it Cf.} Section~\ref{sec.mod} for an explanation on the role of 
+   these files.}
+for options, patches and colors:
+\texttt{VCPref-default.tex}, 
+\texttt{VCPref-slides.tex},
+\texttt{VCPref-beamer.tex},
+\texttt{VCPref-mystyle.tex},
+\texttt{VCColor-names.def}
+\index{VCPref-default}%
+\index{VCPref-slides}%
+\index{VCPref-beamer}%
+\index{VCPref-mystyle}%
+\index{VCColor-names.def}%
+that should all be stored in the user's \texttt{texinputs} directory.
+
+A \LaTeX\ file that will use \VCSG macros should contain the call to 
+the wrapper in the preamble:
+
+\verb+\usepackage{vaucanson-g}+ 
+
+The \VCSG commands are to be used in a \LaTeX\ file and not in a plain \TeX\ 
+file for it uses the macro \verb+\newcommand+ that does not exist in \TeX.
+
+\VCSG is based on the \PSTricks package.
+The knowledge of this macro package,
+described in \cite{Girou94}, \cite[Ch.~4]{GRM97}, 
+\cite{GRMRV07}, \cite{Voss07},
+is not necessary to use the \VCSG commands.\footnote{%
+   It probably helps in understanding how they are built, and is 
+   useful if one wants to make figures that consists of automata but 
+   also contains other graphical elements
+   ({\it cf.} Section~\ref{sec.pla}).}
+On the contrary, \VCSG has somehow be written to save on it.
+In particular, the \VCSG commands follow the simple (and rigid) 
+syntax of \LaTeX\ commands concerning the way the arguments are 
+specified, and not the much more flexible syntax of \PSTricks itself.
+
+
+But the call to \PSTricks commands has the consequence that \VCSG 
+commands generate pieces of \texttt{Postscript} files which in turn 
+has two main outcomes\footnote{%
+    which a user should have in mind before sending complaint and 
+    request.}:
+    \begin{itemize}
+        \item  \VCSG is not compatible with \verb+pdflatex+ ;
+    
+        \item  the figures produced with \VCSG are not likely to be 
+        seen on a \texttt{DVI} viewer: the space occupied by the figure 
+        will appear empty and, in most cases, the labels will appear 
+        at the bottom of it.
+    \end{itemize}
+
+% %%%%%%%%%%%%%%%%%%%ù
+% \section{Using Beamer document class}
+\VCSG can be used with the \texttt{beamer} document class to design slides.
+The document class
+\index{beamer class}%
+should be called with {\tt xcolor=pst,dvips} options:
+
+\verb+\documentclass[xcolor=pst,dvips]{beamer}+.
+
+\noindent
+Thus equipped, we may begin.
+%%%%%%%%%%%%%%%%%%%%%%
+\section{Basic commands}\label{sec.b}
+
+An automaton is a \emph{labelled directed graph} where some of the vertices, 
+called \emph{states}, are distinguished to be \emph{initial} or 
+\emph{final} states.
+The basic commands allow then \emph{to define} and \emph{to draw} 
+states, to give them the quality of being initial or final and to give 
+them \emph{labels} as well.
+They allow to draw \emph{transitions} 
+between states (that have been defined before);
+there are 3 kinds of transitions: \emph{(straight) edges}, \emph{arcs} and 
+\emph{loops}.
+
+These commands have to be put in an environment that defines \emph{a 
+picture}.
+All graphical parameters of these elements (size, line width, \etc ) 
+are kept implicit when using these basic commands.
+
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The \texttt{VCPicture} environment}\label{subsec.pic}
+\index{VCPicture}
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\begin{VCPicture}{+($x_{0}$, $y_{0}$)($x_{1}$, $y_{1}$)\verb+}+
+
+\ldots
+
+\verb+\end{VCPicture}+
+\normalsize
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Defines a box that ``encloses'' the elements defined in the 
+environment.
+Its lower left (resp. upper right) corner has 
+coordinates~($x_{0}$, $y_{0}$) (resp.~($x_{1}$, $y_{1}$)).
+\end{minipage}%
+
+\medskip
+
+The~$x_{i}$ and~$y_{i}$ are either \emph{length} or \emph{numbers} in 
+which case they represent the corresponding length in centimeter (which 
+is the implicit length unit used in \VCSG).
+The length of the box is thus~$x_{1}-x_{0}$, its 
+height~$y_{1}-y_{0}$, its \emph{baseline point} stands at the middle 
+of the height.
+As usual in \TeX, a picture may well ``contain'' an element that 
+actually lays outside of the box.
+
+Note that the environment has only \emph{one} argument consisting of \emph{two} 
+point coordinates enclosed in adjacent parentheses.
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The \texttt{State} commands}\label{subsec.sta}
+\index{State}
+
+States are represented by circles, inside which an information (the 
+\emph{Label}) can be written.
+Every state is given a \emph{Name} which is used then internally in the figure to describe the 
+transitions that start from it or end at it.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\State[+\textsl{Label}\verb+]{+%
+   $(x,y)$\verb+}{+%
+   \textsl{Name}\verb+}+
+\normalsize
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Defines a state with name \textsl{Name} and draws it 
+at the coordinate~$(x,y)$ with label \textsl{Label} written inside.
+\end{minipage}%
+
+\medskip 
+\noi 
+The parameter \textsl{Label} is optional; default value is the empty 
+string.
+It is written in `\TeX\ mathmode'.
+
+\medskip 
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\Initial[+\textsl{Dir}\verb+]{+%
+   \textsl{Name}\verb+}+
+\normalsize
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Makes the state \textsl{Name} initial, \ie  draws an incoming arrow 
+from the direction \textsl{Dir} to state {\sl Name}.
+\end{minipage}%
+\index{Initial}\index{Final}
+
+\medskip 
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\Final[+\textsl{Dir}\verb+]{+%
+   \textsl{Name}\verb+}+
+\normalsize
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Makes the state \textsl{Name} final, \ie  draws an outgoing arrow 
+from state {\sl Name} in the direction \textsl{Dir}.
+\end{minipage}%
+
+\medskip 
+\noi 
+The parameter \textsl{Dir} is optional; the possible values are the 
+eight main
+compass points: {\sl n}, {\sl s}, {\sl e}, {\sl w}, {\sl ne}, {\sl 
+nw}, {\sl se} and {\sl sw}. 
+Default value is {\sl w} for \verb+\Initial+, 
+{\sl e} for \verb+\Final+.
+
+Many authors, in particular those dealing with automata on infinite words,
+rather indicate that a state is final by drawing it with doubleline.
+The reason why it is not possible to achieve this result by a sequence of
+two commands comes from the \PSTricks macros that are called by the \VCSG
+commands.
+
+\medskip
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\FinalState[+\textsl{Label}\verb+]{+%
+   $(x,y)$\verb+}{+%
+   \textsl{Name}\verb+}+
+\normalsize
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Same as \verb+\State+ but draws state \textsl{Name} 
+with a doubleline which is a common way to indicate that a state is final.
+\index{FinalState}
+\end{minipage}%
+\medskip
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\bigskip 
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[p]{(0,1)}{A} \State{(2,-1)}{B} \State[r]{(4,1)}{C}
+\FinalState[r]{(6,-1)}{D}
+% initial--final
+\Initial{A} \Final{A}
+\Initial[ne]{B}\Initial[nw]{B}
+\Initial[se]{B}\Initial[sw]{B}
+\Initial{C} \Final[w]{C} \Initial[n]{D} \Final[s]{D}
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[p]{(0,1)}{A} \State{(2,-1)}{B} \State[r]{(4,1)}{C}
+\FinalState[r]{(6,-1)}{D}
+% initial--final
+\InitialL{A} \Final{A}
+\Initial[ne]{B} \Initial[nw]{B}
+\Initial[se]{B} \Initial[sw]{B}
+\Initial{C} \Final[w]{C} \Initial[n]{D} \Final[s]{D}
+%
+\end{VCPicture}%
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+%\newpage 
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The \texttt{Edge} commands}\label{subsec.edg}
+
+Edges, like the other transitions, are \emph{oriented} from the origin 
+state to the end state.
+The \emph{left} and the \emph{right} sides of a transition are defined 
+with respect to this orientation, being the left and the right hand of 
+someone standing on the origin state and following
+the transition towards the end state.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+\medskip 
+        \footnotesize
+\verb+\EdgeL[+\textsl{Pos}\verb+]{+%
+   \textsl{Start}\verb+}{+%
+   \textsl{End}\verb+}{+%
+   \textsl{Label}\verb+}+
+   
+\medskip 
+\verb+\EdgeR[+\textsl{Pos}\verb+]{+%
+   \textsl{Start}\verb+}{+%
+   \textsl{End}\verb+}{+%
+   \textsl{Label}\verb+}+
+   \normalsize
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Draws a straight transition from the state \textsl{Start} to the 
+state \textsl{End} with the label \textsl{Label} on the left side
+for \verb+\EdgeL+, on the right side for \verb+\EdgeR+.\index{Edge}
+\end{minipage}%
+
+\medskip 
+\noi 
+The parameter {\sl Pos} is optional. 
+It is a number ($0\jsleq \text{{\sl Pos}} \jsleq 1$) that defines the 
+position of the label on the edge.
+Default value is~$.45$ and may be used most of the time ---
+this slight disymmetry gives some ``dynamic'' to the figure.
+Explicit value for {\sl Pos} is used to avoid collision with other 
+elements of the figure. 
+As for states, the label is written in `\TeX\ mathmode'.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\bigskip 
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,0)}{A} \State[B]{(2,-2)}{B} \State[C]{(4,2)}{C}
+\State[D]{(6,0)}{D}
+% transitions 
+\EdgeR{A}{B}{a} \EdgeL{A}{C}{b} \EdgeR{B}{D}{c} 
+\EdgeL{C}{D}{d} \EdgeL{C}{B}{} \EdgeL[.3]{A}{D}{x}
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,0)}{A} \State[B]{(2,-2)}{B} \State[C]{(4,2)}{C}
+\State[D]{(6,0)}{D}
+% transitions 
+\EdgeR{A}{B}{a} \EdgeL{A}{C}{b} \EdgeR{B}{D}{c} 
+\EdgeL{C}{D}{d} \EdgeL{C}{B}{} \EdgeL[.3]{A}{D}{x}
+%
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The \texttt{Arc} commands}\label{subsec.arc}
+
+Arcs are transitions that link the {\sl Start} state to the {\sl End} 
+state with a curved line.
+The main parameter of such a curve is the \emph{angle} made at both 
+ends by the curve with the straight line that goes from  {\sl Start} to 
+{\sl End} and it can be oriented to the \emph{left} or to the 
+\emph{right}.
+In the sequel, the letter \texttt{\textsl{X}} stands for either \verb+L+ 
+or \verb+R+. 
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+\medskip 
+        \footnotesize
+\verb+\Arc+\texttt{\textsl{X}}\verb+[+\textsl{Pos}\verb+]{+%
+   \textsl{Start}\verb+}{+%
+   \textsl{End}\verb+}{+%
+   \textsl{Label}\verb+}+
+   
+\medskip 
+\verb+\LArc+\texttt{\textsl{X}}\verb+[+\textsl{Pos}\verb+]{+%
+   \textsl{Start}\verb+}{+%
+   \textsl{End}\verb+}{+%
+   \textsl{Label}\verb+}+
+   \normalsize
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Same syntax as \verb+\Edge+\texttt{\textsl{X}}.\index{Arc}\index{LArc} 
+
+The starting angle is~$15^o$ for \verb+Arc+\texttt{\textsl{X}}, 
+$30^o$ for \verb+LArc+\texttt{\textsl{X}}\verb++. 
+
+Parameter {\sl Pos} is optional. 
+Default value is~$.4$ .
+\end{minipage}%
+
+\medskip 
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\bigskip 
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,0)}{A} \State[B]{(2,-2)}{B} \State[C]{(4,2)}{C}
+\State[D]{(6,0)}{D}
+%initial-final
+\Initial{A} \Final[s]{B} \Final[n]{C}
+% transitions 
+\ArcR{A}{B}{a} \ArcL{A}{C}{b} \LArcR{B}{D}{c} \LArcL{C}{D}{d}
+\ArcL{A}{B}{a'} \EdgeR{A}{C}{b'} \EdgeL{B}{D}{c'} \LArcR{C}{D}{d'}
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,0)}{A} \State[B]{(2,-2)}{B} \State[C]{(4,2)}{C}
+\State[D]{(6,0)}{D}
+%initial-final
+\Initial{A} \Final[s]{B} \Final[n]{C}
+% transitions 
+\ArcR{A}{B}{a} \ArcL{A}{C}{b} \LArcR{B}{D}{c} \LArcL{C}{D}{d}
+\ArcL{A}{B}{a'} \EdgeR{A}{C}{b'} \EdgeL{B}{D}{c'}
+\LArcR{C}{D}{d'}
+%
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The \texttt{Loop} commands}\label{subsec.loo}
+
+Loops are transitions that link a state to itself, a state which is 
+thus both the origin and the end of the transition.
+The two main parameters of such a loop are the \emph{opening angle} 
+and the \emph{direction} of the loop.
+In the sequel, the letter \texttt{\textsl{Y}} stands for any of the compass 
+points: \verb+N+, \verb+S+, \verb+E+, \verb+W+, \verb+NE+, \verb+NW+, 
+\verb+SE+ or \verb+SW+.\index{Loop}\index{CLoop} 
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+\medskip 
+        \footnotesize
+\verb+\Loop+\texttt{\textsl{Y}}\verb+[+\textsl{Pos}\verb+]{+%
+   \textsl{Name}\verb+}{+%
+   \textsl{Label}\verb+}+
+   
+\medskip 
+\verb+\CLoop+\texttt{\textsl{Y}}\verb+[+\textsl{Pos}\verb+]{+%
+   \textsl{Name}\verb+}{+%
+   \textsl{Label}\verb+}+
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Draw a loop around the state {\sl Name} with label {\sl Label}.
+
+The direction of the loop is given by \texttt{\textsl{Y}}.
+The opening of the loop is~$60^o$ for the \verb+Loop+\texttt{\textsl{Y}}\verb++ commands,
+$44^o$ for the \verb+CLoop+\texttt{\textsl{Y}}\verb++ commands.
+
+Parameter {\sl Pos} is optional. 
+Default value is~$.25$ .
+\end{minipage}%
+
+\medskip 
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\bigskip 
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(0,-3)(7,3)}
+% states
+\State[A]{(0,0)}{A} \State[B]{(3,-2)}{B} \State[C]{(3,2)}{C}
+\State[D]{(6,0)}{D}
+% transitions 
+\LoopE{A}{e} \LoopW{A}{w} \LoopS{A}{s} \LoopN[.5]{A}{n} 
+% \LoopNE{B}{ne} \LoopNW[.5]{B}{nw} 
+\LoopSE[.5]{B}{se} \LoopSW[.5]{B}{sw} 
+\CLoopNE[.6]{C}{ne} \CLoopNW[.6]{C}{nw} 
+% \CLoopSE[.5]{C}{se} \CLoopSW[.5]{C}{sw} 
+\CLoopE{D}{e} \CLoopW{D}{w} \CLoopS{D}{s} \CLoopN[.5]{D}{n} 
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-3)(7,3)}
+% states
+\State[A]{(0,0)}{A} \State[B]{(3,-2)}{B} \State[C]{(3,2)}{C}
+\State[D]{(6,0)}{D}
+% transitions 
+\LoopE{A}{e} \LoopW{A}{w} \LoopS{A}{s} \LoopN[.5]{A}{n} 
+\LoopSE[.5]{B}{se} \LoopSW[.5]{B}{sw} 
+\CLoopNE[.6]{C}{ne} \CLoopNW[.6]{C}{nw} 
+\CLoopE{D}{e} \CLoopW{D}{w} \CLoopS{D}{s} \CLoopN[.5]{D}{n} 
+%
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{An example}\label{subsec.ex1}
+This is an automaton with multiplicity in $\mathbb{N}$.
+The multiplicity of a word~$u$ is the square of the number represented by~$u$
+in base~$2$, when~$a$ is interpreted as~$0$ and $b$ as~$1$.
+
+
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\bigskip 
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[i]{(0,0)}{A} \State[q]{(3,0)}{B} \State[t]{(6,0)}{C}
+% initial-final
+\Initial{A} \Final{C}
+% transitions 
+\EdgeR{A}{B}{2b} \EdgeR{B}{C}{2b} \LArcL{A}{C}{b}
+\LoopN{A}{a} \LoopS{A}{b} \LoopS[.5]{B}{2a+2b} 
+\LoopN[.75]{C}{4a} \LoopS[.75]{C}{4b}
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[i]{(0,0)}{A} \State[q]{(3,0)}{B} \State[t]{(6,0)}{C}
+% initial-final
+\Initial{A} \Final{C}
+% transitions 
+\EdgeR{A}{B}{2b} \EdgeR{B}{C}{2b} \LArcL{A}{C}{b}
+\LoopN{A}{a} \LoopS{A}{b} \LoopS[.5]{B}{2a+2b} 
+\LoopN[.75]{C}{4a} \LoopS[.75]{C}{4b}
+%
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+\section{Using preset parameters}\label{sec.pre}
+
+Together with the basic commands, \VCSG gives easy access to two convenient
+parameters for drawing automata: global scaling and state size.
+
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Global scaling}\label{subsec.sca}
+
+The meticulous reader has noticed that the actual size, mesured for 
+instance by the distance between the states, is not the one given in 
+the source code.
+This is because we have slightly cheated and the source code of the 
+picture is indeed encapsulated in a \verb+\VCDraw+ command that uses 
+a preset parameter \verb+\VCScale+ as shown below, with no 
+cheating anymore.
+\index{VCScale}\index{VCDraw}
+
+\ShowFrame
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\medskipneg 
+\begin{center}
+\begin{VCPicture}{(0,-1)(3,1)}
+\State[p]{(0,0)}{A} \State[q]{(3,0)}{B}%
+\end{VCPicture}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-1)(3,1)}
+\State[p]{(0,0)}{A} \State[q]{(3,0)}{B}
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\medskip 
+\begin{center}
+\VCDraw{%
+\begin{VCPicture}{(0,-1)(3,1)}
+\State[p]{(0,0)}{A} \State[q]{(3,0)}{B}%
+\end{VCPicture}}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\VCDraw{%
+\begin{VCPicture}{(0,-1)(3,1)}
+\State[p]{(0,0)}{A} \State[q]{(3,0)}{B}%
+\end{VCPicture}}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+\medskip
+\noi 
+Frames that appear on figures below are an option of \VCSG that we
+shall see later. They point out the effect of the scale.
+
+\medskip
+\noi 
+There is no reason indeed for an author to ``program'' the drawing of 
+an automaton at the size it will appear on his, or her, 
+paper. 
+On the contrary, he, or she, is likely to sketch the figure on a 
+ruled paper at a larger scale, giving the points to be defined integer 
+coordinates.
+And then she, or he, will try to put the figure within the text at a 
+reasonable size and thus would like to scale it.
+
+The parameter \verb+\VCScale+ contains this global scaling factor and is
+initialized to the value \verb+0.6+ , which corresponds to the 
+command \verb+\MediumPicture+.
+Three other commands: 
+\verb+\TinyPicture+ ,
+\verb+\SmallPicture+ and
+\verb+\LargePicture+
+are available, that set \verb+\VCScale+ to the values 
+\verb+0.42+ ,
+\verb+0.5+ and
+\verb+0.85+ respectively.
+\index{MediumPicture}\index{TinyPicture}\index{SmallPicture}
+\index{LargePicture}
+
+These command have to be used \emph{outside} the scope of the 
+\verb+VCPicture+ environment; and this environment should be called 
+as the parameter of a \verb+\VCDraw+ .
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur-.7cm}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+\TinyPicture\VCDraw{%
+\begin{VCPicture}{(-1,-1)(1,1)}\State[p]{(0,0)}{A}\end{VCPicture}}
+\SmallPicture\VCDraw{%
+\begin{VCPicture}{(-1,-1)(1,1)}\State[p]{(0,0)}{A}\end{VCPicture}}
+\MediumPicture\VCDraw{%
+\begin{VCPicture}{(-1,-1)(1,1)}\State[p]{(0,0)}{A}\end{VCPicture}}
+\LargePicture\VCDraw{%
+\begin{VCPicture}{(-1,-1)(1,1)}\State[p]{(0,0)}{A}\end{VCPicture}}
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource+.7cm}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\TinyPicture\VCDraw{%
+\begin{VCPicture}{(-1,-1)(1,1)}\State[p]{(0,0)}{A}\end{VCPicture}}
+\SmallPicture\VCDraw{%
+\begin{VCPicture}{(-1,-1)(1,1)}\State[p]{(0,0)}{A}\end{VCPicture}}
+\MediumPicture\VCDraw{%
+\begin{VCPicture}{(-1,-1)(1,1)}\State[p]{(0,0)}{A}\end{VCPicture}}
+\LargePicture\VCDraw{%
+\begin{VCPicture}{(-1,-1)(1,1)}\State[p]{(0,0)}{A}\end{VCPicture}}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+\HideFrame
+
+% \medskip
+\noi
+In the sequel, and unless otherwise stated,
+all the figure will be given at the \verb+\MediumPicture+ 
+scale without mentionning the command \verb+\VCDraw+ in the source code.
+
+% \smallskipneg 
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{State size}\label{subsec.siz1}
+
+There are \emph{three preset sizes} for the states, that are called by the 
+commands \verb+\SmallState+, \verb+\MediumState+ and 
+\verb+\LargeState+, that call for states of diameter 
+\verb+0.6cm+, \verb+0.9cm+ and \verb+1.2cm+ respectively.
+The implicit size, \ie the one that states have if no explicit command 
+is given, is \verb+\MediumState+.
+The ``small'' states are not likely to receive labels, unless their 
+size are changed by other commands.
+\index{SmallState}\index{MediumState}\index{LargeState}
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur-.7cm}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,0)}{A} 
+\SmallState\State{(2,-2)}{B} 
+\MediumState\State[C]{(4,2)}{C}
+\LargeState\State[D]{(6,0)}{D}
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource+.7cm}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,0)}{A} 
+\SmallState\State{(2,-2)}{B} 
+\MediumState\State[C]{(4,2)}{C}
+\LargeState\State[D]{(6,0)}{D}
+%
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}%
+
+% \medskip
+\noi
+When called outside the scope of the environment \verb+\VCPicture+ the 
+commands  \verb+\SmallState+, \verb+\MediumState+ and 
+\verb+\LargeState+ set the implicit size of the states in all 
+pictures from that point on.
+\ShowFrame%
+
+% \smallskipneg 
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur-.7cm}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+        \SmallState
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(-1,-1)(1,1)}
+\State[A]{(0,0)}{A} 
+\end{VCPicture}%
+}\e 
+\LargeState
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(-1,-1)(1,1)}
+\State[A]{(0,0)}{A} 
+\end{VCPicture}%
+}\e 
+\MediumState
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(-1,-1)(1,1)}
+\State[A]{(0,0)}{A} 
+\end{VCPicture}%
+}
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource+.7cm}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\SmallState
+\begin{VCPicture}{(-1,-1)(1,1)}\State[A]{(0,0)}{A} \end{VCPicture}
+\LargeState
+\begin{VCPicture}{(-1,-1)(1,1)}\State[A]{(0,0)}{A} \end{VCPicture}
+\MediumState
+\begin{VCPicture}{(-1,-1)(1,1)}\State[A]{(0,0)}{A} \end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}%
+\HideFrame
+
+% \smallskipneg 
+\subsection{Variable size states}\label{subsec.varst}
+% \medskip
+\noi
+%Independently of the preset size --- in this instance, of the \emph{height} --- 
+One can draw states which will be called \emph{variable states} and whose 
+\emph{width} is variable and \emph{fits the width of the 
+label}.\footnote{%
+   This makes sense for long labels and it may be the case then that 
+   the label is not a mathematical variable or expression any more 
+   but simple text.
+   In order to write labels in \TeX\ LR mode, the easiest way is to 
+   write it as the parameter of a $\backslash$\texttt{text} command, 
+   provided the \texttt{amsmath} package has been called in the 
+   preamble.}
+The height of
+\index{StateVar}
+\index{text}
+\index{amsmath}
+these variable states is fixed by the current preset state size.
+
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\StateVar[+\textsl{Label}\verb+]{+%
+   $(x,y)$\verb+}{+%
+   \textsl{Name}\verb+}+
+\normalsize
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Same as syntax as \verb+\State+.
+\end{minipage}%
+% \clearpage
+
+% \medskip
+
+\noi
+Note that the current version of \VCSG uses a trick to make these 
+states with adaptable width.
+They look like Egyptian cartouches but they are indeed 
+\emph{rectangles} which can be observed when transitions reach these 
+states in an oblique way.
+
+Arcs between variable states of different width will look asymmetric 
+and often ungainly.
+Other loops than ``north'' and ``south'' loops should not be drawn 
+around variable states. Moreover, in order to draw loops that have the same appearance as loops
+around standard states, one should use 
+\verb+\LoopVarN+ or \verb+\LoopVarS+
+that have the same syntax as \verb+\LoopN+ or \verb+\LoopS+.
+\index{LoopVarN}\index{LoopVarS}
+Another possibility is to call the \verb+\VarLoopOn+ command to make 
+all the subsequent loops suited to variable states.
+Switching back to `normal' loops is made by \verb+\VarLoopOff+.
+\index{VarLoopOn}
+\index{VarLoopOff}
+
+For the same reason, it is \emph{not possible} to make a variable
+state initial or final with diagonal arrows ($ne$, $nw$, $se$, $sw$).
+
+
+\medskip 
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+\SmallPicture\VCDraw{%
+\begin{VCPicture}{(0,-3)(8,3)}
+% states
+\State[AA]{(0,2)}{A} \StateVar[AA]{(2.5,2)}{B} 
+\StateVar[(b a^{*} b)^{*}]{(7,2)}{C} 
+\LargeState 
+\State[AA]{(0,-2)}{A1} \StateVar[AA]{(2.5,-2)}{B1} 
+\StateVar[(b a^{*} b)^{*}]{(7,-2)}{C1} 
+%
+\Initial[n]{B} \Final{C} \Initial[s]{B1} \Final{C1}
+%
+\EdgeL{A}{B}{a} \ArcL{B}{C}{b} \ArcL{C}{C1}{c} \EdgeL{B1}{C}{a} 
+\ArcL{A1}{B1}{a} \LArcR{A1}{B1}{b} \LArcR{B1}{C1}{b} 
+\LoopN{A}{c} \LoopVarN{C}{c}
+\LoopS{A1}{c} \VarLoopOn\LoopS{C1}{c}\VarLoopOff
+\end{VCPicture}}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\SmallPicture\VCDraw{\begin{VCPicture}{(0,-3)(8,3)}
+% states
+\State[AA]{(0,2)}{A} \StateVar[AA]{(2.5,2)}{B} 
+\StateVar[(b a^{*} b)^{*}]{(7,2)}{C} 
+\LargeState \StateVar[(b a^{*} b)^{*}]{(7,-2)}{C1} 
+\State[AA]{(0,-2)}{A1} \StateVar[AA]{(2.5,-2)}{B1} 
+%
+\Initial[n]{B} \Final{C} \Initial[s]{B1} \Final{C1}
+%
+\EdgeL{A}{B}{a} \ArcL{B}{C}{b} \ArcL{C}{C1}{c} \EdgeL{B1}{C}{a} 
+\ArcL{A1}{B1}{a} \LArcR{A1}{B1}{b} \LArcR{B1}{C1}{b} 
+\LoopN{A}{c} \LoopVarN{C}{c}
+\LoopS{A1}{c} \VarLoopOn\LoopS{C1}{c}\VarLoopOff
+\end{VCPicture}}
+\end{verbatim}
+\normalsize
+\end{minipage}
+
+\medskip 
+
+\noi
+There exists\footnote{%
+   Since version 0.3 only.}
+also a \verb+\FinalStateVar+  command, with the same syntax as 
+\verb+\StateVar+ and which draws a variable state with double line, 
+(independently of the current drawing style for the state), exactly 
+in the same way as does \verb+\FinalState+.
+\index{FinalStateVar}%
+
+\subsection{Very small states}\label{subsec.siz2}
+There is actually a fourth size for states, called \emph{very small} states.
+To define such a state one uses the command \verb+\VSState+ with
+the same syntax as \verb+\State+. However, it is not possible, of course,
+to put a label inside such a state.
+\index{VSState}
+
+\medskip 
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+\SmallPicture\VCDraw{%
+\begin{VCPicture}{(-3,-3)(3,3)}
+% states
+\State[A]{(0,0)}{A}
+\VSState{(-2,2)}{G1} 
+\VSState{(-2,0)}{G2} 
+\VSState{(-2,-2)}{G3} 
+\VSState{(2,2)}{D1} 
+\VSState{(2,0)}{D2} 
+\VSState{(2,-2)}{D3} 
+\EdgeL{G1}{A}{a_1} \EdgeL{G2}{A}{a_2} \EdgeL{G3}{A}{a_3}
+\EdgeL{A}{D1}{b_1} \EdgeL{A}{D2}{b_2} \EdgeL{A}{D3}{b_3}
+\end{VCPicture}}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(-3,-3)(3,3)}
+% states
+\State[A]{(0,0)}{A}
+\VSState{(-2,2)}{G1} \VSState{(-2,0)}{G2} \VSState{(-2,-2)}{G3}
+\VSState{(2,2)}{D1} \VSState{(2,0)}{D2} \VSState{(2,-2)}{D3}
+\EdgeL{G1}{A}{a_1} \EdgeL{G2}{A}{a_2} \EdgeL{G3}{A}{a_3}
+\EdgeL{A}{D1}{b_1} \EdgeL{A}{D2}{b_2} \EdgeL{A}{D3}{b_3}
+\end{VCPicture}}
+\end{verbatim}
+\normalsize
+\end{minipage}%
+
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Miscellaneous}\label{subsec.misc1}
+
+A few commands allow to tune the drawing of an automaton without 
+going to precise mastering of the parameters involved in the commands 
+and that we shall describe in section~4.
+
+%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Dimmed states and transitions}
+~
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\DimState+ \ee 
+\verb+\DimEdge+
+   
+\medskip 
+\verb+\RstState+ \ee 
+\verb+\RstEdge+
+   
+\medskip 
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Draw states and transitions and their 
+respective labels in gray.
+
+% , in such a way they appear as 
+% dimmed. 
+\smallskip 
+
+Restore the normal style.
+\end{minipage}%
+\index{DimState}\index{DimEdge}
+\index{RstEdge}\index{RstState}
+
+\medskip
+\noi 
+May be used for instance in order to indicate the non accessible part 
+of an automaton.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(0,-2)(6,2)}
+%% states
+\State[A]{(0,0)}{A} \State[B]{(2,-2)}{B} \State[C]{(4,2)}{C}
+\DimState \State[D]{(6,0)}{D}
+%initial-final
+\Initial{A} \Final[s]{B} \Final[n]{C}
+% transitions 
+\ArcR{A}{B}{a} \ArcL{A}{C}{b} 
+\DimEdge \LArcR{B}{D}{c} \LArcL{C}{D}{d} \RstEdge
+\ArcL{A}{B}{a'} \EdgeR{A}{C}{b'}
+\DimEdge \EdgeL{B}{D}{c'} \LArcR{C}{D}{d'}
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,0)}{A} \State[B]{(2,-2)}{B} \State[C]{(4,2)}{C}
+\DimState \State[D]{(6,0)}{D}
+%initial-final
+\Initial{A} \Final[s]{B} \Final[n]{C}
+% transitions 
+\ArcR{A}{B}{a} \ArcL{A}{C}{b} 
+\DimEdge \LArcR{B}{D}{c} \LArcL{C}{D}{d} \RstEdge
+\ArcL{A}{B}{a'} \EdgeR{A}{C}{b'}
+\DimEdge \EdgeL{B}{D}{c'} \LArcR{C}{D}{d'}
+%
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Double lines}
+~
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\StateLineDouble+ \ee \verb+\EdgeLineDouble+ 
+   
+\medskip 
+\verb+\StateLineSimple+ \ee \verb+\EdgeLineSimple+ 
+   
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Draw states and transitions with double lines.
+\index{StateLineDouble}\index{EdgeLineDouble}
+
+\smallskip 
+
+Draw states and transitions with simple lines.
+\index{StateLineSimple}\index{EdgeLineSimple}
+\end{minipage}%
+
+\medskip
+\noi 
+May be used for emphasize transitions or states 
+of an automaton.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,0)}{A} \State[B]{(2,-2)}{B}
+\StateLineDouble \State[C]{(4,2)}{C}
+\StateLineSimple \State[D]{(6,0)}{D}
+%initial-final
+\Initial{A} \Final[s]{B}
+% transitions 
+\ArcR{A}{B}{a} \ArcL{A}{C}{b}
+\LArcR{B}{D}{c} \LArcL{C}{D}{d}
+\ArcL{A}{B}{a'} \EdgeLineDouble \EdgeR{A}{C}{b'}
+\EdgeLineSimple \EdgeL{B}{D}{c'} \LArcR{C}{D}{d'}
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,0)}{A} \State[B]{(2,-2)}{B}
+\StateLineDouble \State[C]{(4,2)}{C}
+\StateLineSimple \State[D]{(6,0)}{D}
+%initial-final
+\Initial{A} \Final[s]{B}
+% transitions 
+\ArcR{A}{B}{a} \ArcL{A}{C}{b}
+\LArcR{B}{D}{c} \LArcL{C}{D}{d}
+\ArcL{A}{B}{a'} \EdgeLineDouble \EdgeR{A}{C}{b'}
+\EdgeLineSimple \EdgeL{B}{D}{c'} \LArcR{C}{D}{d'}
+%
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+\noi
+The command \verb+\FinalState{+$(x,y)$\verb+}{+$p$\verb+}+ is equivalent to
+the sequence\\
+\verb+\StateLineDouble \State{+$(x,y)$\verb+}{+$p$\verb+} \StateLineSimple+ 
+if the current implicit mode is \verb+\StateLineSimple+ , 
+it is equivalent to \verb+\State{+$(x,y)$\verb+}{+$p$\verb+}+ in the 
+other case.
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Hiding states}
+~
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\HideState+ \ee 
+   
+\medskip 
+\verb+\ShowState+ \ee 
+   
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Cancel the drawing of states.\index{HideState}
+
+\smallskip 
+
+Active the drawing of states.\index{ShowState}
+\end{minipage}%
+
+\medskip
+\noi 
+May be useful for drawing slides that will be overlayed.\footnote{%
+   We began to write the package when overhead projectors were still 
+   of common usage\ldots}
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\HideState
+\State[i]{(0,0)}{A} \State[t]{(6,0)}{C}
+\ShowState
+\State[q]{(3,0)}{B} 
+% initial-final
+\Initial{A} \Final{C}
+% transitions 
+\EdgeR{A}{B}{2b} \EdgeR{B}{C}{2b} \LArcL{A}{C}{b}
+\LoopN{A}{a} \LoopS{A}{b} \LoopS[.5]{B}{2a+2b} 
+\LoopN[.75]{C}{4a} \LoopS[.75]{C}{4b}
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\HideState
+\State[i]{(0,0)}{A} \State[t]{(6,0)}{C}
+\ShowState
+\State[q]{(3,0)}{B} 
+% initial-final
+\Initial{A} \Final{C}
+% transitions 
+\EdgeR{A}{B}{2b} \EdgeR{B}{C}{2b} \LArcL{A}{C}{b}
+\LoopN{A}{a} \LoopS{A}{b} \LoopS[.5]{B}{2a+2b} 
+\LoopN[.75]{C}{4a} \LoopS[.75]{C}{4b}
+%
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Reverse transitions}
+~
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\ReverseArrow+ \ee 
+   
+\medskip 
+\verb+\StraightArrow+ \ee 
+   
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Exchange the origin and the end of a transition.\index{ReverseArrow}
+
+\smallskip 
+
+Restore the normal style.\index{StraightArrow}
+\end{minipage}%
+
+\medskip
+\noi 
+May be useful for modifying a part of a figure that had already been 
+written.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\bigskip 
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,0)}{A} \State[B]{(2,-2)}{B} \State[C]{(4,2)}{C}
+\State[D]{(6,0)}{D}
+% transitions 
+\Final[s]{B}
+\ArcR{A}{B}{a} \ArcL{A}{C}{b} \LArcR{B}{D}{c} \LArcL{C}{D}{d}
+\ReverseArrow
+\Initial{A} \Final[n]{C}
+\ArcL{A}{B}{a'} \EdgeR{A}{C}{b'} \EdgeL{B}{D}{c'} \LArcR{C}{D}{d'}
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,0)}{A} \State[B]{(2,-2)}{B} \State[C]{(4,2)}{C}
+\State[D]{(6,0)}{D} 
+% transitions 
+\Final[s]{B}
+\ArcR{A}{B}{a} \ArcL{A}{C}{b} \LArcR{B}{D}{c} \LArcL{C}{D}{d}
+\ReverseArrow
+\Initial{A} \Final[n]{C}
+\ArcL{A}{B}{a'} \EdgeR{A}{C}{b'} \EdgeL{B}{D}{c'}
+\LArcR{C}{D}{d'}
+%
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Edge border}
+~
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\EdgeBorder+ \ee 
+   
+\medskip 
+\verb+\EdgeBorderOff+ \ee 
+   
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Draw edges with a white border on each side.\index{EdgeBorder}
+
+\smallskip 
+
+Restore the normal style.\index{EdgeBorderOff}
+\end{minipage}%
+
+\medskip
+\noi
+May be used to make more readable a picture in which many arrows 
+cross each other.
+The \emph{order} in which the edges are drawn becomes then meaningfull.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,1)}{A}  \State[B]{(3,2)}{B}  \State[C]{(6,1)}{C}
+\State[D]{(0,-1)}{D} \State[E]{(3,-2)}{E} \State[F]{(6,-1)}{F}
+% transitions 
+\EdgeR{A}{E}{a} \EdgeL[.8]{D}{B}{b} \EdgeR[.7]{B}{E}{b} 
+%
+\EdgeBorder
+\EdgeL[.35]{A}{F}{a} \EdgeR[.3]{E}{C}{d}
+\EdgeBorderOff
+\EdgeL{B}{F}{c}
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,1)}{A}  \State[B]{(3,2)}{B}  \State[C]{(6,1)}{C}
+\State[D]{(0,-1)}{D} \State[E]{(3,-2)}{E} \State[F]{(6,-1)}{F}
+% transitions 
+\EdgeR{A}{E}{a} \EdgeL[.8]{D}{B}{b} \EdgeR[.7]{B}{E}{b} 
+%
+\EdgeBorder
+\EdgeL[.35]{A}{F}{a} \EdgeR[.3]{E}{C}{d}
+\EdgeBorderOff
+\EdgeL{B}{F}{c}
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Forth and back offset}
+~
+Normally, an edge lays on the line that links the center of the start 
+and end states.
+Which forbid to have two straight edges in opposite directions 
+between states.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\ForthBackOffset+ \ee 
+   
+\medskip 
+\verb+\RstEdgeOffset+ \ee 
+   
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Shift the edge on the left handside.\index{ForthBackOffset}
+
+\smallskip 
+
+Restore the normal style.\index{RstEdgeOffset}
+\end{minipage}%
+
+\medskip
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\bigskip 
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,1)}{A} \State[B]{(3,1)}{B} \State[C]{(6,1)}{C}
+\LargeState
+\State[A]{(0,-1)}{A1} \State[B]{(3,-1)}{B1} \State[C]{(6,-1)}{C1}
+% transitions 
+\EdgeL{A}{B}{a} 
+\ForthBackOffset \EdgeL{B}{C}{b} \EdgeL{C}{B}{b} 
+\RstEdgeOffset 
+\EdgeL{A1}{B1}{a} 
+\ForthBackOffset \EdgeL{B1}{C1}{b} \EdgeL{C1}{B1}{b} 
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,1)}{A} \State[B]{(3,1)}{B} \State[C]{(6,1)}{C}
+\LargeState
+\State[A]{(0,-1)}{A1} \State[B]{(3,-1)}{B1}
+\State[C]{(6,-1)}{C1}
+% transitions 
+\EdgeL{A}{B}{a} 
+\ForthBackOffset \EdgeL{B}{C}{b} \EdgeL{C}{B}{b} 
+\RstEdgeOffset \EdgeL{A1}{B1}{a} 
+\ForthBackOffset \EdgeL{B1}{C1}{b} \EdgeL{C1}{B1}{b} 
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Zigzag edges}
+~
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+\medskip 
+        \footnotesize
+\verb+\ZZEdgeL[+\textsl{Pos}\verb+]{+%
+   \textsl{Start}\verb+}{+%
+   \textsl{End}\verb+}{+%
+   \textsl{Label}\verb+}+
+   
+\medskip 
+\verb+\ZZEdgeR[+\textsl{Pos}\verb+]{+%
+   \textsl{Start}\verb+}{+%
+   \textsl{End}\verb+}{+%
+   \textsl{Label}\verb+}+
+   \normalsize
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Draws a ``zigzag'' transition from the state \textsl{Start} to the 
+state \textsl{End} with the label \textsl{Label} on the left or
+the right side.\index{ZZEdge}
+\end{minipage}%
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,0)}{A} \State[B]{(2,-2)}{B} \State[C]{(4,2)}{C}
+\VSState{(6,0)}{D}
+% transitions 
+\EdgeR{A}{B}{a} \EdgeL{A}{C}{b} \EdgeR{B}{D}{c} 
+\ZZEdgeL{C}{D}{d} \ZZEdgeR{C}{B}{b}
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,0)}{A} \State[B]{(2,-2)}{B} \State[C]{(4,2)}{C}
+\VSState{(6,0)}{D}
+% transitions 
+\EdgeR{A}{B}{a} \EdgeL{A}{C}{b} \EdgeR{B}{D}{c} 
+\ZZEdgeL{C}{D}{d} \ZZEdgeR{C}{B}{b}
+%
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+\paragraph{Lining up}
+~
+By default, labels of states are centered. When states are aligned, it may happen
+that this seems ungainly. The following command solves this problem.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\AlignedLabel+ \ee 
+   
+\medskip 
+\verb+\FloatingLabel+ \ee 
+   
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Put labels of states on a virtual baseline.\index{AlignedLabel}
+
+\smallskip 
+
+Center the label of states vertically.\index{FloatingLabel}
+\end{minipage}%
+
+\noi
+Default option is \verb+\FloatingLabel+.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\bigskip 
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(0,-4)(6,1)}
+% states
+\State[p]{(0,0)}{A} \State[b]{(3,0)}{B} \State[a]{(6,0)}{C}
+\AlignedLabel
+\State[p]{(0,-3)}{A1} \State[b]{(3,-3)}{B1} \State[a]{(6,-3)}{C1}
+%transitions 
+\EdgeL{A}{B}{a} \ArcL{B}{C}{b} \ArcL{C}{B}{c} 
+\EdgeL{A1}{B1}{a} \ArcL{B1}{C1}{b} \ArcL{C1}{B1}{c} 
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-4)(6,1)}
+% states
+\State[p]{(0,0)}{A} \State[b]{(3,0)}{B} \State[a]{(6,0)}{C}
+\AlignedLabel
+\State[p]{(0,-3)}{A1} \State[b]{(3,-3)}{B1}
+\State[a]{(6,-3)}{C1}
+%transitions 
+\EdgeL{A}{B}{a} \ArcL{B}{C}{b} \ArcL{C}{B}{c} 
+\EdgeL{A1}{B1}{a} \ArcL{B1}{C1}{b} \ArcL{C1}{B1}{c} 
+%
+\end{VCPicture}%
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{The command \texttt{$\backslash$Point}}
+~
+This commands is a direct translation of a command from \PSTricks.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\Point{+%
+   $(x,y)$\verb+}{+%
+   \textsl{Name}\verb+}+
+   
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Sets a point with name \textsl{Name} at the coordinate $(x,y)$.\index{Point}
+\end{minipage}% 
+
+This command does \textsl{not} draw any point.
+With \PSTricks, and thus with \VCSG, any line or curve must be drawn
+\textsl{between} two predefined objects. That is the aim of \verb+\Point+.
+For instance, initial and final arrows are drawn with this trick:
+any time a state is defined, eight points are silently and implicitely defined around it.
+
+%\noi 
+%\hspace*{-\jsIndent}
+%\begin{minipage}[t]{\ColoText}
+%       \par\vspace*{0mm}% pour l'alignement sur le haut
+%       \footnotesize
+%\verb+\Edge{+%
+%   \textsl{Start}\verb+}{+%
+%   \textsl{End}\verb+}+
+%   
+%\end{minipage}% 
+%\hspace*{1.2em}% 
+%\begin{minipage}[t]{\ColoFigu}%
+%% \setlength{\parindent}{\parindenttemp}%
+%\par\vspace*{0mm}% pour l'alignement sur le haut
+%Sets a point with name \textsl{Name} at the coordinate \textsl{x,y}.
+%
+%\smallskip 
+%
+%Draws a straight arrow from the state \textsl{Start} to the state \textsl{End}.
+%\end{minipage}%
+%
+%\medskip
+
+\subsection{Writing composite labels}
+Some useful tools are proposed to write composite labels on arrows.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\IOL{+%
+   \textsl{Input}\verb+}{+%
+   \textsl{Output}\verb+}+
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Produces the string \textsl{Input}$\mid$\textsl{Output}, useful
+when one draws transducers. This allows to modify the way it is done
+by redefining command \verb+\IOL+.\index{IOL}
+
+\end{minipage}%
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\Stack+\texttt{\textsl{X}}\verb+Labels{+%
+   \textsl{Label1}\verb+}{+%
+   \textsl{Label2}\verb+}+
+
+\medskip
+\verb+\Stack+\texttt{\textsl{X}}\verb+LabelsP{+%
+   \textsl{Label1}\verb+}{+%
+   \textsl{Label2}\verb+}+
+
+\medskip
+\verb+\Line+\texttt{\textsl{X}}\verb+LabelsP{+%
+   \textsl{Label1}\verb+}{+%
+   \textsl{Label2}\verb+}+
+
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+In these commands, \texttt{\textsl{X}} equals \texttt{Two} or \texttt{Three}.
+In the later case, commands have obviously three arguments.
+
+\verb+\Stack+\texttt{\textsl{X}}\verb+Labels+ gives a vertical arrangement of labels, whereas
+\verb+\Stack+\texttt{\textsl{X}}\verb+LabelsP+ inserts symbols $+$ between them.
+\verb+\Line+\texttt{\textsl{X}}\verb+LabelsP+ is the horizontal version of \verb+\Stack+\texttt{\textsl{X}}\verb+LabelsP+;
+it can be redefined in order to change symbols, for instance.
+\index{StackLabels}\index{LineLabelsP}
+\end{minipage}%
+
+\noi
+The following automaton is the right sequential transducer that realizes the addition in base~$2$.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(-2,-2)(5,3)}
+% states
+\State[0]{(0,0)}{A} \State[1]{(3,0)}{B}
+\Initial[n]{A}
+\Final[s]{A} \FinalR{e}{B}{\IOL{}{1}}
+%transitions 
+\LoopW[.5]{A}{\StackTwoLabelsP{\IOL{0}{0}}{\IOL{1}{1}}}
+\LoopN[.7]{B}{\LineTwoLabelsP{\IOL{1}{0}}{\IOL{2}{1}}}
+\ArcL{A}{B}{\IOL{2}{0}}
+\ArcL{B}{A}{\IOL{0}{1}}
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(-2,-2)(5,3)}
+% states
+\State[0]{(0,0)}{A} \State[1]{(3,0)}{B}
+\Initial[n]{A}
+\Final[s]{A} \FinalR{e}{B}{\IOL{}{1}}
+%transitions 
+\LoopW[.5]{A}{\StackTwoLabelsP{\IOL{0}{0}}{\IOL{1}{1}}}
+\LoopN[.7]{B}{\LineTwoLabelsP{\IOL{1}{0}}{\IOL{2}{1}}}
+\ArcL{A}{B}{\IOL{2}{0}}
+\ArcL{B}{A}{\IOL{0}{1}}
+%
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+%%%%%%%%%%%%%%%%%%%%%%
+\section{Composing a picture}\label{sec.com}
+
+The commands described above allow to define most of the figures 
+representing automata in any textbook or technical paper.
+Before turning to more sophisticated commands that are used 
+for less than 5 percent of the elements and that appear in less than 
+10 percent of the figures, let us turn to few commands that help in 
+composing the figures.
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Structuring the automaton: The \texttt{VCPut} command}\label{subsec.rpu}
+
+In many automata, a same pattern in states, and also in edges, is 
+reproduced several times in the figure.
+The idea is not to try to ``program'' these regular patterns but to 
+allow the use of the ``copy-and-paste'' operations in the source 
+file as much as possible, with minimum corrections afterwards.
+This will be achieved easily with the help of the  
+command~\verb+\VCPut+.\index{VCPut}
+
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\VCPut{(+$x$,$y$\verb+)}{+ instructions\ldots \verb+}+
+\normalsize
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Translates the result of the instructions by the vector~($x$, $y$).
+\end{minipage}%
+
+\medskip
+\noi
+Note that this command is taken directly from \PSTricks but uses \VCSG's syntax.
+%the special syntax of that command which is taken directly from 
+%PSTricks: the first argument ($x$,$y$)
+%\emph{is not} put inside braces.
+%There should not be any space before, after, and inside the 
+%parentheses.
+
+Of course the commands that are to be put as the second argument 
+of~\verb+\VCPut+ are the defining states commands, with possibly  
+other~\verb+\VCPut+ inside. 
+The structuration of the figure \textit{via} the use of~\verb+\VCPut+
+commands does not only save typing.
+It makes also easier the tuning of the figure, and the reusability of 
+its parts.
+
+In the example below, the two~\verb+\VCPut+ are used to place the 
+two parts of the automaton.
+
+\medskip
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+%       \ShowFrame 
+\SmallPicture\VCDraw{%
+\begin{VCPicture}{(-1,-2)(7,5)}
+\VCPut{(0,3)}{\State[j]{(0,0)}{A1} \State[r]{(3,0)}{B1}}
+\VCPut{(3,0)}{\State[s]{(0,0)}{A2} \State[u]{(3,0)}{B2}}
+%
+\Initial{A1} \Final{B2} 
+\EdgeL{A1}{B1}{b} \LoopN[.5]{A1}{a+b} \LoopN[.5]{B1}{2a+2b}
+\EdgeR{A2}{B2}{b} \LoopS[.5]{A2}{2a+2b} \LoopS[.5]{B2}{4a+4b}
+\EdgeR{A1}{A2}{b} \EdgeL{B1}{B2}{b} \EdgeL{A1}{B2}{b}
+%
+\end{VCPicture}
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(-1,-2)(7,5)}
+\VCPut{(0,3)}{\State[j]{(0,0)}{A1} \State[r]{(3,0)}{B1}}
+\VCPut{(3,0)}{\State[s]{(0,0)}{A2} \State[u]{(3,0)}{B2}}
+%
+\Initial{A1} \Final{B2}
+\EdgeL{A1}{B1}{b} \LoopN[.5]{A1}{a+b} \LoopN[.5]{B1}{2a+2b}
+\EdgeR{A2}{B2}{b} \LoopS[.5]{A2}{2a+2b} \LoopS[.5]{B2}{4a+4b}
+\EdgeR{A1}{A2}{b} \EdgeL{B1}{B2}{b} \EdgeL{A1}{B2}{b}
+%
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+\noi
+The \verb+\VCPut+ command can also be used to rotate a figure by using
+an optional parameter.
+
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\VCPut[+$r$\verb+]{(+$x$,$y$\verb+)}{+ instructions\ldots \verb+}+
+\normalsize
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Rotate the result of the instructions with angle~$r$ and center~$(0,0)$
+and then translate it by the vector~($x$, $y$).
+\end{minipage}%
+
+\medskip
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+%       \ShowFrame 
+\SmallPicture\VCDraw{%
+\begin{VCPicture}{(-1,-1)(5,4)}
+\StateVar[(0,0)]{(0,0)}{O}
+\State[A]{(3,0)}{A}
+\VCPut[90]{(0,0)}{\StateVar[90^o]{(3,0)}{B}}
+\VCPut[90]{(4,0)}{\State[C]{(3,0)}{C}}
+\LArcR{A}{B}{r} \EdgeL{B}{C}{t}
+\end{VCPicture}
+}
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(-1,-1)(5,4)}
+\StateVar[(0,0)]{(0,0)}{O}
+\State[A]{(3,0)}{A}
+\VCPut[90]{(0,0)}{\StateVar[90^o]{(3,0)}{B}}
+\VCPut[90]{(4,0)}{\State[C]{(3,0)}{C}}
+\LArcR{A}{B}{r} \EdgeL{B}{C}{t}
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+The default option is that labels of states (except those of \emph{variable states}) are put in a horizontal
+position (\verb+\RigidLabel+), but the command \verb+\SwivelLabel+
+makes them rotate with the figure.\index{RigidLabel}\index{SwivelLabel}
+
+\medskip
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+%       \ShowFrame 
+\SmallPicture\VCDraw{%
+\begin{VCPicture}{(-5,-5)(5,5)}
+\SwivelLabel
+\State[1]{(4,0)}{A1}\LoopE{A1}{a}
+\VCPut[40]{(0,0)}{\State[2]{(4,0)}{A2}\LoopE{A2}{a}\ArcR{A1}{A2}{b}}
+\VCPut[80]{(0,0)}{\State[3]{(4,0)}{A3}\LoopE{A3}{a}\ArcR{A2}{A3}{b}}
+\VCPut[120]{(0,0)}{\State[4]{(4,0)}{A4}\LoopE{A4}{a}}
+\VCPut[160]{(0,0)}{\State[5]{(4,0)}{A5}\LoopE{A5}{a}}
+\RigidLabel
+\VCPut[200]{(0,0)}{\State[6]{(4,0)}{A6}\LoopE{A6}{a}\ArcR{A5}{A6}{b}}
+\VCPut[240]{(0,0)}{\State[7]{(4,0)}{A7}\LoopE{A7}{a}\ArcR{A6}{A7}{b}}
+\VCPut[280]{(0,0)}{\State[8]{(4,0)}{A8}}
+\VCPut[320]{(0,0)}{\State[9]{(4,0)}{A9}}
+\ArcR{A3}{A4}{b} \ArcR{A4}{A5}{b}
+\ArcR{A7}{A8}{b} \ArcR{A8}{A9}{b} \ArcR{A9}{A1}{b}
+\LoopL{280}{A8}{a} \LoopL{320}{A9}{a}
+\end{VCPicture}
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(-5,-5)(5,5)}
+\SwivelLabel
+\State[1]{(4,0)}{A1}\LoopE{A1}{a}
+\VCPut[40]{(0,0)}{%
+   \State[2]{(4,0)}{A2}\LoopE{A2}{a}\ArcR{A1}{A2}{b}}
+\VCPut[80]{(0,0)}{%
+   \State[3]{(4,0)}{A3}\LoopE{A3}{a}\ArcR{A2}{A3}{b}}
+\VCPut[120]{(0,0)}{\State[4]{(4,0)}{A4}\LoopE{A4}{a}}
+\VCPut[160]{(0,0)}{\State[5]{(4,0)}{A5}\LoopE{A5}{a}}
+\RigidLabel
+\VCPut[200]{(0,0)}{%
+   \State[6]{(4,0)}{A6}\LoopE{A6}{a}\ArcR{A5}{A6}{b}}
+\VCPut[240]{(0,0)}{%
+   \State[7]{(4,0)}{A7}\LoopE{A7}{a}\ArcR{A6}{A7}{b}}
+\VCPut[280]{(0,0)}{\State[8]{(4,0)}{A8}}
+\VCPut[320]{(0,0)}{\State[9]{(4,0)}{A9}}
+\ArcR{A3}{A4}{b} \ArcR{A4}{A5}{b}
+\ArcR{A7}{A8}{b} \ArcR{A8}{A9}{b} \ArcR{A9}{A1}{b}
+\LoopL{A8}{280}{a} \LoopL{A9}{320}{a}
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+One can notice that \verb+\RigidLabel+ only acts on labels of states.
+To draw arcs with ``rigid'' labels, commands have to be written outside
+\verb+\VCPut+. We shall see later how to deal with the command \verb+\LoopL+
+in order to give any orientation to loops without using \verb+\VCPut+.
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Using separate files}\label{subsec.fil}
+
+In order to use several times the same figure in the same or in 
+different papers, or even, as we shall see in the next section, in two 
+different contexts such as in a paper and in a slide for a talk,
+it is convenient to have the figure written into a file and imported
+in the main \LaTeX \ source file.
+This can be handled by the following macros.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\VCCall{+\textsl{FileName}\verb+}+
+\normalsize
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Calls the file \textsl{FileName} and apply the~\verb+\VCScale+.\index{VCCall}
+\end{minipage}%
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\SetVCDirectory{+\textsl{Directory}\verb+}+
+\normalsize
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Sets to \textsl{Directory} the directory where the file 
+\textsl{FileName} will be taken by the macro \verb+\VCCall+ .
+Set to the current directory by default.
+Usual Unix syntax is used to name directories.
+\end{minipage}%
+
+\medskip
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\ShowName+ \ee 
+\verb+\HideName+ 
+\normalsize
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Sets or unsets a flag that controls the printing of  
+\textsl{FileName} besides the figure drawn by \verb+\VCCall+.
+\index{ShowName}\index{HideName}
+\end{minipage}%
+
+\medskip
+\noi
+For the example below, the following lines have been saved in the 
+file \verb+TwoStates.tex+:
+\small
+\begin{verbatim}
+\begin{VCPicture}{(-1,-1)(4,1)}
+\State[p]{(0,0)}{A} \State[q]{(3,0)}{B}%
+\ArcL{A}{B}{b} \LArcL{B}{A}{a} \LoopE{B}{a}
+\end{VCPicture}
+\end{verbatim}
+\normalsize 
+
+\verb+\VCCall+ applies the same parameters to figures described
+in files as \verb+\VCDraw+ does. 
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+% \begin{center}
+\ee \VCCall{TwoStates}
+
+\medskip
+
+\SmallPicture \ShowName 
+\ee \VCCall{TwoStates}
+% \end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\VCCall{TwoStates}
+
+\SmallPicture \ShowName 
+\VCCall{TwoStates}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Frame and grid}\label{subsec.ffra}
+
+% %%%%%%%%%%%%%%%%%%%%%%
+% \paragraph{Frame and grid}
+% ~
+Two macros that help placing the figure in the page, and the states in 
+the figure.  
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\ShowFrame+ \ee \verb+\HideFrame+ \ee
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Sets or unsets a flag that controls the drawing of the \emph{bounding box} which is 
+defined by the parameter of the \verb+\VCPicture+ environment.
+\index{ShowFrame}\index{HideFrame}
+\end{minipage}%
+
+\medskip
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\ShowGrid+ \ee \verb+\HideGrid+ \ee 
+   \end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Sets or unsets a flag that controls the drawing of a \emph{grid} inside the 
+bounding box which is  
+defined by the parameter of the \verb+\VCPicture+ environment.
+\index{ShowGrid}\index{HideGrid}
+\end{minipage}%
+
+
+\medskip
+\noi 
+Default settings are \verb+\HideFrame+  and  \verb+\HideGrid+ .
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+% \begin{center}
+\ee \ShowFrame  \ShowGrid \VCCall{TwoStates}
+
+% \end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\medskip
+\footnotesize
+\begin{verbatim}
+\ShowFrame \ShowGrid \VCCall{TwoStates}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+
+\subsection{The grid scale}
+This parameter controls the value of the \PSTricks unit length.
+As values that define the size of states and the width of lines are given with fixed units
+(as \texttt{cm} or \texttt{pt}), they are not modified by this parameter.
+However, the scale of the grid on which they are put, \ie the
+distance between each other is modified by grid scale.
+This parameter is actually the first (optional) argument of \verb+\VCDraw+
+or \verb+\VCCall.+
+
+The following example is the figure of Subsection~\ref{subsec.ex1}
+with another grid scale:
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+\VCDraw[.7]{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[i]{(0,0)}{A} \State[q]{(3,0)}{B} \State[t]{(6,0)}{C}
+% initial-final
+\Initial{A} \Final{C}
+% transitions 
+\EdgeR{A}{B}{2b} \EdgeR{B}{C}{2b} \LArcL{A}{C}{b}
+\LoopN{A}{a} \LoopS{A}{b} \LoopS[.5]{B}{2a+2b} 
+\LoopN[.75]{C}{4a} \LoopS[.75]{C}{4b}
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\VCDraw[.7]{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[i]{(0,0)}{A} \State[q]{(3,0)}{B} \State[t]{(6,0)}{C}
+% initial-final
+\Initial{A} \Final{C}
+% transitions 
+\EdgeR{A}{B}{2b} \EdgeR{B}{C}{2b} \LArcL{A}{C}{b}
+\LoopN{A}{a} \LoopS{A}{b} \LoopS[.5]{B}{2a+2b} 
+\LoopN[.75]{C}{4a} \LoopS[.75]{C}{4b}
+\end{VCPicture}
+}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+We can call \verb+TwoStates+ with another grid scale.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+% \begin{center}
+\ee \ShowFrame  \ShowGrid \VCCall[1.5]{TwoStates}
+
+% \end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\medskip
+\bigskip
+\footnotesize
+\begin{verbatim}
+\ShowFrame \ShowGrid \VCCall[1.5]{TwoStates}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+%%%%%%%%%%%%%%%%%%%%%%
+\section{Parametrized drawing commands}\label{sec.par}
+
+\noi
+In the sequel, the letter \texttt{X} stands for either 
+\texttt{L} or \texttt{R}.
+
+\subsection{Parametrized loops}
+One can draw loops around state with any direction.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+\medskip 
+        \footnotesize
+\verb+\LoopX[+\textsl{Pos}\verb+]{+%
+   \textsl{Direction}\verb+}{+%
+   \textsl{Name}\verb+}{+%
+   \textsl{Label}\verb+}+
+   
+\medskip 
+\verb+\CLoopX[+\textsl{Pos}\verb+]{+%
+   \textsl{Direction}\verb+}{+%
+   \textsl{Name}\verb+}{+%
+   \textsl{Label}\verb+}+
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Draw a loop around the state {\sl Name} in direction {\sl Direction},
+which is an angle with respect to east, with label {\sl Label}.
+
+As the label 
+is placed outside the loop, \verb+\LoopL+ is reversed
+with respect to \verb+\LoopR+.
+The opening of the loop is~$60^o$ for the \verb+LoopX+ commands,
+$44^o$ for the \verb+CLoopX+ commands.\index{Loop}\index{CLoop}
+\end{minipage}%
+
+\medskip 
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+\SmallPicture\VCDraw{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[i]{(0,0)}{A} \State[q]{(3,0)}{B} \State[t]{(6,0)}{C}
+% initial-final
+\Initial{A} \Final{C}
+% transitions 
+\EdgeR{A}{B}{2b} \EdgeR{B}{C}{2b} \LArcL{A}{C}{b}
+\LoopR{120}{A}{a} \LoopL{-120}{A}{b} \LoopS[.5]{B}{2a+2b} 
+\LoopL[.5]{60}{C}{4a} \LoopR[.5]{-60}{C}{4b}
+%
+\end{VCPicture}%
+}
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[i]{(0,0)}{A} \State[q]{(3,0)}{B} \State[t]{(6,0)}{C}
+% initial-final
+\Initial{A} \Final{C}
+% transitions 
+\EdgeR{A}{B}{2b} \EdgeR{B}{C}{2b} \LArcL{A}{C}{b}
+\LoopR{120}{A}{a} \LoopL{-120}{A}{b} \LoopS[.5]{B}{2a+2b} 
+\LoopL[.5]{60}{C}{4a} \LoopR[.5]{-60}{C}{4b}
+%
+\end{VCPicture}%
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+\subsection{Parametrized arcs}
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColoText+9em}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+% \medskip 
+        \footnotesize
+\verb+\VArcX[+\textsl{Pos}\verb+]{arcangle=+%
+   \textsl{x}\verb+,ncurv=+%
+   \textsl{v}\verb+}{+%
+   \textsl{Start}\verb+}{+%
+   \textsl{End}\verb+}{+%
+   \textsl{Label}\verb+}+
+\end{minipage}% 
+  \begin{minipage}[c]{\ColoFigu-9em}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+% \medskip
+% \bigskip
+Draw an arc from \textsl{Start} to \textsl{End} with label 
+\textsl{Label}, with a starting angle \texttt{x} and an eccentricity 
+\texttt{v}. 
+\index{VArc}
+\end{minipage}%
+
+\noi
+The starting angle is defined by the parameter \verb+arcangle=+$x$
+and is measured, going to the left if 
+\texttt{X=L}, to the right if \texttt{X=R}, from the line that goes 
+from \textsl{Start} to \textsl{End}, called the \emph{base line}.
+% with an angle defined respectively by \texttt{arcangle}.
+The parameter \verb+ncurv+ is the `eccentricity' of the arc and some 
+how measures the distance between the center of the arc and the base 
+line as one can observe on the figure below.
+\index{eccentricity (of curve)}
+
+The first (non optional) parameter of \verb+\VArcX+ contains 
+PSTrick's parameters, written with PSTrick's syntax: they are 
+separated by a comma and there must be no space inside the braces 
+that contains them.  
+All these parameters are optional, but this first parameter of 
+\verb+\VArcX+ itself is not an optional argument, which 
+means that this command must always have
+four arguments (and possibly an optional one): 
+
+\begin{minipage}[c]{6cm}
+\verb+\VArcL{arcangle=15}{A}{B}{x}+\\
+\verb+\VArcL{ncurve=1}{A}{B}{x}+\\
+\verb+\VArcL{}{A}{B}{x}+
+\end{minipage}
+\ are syntactically correct commands.
+
+\noi 
+Default value for \verb+arcangle+
+is the same as for \verb+\LArc+, whereas the default \verb+ncurv+
+value is~$1$. 
+
+\medskip
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(-3,-2)(3,6)}
+%
+\LargeState
+\State[A]{(-2,0)}{A}
+\State[B]{(2,0)}{B}
+%transitions
+\VArcR[.5]{arcangle=60,ncurv=.2}{A}{B}{0.2}
+\VArcL[.5]{arcangle=60,ncurv=.8}{A}{B}{0.8}
+\VArcL[.5]{arcangle=60,ncurv=2}{A}{B}{2}
+\VArcR[.5]{arcangle=60,ncurv=6}{A}{B}{6}
+\VArcL{arcangle=-60}{A}{B}{60}
+\VArcR{arcangle=-90}{A}{B}{90}
+\VArcR[.2]{arcangle=-120}{A}{B}{120}
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(-3,-2)(3,6)}
+% states
+\LargeState
+\State[A]{(-2,0)}{A}
+\State[B]{(2,0)}{B}
+%transitions
+\VArcR[.5]{arcangle=45,ncurv=.2}{A}{B}{0.2}
+\VArcL[.5]{arcangle=45,ncurv=.8}{A}{B}{0.8}
+\VArcL[.5]{arcangle=45,ncurv=2}{A}{B}{2}
+\VArcR[.5]{arcangle=45,ncurv=6}{A}{B}{6}
+\VArcL{arcangle=-60}{A}{B}{60}
+\VArcR{arcangle=-90}{A}{B}{90}
+\VArcR[.2]{arcangle=-120}{A}{B}{120}
+%
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+
+\subsection{General curve}
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColoText+12em}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+% \medskip 
+        \footnotesize
+\verb+\VCurveX[+\textsl{Pos}\verb+]{angleA=+%
+   \textsl{x}\verb+,angleB=+%
+   \textsl{y}\verb+,ncurv=+%
+   \textsl{v}\verb+}{+%
+   \textsl{Start}\verb+}{+%
+   \textsl{End}\verb+}{+%
+   \textsl{Label}\verb+}+
+   
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColoFigu-12em}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+% \medskip
+% \bigskip
+Draw a curve from \textsl{Start} to \textsl{End} with label 
+\textsl{Label}, starting with an angle \textsl{x}, arriving with an 
+angle \textsl{y} and with an eccentricity \textsl{v}.
+\end{minipage}%
+\index{VCurve}
+\index{angleA}
+\index{angleB}
+
+\medskip
+\noi
+A (B\'ezier) curve, computed by \PSTricks with the three parameters:
+the \emph{starting angle} fixed by \verb+angleA=+\textsl{x}, the 
+ending angle fixed by \verb+angleB=+\textsl{y}, and the eccentricity 
+\verb+ncurv=+\textsl{v}.
+The two angles are measured, as trigonometric angles are, from
+the East direction and counterclockwise. 
+The syntax of these parameters is \PSTricks's and they are optional, 
+as in \verb+\VArcX+.
+Default values for \verb+angleA+
+and \verb+angleB+ are respectively $0$ and $180$; \verb+ncurv+ is fixed
+by default to $1$.
+
+\medskip
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+\scalebox{\VCScale}{%
+\begin{VCPicture}{(-4,-4)(4,4)}
+%
+\State[A]{(-3,0)}{A}
+\State[B]{(0,0)}{B}
+\State[C]{(3,0)}{C}
+%transitions
+\VCurveL{angleA=90,angleB=135}{A}{B}{1}
+\VCurveR[.5]{angleA=90,angleB=135,ncurv=.5}{A}{B}{0.5}
+\VCurveL{angleA=90,angleB=135,ncurv=2}{A}{B}{2}
+\VCurveR[.6]{angleA=-80,angleB=175}{A}{B}{b}
+\VCurveR[.6]{angleA=-80,angleB=175}{A}{C}{c}
+\VCurveL{angleB=20,angleB=160}{B}{C}{d}
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(-4,-4)(4,4)}
+%states
+\State[A]{(-3,0)}{A}
+\State[B]{(0,0)}{B}
+\State[C]{(3,0)}{C}
+%transitions
+\VCurveL{angleA=90,angleB=135}{A}{B}{1}
+\VCurveR[.5]{angleA=90,angleB=135,ncurv=.5}{A}{B}{0.5}
+\VCurveL{angleA=90,angleB=135,ncurv=2}{A}{B}{2}
+\VCurveR[.6]{angleA=-80,angleB=175}{A}{B}{b}
+\VCurveR[.6]{angleA=-80,angleB=175}{A}{C}{c}
+\VCurveL{angleB=20,angleB=160}{B}{C}{d}
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+
+\subsection{Transitions labelling}
+
+\paragraph{Initial and final arrows with a label} When one deals with
+tranducers, or automata with multiplicity, one may need to put
+some labels on initial or final arrows.
+
+\medskip 
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\InitialL[+\textsl{Pos}\verb+]{+%
+   \textsl{Dir}\verb+}{+\textsl{Name}\verb+}{+\textsl{Label}\verb+}+
+\\ \verb+\InitialR[+\textsl{Pos}\verb+]{+%
+   \textsl{Dir}\verb+}{+\textsl{Name}\verb+}{+\textsl{Label}\verb+}+
+\normalsize
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Makes the state \textsl{Name} initial and writes \textsl{Label}
+on the left or the right size of the incoming arrow.\index{Initial}\index{Final}
+\end{minipage}%
+
+\medskip 
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\FinalL[+\textsl{Pos}\verb+]{+%
+   \textsl{Dir}\verb+}{+\textsl{Name}\verb+}{+\textsl{Label}\verb+}+
+\\ \verb+\FinalR[+\textsl{Pos}\verb+]{+%
+   \textsl{Dir}\verb+}{+\textsl{Name}\verb+}{+\textsl{Label}\verb+}+
+\normalsize
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Makes the state \textsl{Name} final and writes \textsl{Label}
+on the left or the right size of the outgoinging arrow.
+\end{minipage}%
+
+
+\medskip 
+\noi 
+Here, the parameter \textsl{Dir} is not optional. Whereas, there is
+an optional parameter \textsl{Pos} that defines the position
+of the label on the arrow. Its default values is fixed to $0.1$ ({\it resp.} $0.9$)
+for initial ({\it resp.} final) arrows. The label is thus written far enough of the state.
+
+
+\paragraph{Independant labelling of transitions}
+\medskip
+There exists commands to label transitions that
+have not been labeled yet or to put a second label on them.
+These commands must directly follow the definition of
+the transition that will be labeled.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\LabelL[+%
+   \textsl{Pos}\verb+]{+%
+   \textsl{Label}\verb+}+
+   
+\medskip 
+\verb+\LabelR[+%
+   \textsl{Pos}\verb+]{+%
+   \textsl{Label}\verb+}+
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Puts a label on the previous transition. The default position of the label
+is the same as for edges.\index{Label}
+\end{minipage}%
+
+
+\medskip
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+%       \ShowFrame 
+%\SmallPicture
+\VCDraw{%
+\begin{VCPicture}{(-3,-2)(3,2)}
+\State[A]{(-2,1)}{A} \State[B]{(2,1)}{B}
+\State[C]{(-2,-1)}{C} \State[D]{(2,-1)}{D}
+\EdgeL{A}{B}{u} \LabelR{\varphi(u)=3}
+\LArcR{D}{C}{} \LabelL{v}
+\VCurveL[.3]{angleA=45,angleB=-45}{B}{D}{a}
+\LabelL[.5]{b} \LabelL[.7]{c}
+%
+\end{VCPicture}
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(-3,-2)(3,2)}
+\State[A]{(-2,1)}{A} \State[B]{(2,1)}{B}
+\State[C]{(-2,-1)}{C} \State[D]{(2,-1)}{D}
+%
+\EdgeL{A}{B}{u} \LabelR{\varphi(u)=3}
+\LArcR{D}{C}{} \LabelL{v}
+\VCurveL[.3]{angleA=45,angleB=-45}{B}{D}{a}
+\LabelL[.5]{b} \LabelL[.7]{c}
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+\subsection{Miscellaneous}
+
+
+\paragraph{Loops on variable states}
+Instead of using \verb+\VarLoopN+ or \verb+\VarLoopS+, one can modify
+parameters of loops to draw, for instance, many loops on variable states.
+As usual, these loops may be drawn on the south or north side of
+the states only.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\VarLoopOn+
+   
+\medskip 
+\verb+\VarLoopOff+
+
+\medskip 
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Modifies parameters in order to draw loops around variable states.
+\index{VarLoopOn}\index{VarLoopOff}
+
+\smallskip 
+
+Restore the normal style of loops.
+\end{minipage}%
+
+\noi
+Command \verb+\LoopVarN+ is equivalent to the sequence
+\verb+\LoopVarOn \LoopN \LoopVarOff+.
+
+\paragraph{Saving memory}
+
+In default mode, the call to a \verb+\State+ command 
+defines eight additional points, that allow then to draw initial and 
+final arrows in the prescribed compass direction.
+In case of large figures, with many states, this ought to lead
+to an overflow of \TeX\   memory. This is the reason why one can define
+states without any additional point.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\PlainState+
+   
+\medskip 
+\verb+\FullState+ 
+   
+\medskip 
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Draw states with no additional points.\index{PlainState}
+
+\smallskip 
+
+Draw states with eight points to draw initial or final arrows.\index{FullState}
+\end{minipage}%
+
+Of course, when in \verb+\PlainState+ mode, one can define states
+with additional points.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\IFState[+\textsl{Label}\verb+]{+%
+   $(x,y)$\verb+}{+%
+   \textsl{Name}\verb+}+
+   
+\medskip 
+\verb+\IFXState[+\textsl{Label}\verb+]{+%
+   $(x,y)$\verb+}{+%
+   \textsl{Name}\verb+}+
+   
+\medskip 
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Draws a state with four points ($n$, $s$, $e$, $w$).\index{IFState}
+
+\smallskip 
+
+Draws a state with eight points ($n$, $s$, $e$, $w$, $ne$, $se$, $nw$, $sw$).
+\index{IFXState}
+\end{minipage}%
+
+In \verb+\PlainState+ mode, one should not apply an \verb+\Initial+
+or a \verb+\Final+ command to a state defined by \verb+\State+.
+Likewise, these commands can be only used for \verb+\IFState+
+with directions $n$, $s$, $e$ and $w$.
+
+Note that even when in \verb+\FullState+ mode, 
+variable states defined by \verb+\StateVar+ have
+ the same four additional points as \verb+\IFState+.
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+\section{Modifying and setting the parameters}\label{sec.mod}
+
+The reason why the commands in \VCSG are simple and concise is that 
+all the parameters that control the geometry (size, angles, 
+\ldots) and the drawing (line width, line style, line color, \ldots) 
+of the states and transitions in an automaton are preset by \VCSG and 
+can be kept implicit.
+But there are two instances where a user may want to modify these 
+preset values.
+
+The first case is when one needs to tune a parameter in order to make 
+the figure more readable, or nicer. 
+Such a case has already been considered in 
+sections~\ref{subsec.edg}, \ref{subsec.arc} and~\ref{subsec.loo}, 
+where the parameter \textsl{Pos}   
+that controls the position of the label of a transition along the 
+edge has been modified with an optional argument. 
+The parameters that will be considered in this section are not 
+optional parameters of already defined commands but parameters that 
+are set with their own commands.
+
+The other case where a user will change the implicit parameters of 
+a figure or, more likely, of a set of figures, is when he (or she) 
+will be in the position to change completely the ``style'' of the 
+drawing.
+For instance, a same set of figures may be used in a paper \emph{and} in a 
+series of slides for the presentation of the paper.
+Of course, the figures have to be set at a larger scale, probably 
+in colour, and possibly with different relative sizes of the elements.
+
+We begin with the description of the options for the latter case, 
+which is by far simpler. We then explain the syntax convention taken 
+to coin the names of the many commands that control the many 
+parameters.
+Then comes the list of these parameters, for scaling first, then for 
+states, for transitions, and finally for the fine tuning of 
+some details of the drawing.
+
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Style files}\label{sec.sty-fil}
+
+The package \VCSG is loaded with default values that are all set up 
+in the file \verb+VCPref-default.tex+~. 
+\index{VCPref-default}%
+\index{VCPref-slides}%
+\index{VCPref-beamer}%
+\index{VCPref-mystyle}%
+The package comes with two other styles, in particular one for 
+drawing slides. 
+The normal way of using the different style files is to call the 
+wrapper \texttt{vaucanson-g} with an option:
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\usepackage[+\textsl{option}\verb+]{vaucanson-g}+
+\end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+The default option is \texttt{default}; the other possible options are
+\texttt{slides}, \texttt{beamer} and \texttt{mystyle}.
+%\footnotemark 
+\end{minipage}%
+% \footnotetext{There exists also, for downward compatibility, a 
+% \texttt{beamer} option which calls indeed the same file as 
+% \texttt{slides}.}%
+% \stepcounter{footnote}%
+% \medskip
+% \smallskip 
+
+Although it is not the normal usage,
+it is also possible to change style in the course of the text by 
+loading a style file with an \verb+\input+ command. In this
+case, it is recommended to reset all parameters by calling
+\verb+VCPref-default.tex+.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur+6em}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\hspace*{1cm}
+\begin{center}
+\VCCall{TwoStates}%
+\input{VCPref-slides}%
+\hspace*{-1cm}%
+\VCCall{TwoStates}\\
+\vspace*{.5cm}%
+\input{VCPref-default}%
+\input{VCPref-beamer}%
+% \hspace*{1cm}%
+\VCCall{TwoStates}\\
+\vspace*{.5cm}%
+\input{VCPref-default}
+\input{VCPref-mystyle}
+\VCCall{TwoStates}
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}%
+%%%%
+\begin{minipage}[c]{\ColSource-6em}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+% \vspace*{-1cm}
+\footnotesize
+\begin{verbatim}
+\usepackage{vaucanson-g}
+...
+\VCCall{TwoStates}
+...
+
+
+\usepackage[slides]{vaucanson-g}
+...
+\VCCall{TwoStates}
+...
+
+\usepackage[beamer]{vaucanson-g}
+...
+\VCCall{TwoStates}
+...
+
+...
+\input{VCPref-default} % gets back to default values
+\input{VCPref-mystyle}
+\VCCall{TwoStates}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+\medskip 
+
+\noi
+By editing the files \texttt{VCPref-mystyle}, \texttt{VCPref-beamer} 
+or \texttt{VCPref-slides}, and giving the  
+parameters the values he (or she) thinks more appropriate, a user may 
+easily build his (or her) own style for drawing automata. 
+Modifying directly \texttt{VCPref-default}, although possible, is not 
+necessarily a good idea.
+By cut, editing and paste, it is not difficult create many style 
+files, and even, with an easy modification of the wrapper 
+itself to make them possible options.
+The content of these style files are described in the following 
+subsections. \texttt{VCPref-slides}, \texttt{VCPref-beamer}
+and \texttt{VCPref-mystyle} are 
+given at Appendix~B.
+
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Syntax of parameter settings}
+\label{sec.syn}
+
+The set of values of all parameters defines a \emph{style} of figures.
+Most of parameters, \eg \verb+\StateLineColor+ which defines the 
+color of the line  
+that delimits a state, may be given a \emph{temporary} value, within a 
+figure, without changing the style.
+These parameters are dealt with by means of 3 different commands:
+
+\noi 
+% \hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\Chg+\textsl{Param}\verb+{+ \textsl{Val} \verb+}+
+   \end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Gives the new value \textsl{Val} to \verb+\+\emph{Param}.
+\end{minipage}%
+
+% \smallskip
+\noi 
+% \hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\Rst+\textsl{Param} 
+   \end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Restores the style value in \verb+\+\emph{Param}.
+\end{minipage}%
+
+% \smallskip
+\noi 
+% \hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\Set+\textsl{Param}\verb+{+ \textsl{Val} \verb+}+
+   \end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Sets the style value for \verb+\+\emph{Param} to \textsl{Val} .
+\end{minipage}%
+
+\medskip
+\noi 
+% In order to be effective, the command \verb+\Set+\textsl{Param} has to be 
+% called \emph{outside} a picture.
+The command \verb+\Set+\textsl{Param} can be 
+called \emph{outside} a \verb+\VCPicture+ environment, in which case 
+it will be effective in all subsequent figures, until a new setting 
+of the same parameter.
+Its natural place, if it is considered as a modification of the style,
+is in the preamble, after the call to the package \VCSG.
+If the command \verb+\Set+\textsl{Param} is
+called \emph{inside} a \verb+\VCPicture+ environment, its effect will 
+be restricted to that figure.
+
+Such parameters will be called \emph{adjustable parameters} in the 
+sequel.
+
+Note that in the case where \verb+\+\textsl{Param} is a value
+(a \emph{length} or a \emph{scale}), the 
+value of \textsl{Val} in \verb+\Chg+\textsl{Param}\verb+{+\textsl{Val}\verb+}+ is a 
+\emph{coefficient} which is applied to the style value of \verb+\+\textsl{Param}
+defined with \verb+\Set+\textsl{Param}\verb+{+\textsl{Val}\verb+}+.
+Therefore, in this case, \verb+\Rst+\textsl{Param} is equivalent to 
+\verb+\Chg+\textsl{Param}\verb+{1}+. 
+
+The other parameters, as those that define the ``dimmed'' style,
+are called \emph{preset parameters}.
+%Belong to that class those parameters that can be ``adjusted'' by means 
+%of an optionnal argument, \eg \verb+\EdgeLabelPosit+ which gives 
+%the implicit position of the label on an edge.
+
+There is finally a class of parameters that fall in between the 
+adjustable and the preset ones, those for which several values are 
+``preset'' but that can be given other values. 
+%For instance, the scale of the 
+%picture  is fixed by the parameter \verb+\VCScale+: it can given 
+%the preset values \verb+\NormalScale+, \verb+\SmallScale+ or 
+%\verb+\LargeScale+ 
+%by means of the command \verb+\NormalPicture+, \verb+\SmallPicture+ 
+%or \verb+\LargePicture+ respectively, or given any chosen value 
+%\textsl{Val} by the command \verb+\FixVScale{+\textsl{Val}\verb+}+ .
+%
+These parameters will be called \emph{multivalued preset parameters}.
+
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Scale parameter {\rm(Multivalued preset parameter)}}\label{sec.sca-par}
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\FixVCScale{+\textsl{Scale}\verb+}+
+   \end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Sets \verb+\VCScale+ to \textsl{Scale}.\index{FixVCScale}
+\end{minipage}%
+
+\medskip 
+\noi 
+The commands 
+\verb+\MediumPicture+, \verb+\SmallPicture+, \verb+\TinyPicture+ \ 
+and \verb+\LargePicture+ set  \verb+\VCScale+ to the values
+\verb+\MediumScale+, \verb+\SmallScale+, \verb+\TinyScale+
+and \verb+\LargeScale+ respectively.
+Their values are
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\verb+\TinyScale+ & \verb+\SmallScale+ & \verb+\MediumScale+ & 
+\verb+\LargeScale+\\ 
+\hline
+$0.42$ & $0.5$ &  $0.6$ & $0.85$ \\
+\hline
+\end{tabular}
+\end{center}
+%\texttt{0.85} respectively and can be modified with a \verb+\renewcommand+.
+
+These preset values can be modified by a \verb+\renewcommand+.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{State parameters}\label{sec.sta-par}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{State diameter {\rm(Multivalued preset parameter)}}
+~
+This parameter controls, \via the commands 
+\verb+\MediumState+, \verb+\SmallState+ 
+or \verb+\LargeState+ the value of a number of other preset parameters.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColoText}
+        \par\vspace*{0mm}% pour l'alignement sur le haut
+        \footnotesize
+\verb+\FixStateDiameter{+\textsl{Diam}\verb+}+
+   \end{minipage}% 
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColoFigu}%
+% \setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+Sets the state diameter to \textsl{Diam} (\textsl{Diam} is 
+a length) until the next call to a \verb+\ZState+ command, or to the 
+next figure if called inside a \verb+\VCPicture+.\index{FixStateDiameter}
+\end{minipage}%
+
+\smallskip
+%\noi 
+%\hspace*{-\jsIndent}
+%\begin{minipage}[t]{\ColoText}
+%       \par\vspace*{0mm}% pour l'alignement sur le haut
+%       \footnotesize
+%\verb+\setlength{\ZStateDiameter}{+\textsl{ZDiam}\verb+}+
+%   \end{minipage}% 
+%\hspace*{1.2em}% 
+%\begin{minipage}[t]{\ColoFigu}%
+%% \setlength{\parindent}{\parindenttemp}%
+%\par\vspace*{0mm}% pour l'alignement sur le haut
+Preset diameter sizes are:
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\verb+\VerySmallState+ & \verb+\SmallState+ & \verb+\MediumState+ & 
+\verb+\LargeState+\\ 
+\hline
+$0.3$cm & $0.6$cm & $0.9$cm &  $1.2$cm\\
+\hline
+\end{tabular}
+\end{center}
+
+These values can be modified by a \verb+\renewcommand+. However, as
+commands that call these parameters deal also with other parameters
+as the eccentricity of loops or the size of initial and final arrows,
+changing these values without modifying the other ones can lead to
+an ungainly result.
+
+The shape of a normalized automaton can be drawn in the following way:
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+%\SmallPicture
+\VCDraw{%
+\begin{VCPicture}{(-5,-3)(5,3)}
+\FixStateDiameter{5cm} \ChgStateLabelScale{3}
+\State[{\cal A}]{(0,0)}{A}
+\MediumState \RstStateLabelScale
+\State[i]{(-4,0)}{I} \State[t]{(4,0)}{T}
+\VSState{(-1,-1)}{P1} \VSState{(-1,1)}{P2} \VSState{(-1.4,0)}{P3} 
+\VSState{(1,-1)}{Q1} \VSState{(1,1)}{Q2} \VSState{(1.4,0)}{Q3}
+\Initial{I} \Final{T}
+%
+\EdgeL{I}{P1}{} \EdgeL{I}{P2}{} \EdgeL{I}{P3}{}
+\EdgeL{Q1}{T}{} \EdgeL{Q2}{T}{} \EdgeL{Q3}{T}{}
+\end{VCPicture}
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(-5,-3)(5,3)}
+\FixStateDiameter{5cm} \ChgStateLabelScale{3}
+\State[{\cal A}]{(0,0)}{A}
+\MediumState \RstStateLabelScale
+\State[i]{(-4,0)}{I} \State[t]{(4,0)}{T}
+\VSState{(-1,-1)}{P1} \VSState{(1,-1)}{Q1}
+\VSState{(-1,1)}{P2} \VSState{(1,1)}{Q2 ]
+\VSState{(-1.4,0)}{P3} \VSState{(1.4,0)}{Q3}
+\Initial{I} \Final{T}
+%
+\EdgeL{I}{P1}{} \EdgeL{I}{P2}{} \EdgeL{I}{P3}{}
+\EdgeL{Q1}{T}{} \EdgeL{Q2}{T}{} \EdgeL{Q3}{T}{}
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{State adjustable parameters}
+~ Each following parameter can be modified by the command
+\verb+\Chg+\textit{Parameter}. The style value can be restored by 
+\verb+\Rst+\textit{Parameter} 
+and one can set the style value with \verb+\Set+\textit{Parameter}.
+
+\begin{center}
+\begin{tabular}{c|c|c|}
+Parameter & Default value & Possible values\\
+\hline
+\textit{StateLineStyle} & \texttt{solid} & \texttt{dashed}, \texttt{dotted}, \texttt{none}\\
+\hline
+\textit{StateLineWidth} & \texttt{1.8pt} &\\
+\hline
+\textit{StateLineColor} & \texttt{black} & \texttt{red}, \texttt{lightgray}, \ldots\\
+\hline
+\textit{StateLabelColor} & \texttt{black} & \texttt{blue}, \texttt{Salmon}, \ldots\\
+\hline
+\textit{StateLabelScale} & \texttt{1.7} &\\
+\hline
+\textit{StateFillStatus} & \texttt{solid} & \texttt{vlines}, \texttt{hlines}, \texttt{crosshatch}, \texttt{none}\\
+\hline
+\textit{StateFillColor} & \texttt{white} & \texttt{green}, \texttt{Purple}, \ldots\\
+\hline
+\end{tabular}
+\end{center}
+\index{StateLineStyle}\index{StateLineWidth}\index{StateLineColor}
+\index{StateLabelColor}\index{StateLabelScale}\index{StateFillStatus}
+\index{StateFillColor}
+
+As it has been previously noticed, the argument of \verb+\ChgStateLineWidth+
+is not a \texttt{length} but a coefficient applied to the style width.
+For instance, with the default value of \textit{StateLineWidth}, 
+after \verb+\ChgStateLineWidth{2}+
+edges will be drawn with a \texttt{3.6pt} width.
+
+When pictures are drawn to scale \verb+\VCScale+ that is set to \texttt{0.6},
+printing state labels with scale \texttt{1.7} makes them to be as large
+as characters of the text. As for line width, \verb+\ChgStateLabelScale{.5}+
+sets the label scale to \texttt{0.85} that make then twice smaller
+than characters of the text (because of \verb+\VCScale+).
+
+\clearpage 
+%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{State preset parameters}
+~
+They deal with the definition of ``dimmed'' states.
+%To be modified with a \verb+\renewcommand+ .
+
+\begin{center}
+\begin{tabular}{c|c|c|}
+Parameter & Default value\\
+\hline
+\textit{DimStateLineStyle} & \texttt{solid} \\
+\hline
+\textit{DimStateLineColor} & \texttt{gray} \\
+\hline
+\textit{DimStateLineCoef} & \texttt{1} \\
+\hline
+\textit{DimStateLabelColor} & \texttt{gray}\\
+\hline
+\textit{DimStateFillColor} & \texttt{white} \\
+\hline
+\end{tabular}
+\end{center}
+\index{DimStateLineStyle}\index{DimStateLineColor}\index{DimStateLineCoef}
+\index{DimStateLabelColor}\index{DimStateFillColor}
+
+\textit{DimStateLineCoef} is a coefficient that is applied to
+\textit{StateLineWidth} in drawing dimmed states. It might be larger
+than~$1$ to compensate optical effects when 
+\textit{DimStateLineStyle} is \texttt{dashed} or \texttt{dotted}.
+
+The style of dimmed states can be fixed by the command
+\\\verb+\FixDimState{+\textit{LineStyle}\verb+}{+\textit{LineColor}\verb+}{+\textit{LineCoef}%
+\verb+}{+\textit{LabelColor}\verb+}{+\textit{FillColor}\verb+}+.
+\index{FixDimState}
+\medskip
+
+In mode \textsl{StateLineDouble} or when one uses the command \verb+\FinalState+,
+two parameters give the width of each of both lines
+and the distance between them. These values are coefficients that are
+applied to \textsl{StateLineWidth}.
+
+\begin{center}
+\begin{tabular}{c|c|c|}
+Parameter & Default value\\
+\hline
+\textsl{StateLineDblCoef} & \texttt{0.6} \\
+\hline
+\textsl{StateLineDblSep} & \texttt{0.4} \\
+\hline
+\end{tabular}
+\end{center}
+\index{StateLineDblCoef}\index{StateLineDblSep}
+
+These values can be fixed by the command 
+\verb+\FixStateLineDouble{+\textsl{Coef}\verb+}{+\textsl{Sep}\texttt{\}}.
+\index{FixStateLineDouble}
+
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Transition parameters}\label{sec.tra-par}
+\paragraph{Edge adjustable parameters}
+~ Each following parameter can be modified by the command
+\verb+\Chg+\textit{Parameter}. The style value can be restored by \verb+\Rst+\textit{Parameter}
+and one can set the style value with \verb+\Set+\textit{Parameter}.
+
+\begin{center}
+\begin{tabular}{c|c|c|}
+Parameter & Default value & Possible values\\
+\hline
+\textit{EdgeLineStyle} & \texttt{solid} & \texttt{dashed}, \texttt{dotted}, \texttt{none}\\
+\hline
+\textit{EdgeLineWidth} & \texttt{1pt} &\\
+\hline
+\textit{EdgeLineColor} & \texttt{black} & many colours\\
+\hline
+\textit{EdgeLineDblStatus} & \texttt{false} &\texttt{true}\\
+\hline
+\textit{EdgeNodeSep} & \texttt{0pt} & \\
+\hline
+\textit{EdgeLabelColor} & \texttt{black} & many colours\\
+\hline
+\textit{EdgeLabelScale} & \texttt{1.7} &\\
+\hline
+\textit{EdgeLabelSep} & \texttt{3.5pt} & \\
+\hline
+\end{tabular}
+\end{center}
+\index{EdgeLineStyle}\index{EdgeLineWidth}\index{EdgeLineColor}
+\index{EdgeLabelColor}\index{EdgeLabelScale}\index{EdgeLineDblStatus}
+\index{EdgeLabelSep}\index{EdgeNodeSep}
+
+As for states, the argument of \verb+\ChgEdgeLineWidth+ is
+a coefficient applied to the style line width.
+
+The parameter \textit{EdgeNodeSep} defines a distance between the 
+begining, and the end, of a transition and the state it starts from 
+and arrives to. The default value is \texttt{0pt}, that is, no 
+distance at all; but it may be the case, especially when there is no 
+line around the state that one may want to increase the distance 
+between the transition and the label of the state.
+
+The parameter \textit{EdgeLabelSep} controls the distance between the 
+box that contains the label of the transition (built by \LaTeX) and 
+the transition.
+
+
+\paragraph{Edge preset parameters}
+~
+A first class of preset parameters deals with the definition of ``dimmed'' edges.
+
+\begin{center}
+\begin{tabular}{c|c|c|}
+Parameter & Default value\\
+\hline
+\textit{DimEdgeLineStyle} & \texttt{solid} \\
+\hline
+\textit{DimEdgeLineColor} & \texttt{gray} \\
+\hline
+\textit{DimEdgeLineCoef} & \texttt{1.2} \\
+\hline
+\textit{DimEdgeLabelColor} & \texttt{gray}\\
+\hline
+\end{tabular}
+\end{center}
+\index{DimEdgeLineStyle}\index{DimEdgeLineColor}\index{DimEdgeLineCoef}\index{DimEdgeLabelColor}
+
+The style of dimmed edges can be fixed by the command
+\\\verb+\FixDimEdge{+\textit{LineStyle}\verb+}{+\textit{LineColor}\verb+}{+\textit{LineCoef}%
+\verb+}{+\textit{LabelColor}\verb+}+.
+\index{FixDimEdge}
+\medskip
+
+The style of the border of edges (in mode \verb+\EdgeBorder+),
+is defined by two parameters~:
+\begin{center}
+\begin{tabular}{c|c|c|}
+Parameter & Default value\\
+\hline
+\textsl{EdgeLineBorderCoef} & \texttt{2} \\
+\hline
+\textsl{EdgeLineBorderColor} & \texttt{white} \\
+\hline
+\end{tabular}
+\end{center}
+\index{EdgeLineBorderCoef}\index{EdgeLineBorderColor}
+
+\verb+\EdgeLineBorderCoef+ is a coefficient applied to \verb+\EdgeLineWidth+,
+that gives the width of the border.\\The style of borders of edges can
+be fixed by the command \verb+\FixEdgeBorder{+\textsl{Coef}\verb+}{+\textsl{Color}\texttt{\}}.
+\index{FixEdgeBorder}
+\medskip
+
+The width of the double line of (in mode \textsl{EdgeLineDouble}),
+is defined by two parameters, that give the width of each of both lines
+and the distance between them. These values are coefficients that are
+applied to \textsl{EdgeLineWidth}.
+
+\begin{center}
+\begin{tabular}{c|c|c|}
+Parameter & Default value\\
+\hline
+\textsl{EdgeLineDblCoef} & \texttt{0.5} \\
+\hline
+\textsl{EdgeLineDblSep} & \texttt{0.6} \\
+\hline
+\end{tabular}
+\end{center}
+\index{EdgeLineDblCoef}\index{EdgeLineDblSep}
+
+These values can be fixed by the command \verb+\FixEdgeLineDouble{+\textsl{Coef}\verb+}{+\textsl{Sep}\texttt{\}}.
+\index{FixEdgeLineDouble}
+
+\subsection{Advanced parameters}
+These parameters can be changed by using the usual command \verb+\renewcommand+
+(or \verb+\setlength+, when the parameter is a length).
+
+As it has already be mentionned, the preset commands that set
+the diameter of states control
+parameters for drawing edges (the length of initial and final arrows or
+the curvature of loops). Their values are:
+\begin{center}
+\begin{tabular}{c|c|c|c|}
+\textit{X} & \verb+\ArrowOn+\textit{X} & \verb+\LoopOn+\textit{X} & \verb+\CLoopOn+\textit{X}\\
+\hline
+\verb+LargeState+ & \texttt{1.3} & \texttt{5.8} & \texttt{6}\\
+\hline
+\verb+MediumState+ & \texttt{1.5} & \texttt{5.8} & \texttt{8}\\
+\hline
+\verb+SmallState+ & \texttt{1.7} & \texttt{5.8} & \texttt{12}\\
+\hline
+\verb+VariableState+ &  & \texttt{5.1} & \texttt{5.2}\\
+\hline
+\verb+VerySmallState+ & \texttt{5} & \texttt{15} & \\
+\hline
+\end{tabular}
+\end{center}
+\index{ArrowOnState}\index{LoopOnState}\index{CloopOnState}
+
+\textit{ArrowOnX} is the coefficient that is applied to the radius of the state
+to obtain the length of initial or final arrows. \textit{LoopOnX} and 
+\textit{CLoopOnX}
+is the eccentricity of loops and closed loops respectively.
+
+Another parameter determines whether the dimension of states
+refer to the middle, the inner or the outer side of the boundary.
+There exist one parameter for classical states and one
+for states with double line:
+\begin{center}
+\begin{tabular}{c|c|}
+Parameter & Default value \\
+\hline
+\verb+\StateDimen+ & \texttt{outer} \\
+\hline
+\verb+\StateDblDimen+ & \texttt{middle} \\
+\hline
+\end{tabular}
+\end{center}\index{StateDimen}{\index{StateDblDimen}
+The possible values are \texttt{inner}, \texttt{outer} or \texttt{middle}.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+\ShowGrid
+\VCDraw{%
+\begin{VCPicture}{(-1,-1)(6,2)}
+\ChgStateLineWidth{5}
+\FixStateDiameter{1cm}
+\renewcommand{\StateDimen}{inner}
+\State{(0.5,0.5)}{I}
+\renewcommand{\StateDimen}{middle}
+\State{(2.5,0.5)}{M}
+\renewcommand{\StateDimen}{outer}
+\State{(4.5,0.5)}{O}
+\end{VCPicture}}
+\HideGrid
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\ShowGrid
+\VCDraw{%
+\begin{VCPicture}{(-1,-1)(6,2)}
+\ChgStateLineWidth{5}
+\FixStateDiameter{1cm}
+\renewcommand{\StateDimen}{inner}
+\State{(0.5,0.5)}{I}
+\renewcommand{\StateDimen}{middle}
+\State{(2.5,0.5)}{M}
+\renewcommand{\StateDimen}{outer}
+\State{(4.5,0.5)}{O}
+\end{VCPicture}}
+\HideGrid
+\end{verbatim}
+\end{minipage}% 
+
+%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Transition adjustable geometric parameters}
+~
+All these parameters are adjustable. That means there
+exist commands as \verb+\Set+\textsl{Parameter}, \verb+\Chg+\textsl{Parameter}
+and \verb+\Rst+\textsl{Parameter}.
+
+Arcs between states are characterized by some adjustable parameters:
+
+\begin{center}
+\begin{tabular}{c|c|c|c|}
+\textsl{X} & \textsl{XAngle} & \textsl{XCurvature} & \textsl{XOffset} \\
+\hline
+\textsl{Arc} & \texttt{15} & \texttt{0.8} & \texttt{1}pt\\
+\hline
+\textsl{LArc} & \texttt{30} & \texttt{0.8} & =\textsl{ArcOffset}\\
+\hline
+\end{tabular}
+\end{center}
+\index{ArcAngle}\index{ArcCurvature}\index{ArcOffset}
+
+\medskip
+Except the curvature that depends on the size of states,
+parameters that define loop,
+the degree of opening and the offset, are adjustable parameters.
+
+\begin{center}
+\begin{tabular}{c|c|c|}
+\textsl{X} & \textsl{XAngle} (degrees) & \textsl{XOffset} \\
+\hline
+\textsl{Loop} & \texttt{30} & \texttt{0}pt\\
+\hline
+\textsl{CLoop} & \texttt{22} & =\textsl{LoopOffset}\\
+\hline
+\textsl{LoopVar} & \texttt{28} & \texttt{0.7}pt\\
+\hline
+\end{tabular}
+\index{LoopAngle}\index{LoopOffset}
+\VCDraw{%
+\begin{VCPicture}{(-3,-3)(3,3)}
+\State{(0,0)}{A}
+\Point{(0,0)}{B}
+\Point{(-1,1.73)}{C}
+\Point{(1,1.73)}{D}
+\Point{(1,-1.73)}{E}
+\Point{(1.09,-1.68)}{F}
+\Point{(-.42,.92)}{G}
+\Point{(1.86,-1.23)}{H}
+\Point{(0.14,-2.23)}{I}
+\ChgEdgeLineWidth{.5}
+\EdgeR{H}{F}{} \EdgeR{I}{E}{}
+\ChgEdgeArrowStyle{<->}
+\ArcL[.5]{C}{D}{2\times\text{Angle}}
+\ChgEdgeArrowStyle{-}
+\EdgeR{E}{F}{\text{Offset}}
+\DimEdge
+\ChgEdgeLineWidth{.1}
+\ChgEdgeLineStyle{dashed}
+\EdgeL{E}{C}{} \EdgeL{B}{D}{} \EdgeL{F}{G}{}
+\RstEdge
+\LoopXL{.5}{90}{A}{30}{.1cm}{15}{}
+%\LoopXL{.5}{A}{90}{30}{0}{15}{}
+\end{VCPicture}%
+}
+\end{center}
+
+\medskip
+\noi
+Likewise, one can modify the style of arrows, that are defined by 
+three adjustable parameters~:
+
+
+\begin{center}
+\begin{tabular}{c|c|}
+Parameter & Default value \\
+\hline
+\textsl{EdgeArrowStyle} & \texttt{->} \\
+\hline
+\textsl{EdgeArrowWidth} & \texttt{5}pt \\
+\hline
+\textsl{EdgeArrowLengthCoef} & \texttt{1.4}  \\
+\hline
+\textsl{EdgeArrowInsetCoef} & \texttt{0.1}  \\
+\hline
+\end{tabular}
+\VCDraw{%
+\begin{VCPicture}{(-4,-2)(4,2)}
+\pspolygon*(-1,-1)(0,1)(1,-1)(0,-.3)
+\ChgEdgeArrowStyle{<->}
+\Point{(-1.5,-1)}{A}
+\Point{(-1.5,1)}{Ah}
+\Point{(1.5,-1)}{B}
+\Point{(1.5,-.3)}{Bh}
+\Point{(-1,-1.5)}{C}
+\Point{(1,-1.5)}{Ch}
+\EdgeL{A}{Ah}{\text{Length}}
+\EdgeR{B}{Bh}{\text{Inset}}
+\EdgeR{C}{Ch}{\text{Width}}
+\end{VCPicture}
+}
+\end{center}
+\index{EdgeArrowStyle}\index{EdgeArrowWidth}%
+\index{EdgeArrowLengthCoef}\index{EdgeArrowInsetCoef}
+
+The {\em length} and the {\em inset} of arrows are given by 
+coefficients that are applied to the {\em width}. 
+There exists some other (non adjustable) parameters to define arrows 
+in special cases: 
+\verb+\EdgeArrowRevStyle+ is equal to \texttt{<-}, to draw transition 
+in reverse mode; for edges with double lines, the size of 
+arrows is a little bit more large. 
+It is defined by \verb+\EdgeDblArrowWidth+
+and \verb+\EdgeDblArrowLengthCoef+ that are respectively equal to 
+\texttt{5.5}pt and \texttt{1.7}. 
+
+\medskip
+\noi
+Zigzag edges are characterized by some adjustable parameters:
+
+\begin{center}
+\begin{tabular}{c|c|}
+Parameter & Default value \\
+\hline
+\textsl{ZZSize} & \texttt{0.9}cm \\
+\hline
+\textsl{ZZLineWidth} & \texttt{1.7}  \\
+\hline
+\end{tabular}
+\end{center}
+\index{ZZSize}\index{ZZlineWidth}
+
+\textsl{ZZSize} is the apparent diameter of the zigzag and \textsl{ZZLineWidth}
+is a coefficient that is applied to \textsl{EdgeLineWidth} and gives
+the width of the line.
+
+\paragraph{Transition preset parameters}
+~
+The default position of labels on transitions depends on the type of transition.
+For instance, on edges, this position is given by the variable \verb+\EdgeLabelPosit+
+that is equal to $0.45$. The first column of the following array gives these values
+for every transition.
+
+\begin{center}
+\begin{tabular}{c|c|c|}
+\textsl{X} & \verb+\+\textsl{X}\texttt{LabelPosit} & \verb+\+\textsl{X}\texttt{LabelRevPosit} \\
+\hline
+\texttt{Edge} & \texttt{.45} & \texttt{.55}\\
+\hline
+\texttt{Arc} & \texttt{.4} & \texttt{.6}\\
+\hline
+\texttt{LArc} & \texttt{.4} & \texttt{.6}\\
+\hline
+\texttt{Loop} & \texttt{.25} & \texttt{.75}\\
+\hline
+\texttt{CLoop} & \texttt{.25} & \texttt{.75}\\
+\hline
+\texttt{Init} & \texttt{.1} & \texttt{.9}\\
+\hline
+\texttt{Final} & \texttt{.9} & \texttt{.1}\\
+\hline
+\end{tabular}
+\end{center}
+
+When the reverse mode is on, the position of label is given by
+variables that correspond to the second column, as \verb+\EdgeLabelRevPosit+ for instance.
+For the same type of transition, the sum of both variables
+that defined position for straight and reverse arrows should
+be equal to $1$ (if one wants to keep the same appearance when using
+the \verb+ReverseArrow+ command).
+
+These parameters can be modified with a \verb+\renewcommand+.
+
+%%%%%%%%%%%%%%%%%%%%%%
+\section{Using ``plain'' \PSTricks commands}
+\label{sec.pla}
+\VCSG is a set of macros based on \PSTricks. It is therefore
+fully compatible with \PSTricks instructions.
+Actually, the \verb+VCPicture+ environment is a specialization
+of the \verb+pspicture+ environment; more, every state in \VCSG
+is a \PSTricks node and every transition (loop, edge, arc)
+is a node connection.
+
+The following example shows how \VCSG commands can be mixed
+with plain \PSTricks commands. For further explanation on
+\PSTricks, we refer to~\cite{Girou94,GRM97,GRMRV07,Voss07}.
+
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[t]{\ColFigur}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\bigskip 
+\begin{center}
+\scalebox{\VCScale}{%
+%
+\begin{VCPicture}{(-7.5,-1)(3,2)}
+\rput(-5,0){\rnode{X}{\psframebox{$\bigoplus$}}}
+\rput(.5,0){\rnode{Y}{\psframebox{$\bigoplus$}}}
+\State[1]{(-3.5,0)}{A}
+\State[0]{(-1,0)}{B} 
+\State[0]{(2,0)}{C}
+\Point{(-7,0)}{S}
+\EdgeL{S}{X}{0011}
+\EdgeL{X}{A}{}\EdgeL{A}{B}{}\EdgeL{B}{Y}{}\EdgeL{Y}{C}{}
+\ncangles[angleB=90, armB=1cm]{C}{X}
+\ncangles[angleB=90, armB=1cm]{C}{Y}
+\end{VCPicture}}
+\\The shif register for $1+x^2+x^3$
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[t]{\ColSource}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\begin{VCPicture}{(-7.5,-1)(3,2)}
+\rput(-5,0){\rnode{X}{\psframebox{$\bigoplus$}}}% pstricks node
+\rput(.5,0){\rnode{Y}{\psframebox{$\bigoplus$}}}% pstricks node
+\State[1]{(-3.5,0)}{A} \State[0]{(-1,0)}{B} \State[0]{(2,0)}{C}
+\Point{(-7,0)}{S}
+\EdgeL{S}{X}{0011}
+\EdgeL{X}{A}{} \EdgeL{A}{B}{} \EdgeL{B}{Y}{} \EdgeL{Y}{C}{}
+\ncangles[angleB=90, armB=1cm]{C}{X}% pstricks connection
+\ncangles[angleB=90, armB=1cm]{C}{Y}% pstricks connection
+\end{VCPicture}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+%
+
+% %%%%%%%%%%%%%%%%%%%ù
+% \section{Using Beamer document class}
+% \VCSG can be used with Beamer document class to design slides.
+% The document class
+% should be called with {\tt xcolor=pst,dvips} options:
+% 
+% \verb+\documentclass[xcolor=pst,dvips]{beamer}+.
+
+\clearpage
+
+% \vspace*{5cm}
+
+\appendix
+
+
+\begin{center}
+    {\Large \textsc{appendix}}
+\end{center}
+
+\section{Version history}
+
+A first version of the package, which would be numbered 0.1, was 
+called \emph{Vaucanson} and used by the authors in their papers 
+between 2000 and 2003.
+But, at the same time, the authors were involved, in cooperation with
+the LRDE at EPITA, in the design of a \texttt{C++} platform for 
+programming automata, for which it was decided that there would be no 
+better name than Vaucanson as well.
+We thus turned the name of the package for drawing automata to \VCSG.
+% The name of every \textbf{file} of the library has been changed accordingly.
+% No name of \textbf{command} in the package has been changed.
+
+Version 0.2 was issued in May 2003 and made available on the web 
+together with this user's manual first version.
+A series of bug corrections and slight improvements made us switch at 
+some point to version 0.3.
+
+Just before sending the package to CTAN, we undertook a full review of 
+the code and updated the manual accordingly. 
+We call it version 0.4.
+It is the last release before a completely new version of the 
+package, with many more options , which is currently under work.
+
+
+\clearpage 
+
+\section{Style files}
+
+\subsection{\texttt{slides} style}
+
+
+{\footnotesize
+\begin{verbatim}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Package `Vaucanson-G'  version 0.4
+%%
+%% This is file `VCPref-slides'.
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Scales  --- slides settings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\LargeScale}{1.5}
+\renewcommand{\MediumScale}{1.16}
+\renewcommand{\SmallScale}{0.92}
+\renewcommand{\TinyScale}{0.75}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% State aspect
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\SetStateLineColor{blue}
+\SetStateLineWidth{2pt}
+\SetStateFillColor{Cyan}
+\SetStateLabelColor{Sepia}
+\FixDimState{solid}{YellowOrange}{1}{YellowOrange}{white}
+%%%%%%%%%%%%%%
+% Edge aspect
+%%%%%%%%%%%%%%
+\SetEdgeLineColor{Mahogany}
+\SetEdgeLineWidth{1.2pt}
+\SetEdgeLabelColor{OliveGreen}
+%%% Dimmed edges
+\FixDimEdge{dashed}{1.2}{Apricot}{Apricot}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{verbatim}}
+\newpage 
+
+\subsection{\texttt{beamer} style}
+
+
+{\footnotesize
+\begin{verbatim}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Package `Vaucanson-G'  version 0.4
+%%
+%% This is file `VCPref-slides'.
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Scales  --- slides settings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\LargeScale}{0.85}       
+\renewcommand{\MediumScale}{0.6}       
+\renewcommand{\SmallScale}{0.4}		
+\renewcommand{\TinyScale}{0.30}		
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% State aspect
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\SetStateLineColor{blue}
+\SetStateLineWidth{2pt}
+\SetStateFillColor{Cyan}
+\SetStateLabelColor{Sepia}
+\FixDimState{solid}{YellowOrange}{1}{YellowOrange}{white}
+%%%%%%%%%%%%%%
+% Edge aspect
+%%%%%%%%%%%%%%
+\SetEdgeLineColor{Mahogany}
+\SetEdgeLineWidth{1.2pt}
+\SetEdgeLabelColor{OliveGreen}
+%%% Dimmed edges
+\FixDimEdge{dashed}{1.2}{Apricot}{Apricot}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{verbatim}}
+\newpage 
+
+\subsection{\texttt{mystyle} style}
+
+This file is given only on the purpose that it can be edited by the 
+user and called by the option \texttt{mystyle} of the wrapper(and this is the 
+reason why the \emph{name} \verb+VCPref-mystyle.tex+ 
+of this file should not be changed).
+
+The actual values given in this file as an example provide a style 
+which mimics the way automata are drawn with GasTeX \cite{Gast} as 
+can be witnessed below.
+
+\noi 
+\hspace*{-\jsIndent}
+\begin{minipage}[c]{\ColFigur+.5cm}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\begin{center}
+\input{VCPref-mystyle}
+\VCDraw{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,0)}{A} \State[B]{(2,-2)}{B}
+\FinalState[C]{(4,2)}{C} \State[D]{(6,0)}{D}
+%initial-final
+\Initial{A} \Final[s]{B}
+% transitions 
+\ArcR{A}{B}{a} \ArcL{A}{C}{b}
+\LArcR{B}{D}{c} \LArcL{C}{D}{d}
+\ArcL{A}{B}{a'} \EdgeLineDouble \EdgeR{A}{C}{b'}
+\EdgeLineSimple \EdgeL{B}{D}{c'} \LArcR{C}{D}{d'}
+%
+\end{VCPicture}%
+}%
+\end{center}
+\end{minipage}%
+\hspace*{1.2em}% 
+\begin{minipage}[c]{\ColSource-.5cm}
+\setlength{\parindent}{\parindenttemp}%
+\par\vspace*{0mm}% pour l'alignement sur le haut
+\footnotesize
+\begin{verbatim}
+\input{VCPref-mystyle}
+\VCDraw{%
+\begin{VCPicture}{(0,-2)(6,2)}
+% states
+\State[A]{(0,0)}{A} \State[B]{(2,-2)}{B}
+\FinalState[C]{(4,2)}{C} \State[D]{(6,0)}{D}
+%initial-final
+\Initial{A} \Final[s]{B}
+% transitions 
+\ArcR{A}{B}{a} \ArcL{A}{C}{b}
+\LArcR{B}{D}{c} \LArcL{C}{D}{d}
+\ArcL{A}{B}{a'} \EdgeLineDouble \EdgeR{A}{C}{b'}
+\EdgeLineSimple \EdgeL{B}{D}{c'} \LArcR{C}{D}{d'}
+%
+\end{VCPicture}}
+\end{verbatim}
+\normalsize
+\end{minipage}% 
+
+\bigskip\bigskip
+{\footnotesize
+\begin{verbatim}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Package `Vaucanson-G'  version 0.4
+%%
+%% This is file `VCPref-mystyle'.
+%%  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Scales  --- 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\LargeScale}{1.2}         %float : argument of a \scalebox
+\renewcommand{\MediumScale}{1}          %float
+\renewcommand{\SmallScale}{.7}		%float
+\renewcommand{\TinyScale}{0.5}		%float
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% State parameters  --- Default settings
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\LargeStateDiameter}{1.2cm}		%length
+\setlength{\MediumStateDiameter}{.8cm}		%length
+\setlength{\SmallStateDiameter}{.6cm}		%length
+\renewcommand{\StateDblDimen}{outer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% State aspect
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\SetStateLineWidth{.14mm}		%% length
+\SetStateFillStatus{none}		%% aspect
+\SetStateFillColor{black}		%% color
+\SetStateLabelScale{1}                  %% float
+\FixStateLineDouble{2}{5}               %% Double style: 
+%%%%%%%%%%%%%%
+% Edge aspect
+%%%%%%%%%%%%%%
+\SetEdgeLineWidth{.14mm}			%% length
+\SetEdgeLabelColor{black}		%% color
+\SetEdgeLabelScale{1}		        %% float
+\FixEdgeLineDouble{1.5}{2}		%% float : 
+%%% arrows
+\SetEdgeArrowWidth{1.03mm}			%width of the edge arrow
+\SetEdgeArrowLengthCoef{1.37}                   %float : 
+\setlength{\EdgeDblArrowWidth}{1.3mm}		%width : 
+\renewcommand{\EdgeDblArrowLengthCoef}{1.09}	% 
+\SetEdgeArrowInsetCoef{0}		%float : coef*\EdgeArrowSizeDim
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Arc geometry
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\SetArcAngle{17}			%% int (degree)
+\SetLArcAngle{30}			%% int (degree)
+\SetArcCurvature{0.7}			%% float
+\SetArcOffset{1pt}			%% length
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Loop geometry
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\LoopOnLargeState}{5.5} 		%float
+\renewcommand{\LoopOnMediumState}{7}		%float : curvature
+\renewcommand{\LoopOnSmallState}{9} 		%float
+\renewcommand{\LoopOnVariableState}{4.5} 		%float
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Edge labels positionning
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\EdgeLabelPosit}{.5}   %per cent 
+\renewcommand{\EdgeLabelRevPosit}{.5}
+\renewcommand{\ArcLabelPosit}{.5}
+\renewcommand{\ArcLabelRevPosit}{.5}
+\renewcommand{\LArcLabelPosit}{.5}
+\renewcommand{\LArcLabelRevPosit}{.5}
+\renewcommand{\LoopLabelPosit}{.5}
+\renewcommand{\LoopLabelRevPosit}{.5}
+\renewcommand{\CLoopLabelPosit}{.5}
+\renewcommand{\CLoopLabelRevPosit}{.5}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Initial states parameters
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\ArrowOnMediumState}{1}		%float 
+\renewcommand{\ArrowOnSmallState}{1} 		%float
+\renewcommand{\ArrowOnLargeState}{1}		%float
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{verbatim}}
+
+\clearpage 
+
+\begin{thebibliography}{99}
+\bibitem{Girou94}
+{\sc D.~Girou}
+\newblock Pr\'esentation de PSTricks,
+\newblock {\em Cahier GUTenberg} \textbf{16} (1994) 21-70.
+%  \texttt{http://www.tug.org/applications/PSTricks/}
+
+\bibitem{Gast}
+{\sc P.~Gastin}
+\newblock {\em GasTeX: Graphs and Automata Simplified in TeX}.\\
+\newblock \texttt{http://www.lsv.ens-cachan.fr/~gastin/gastex/gastex.html}
+
+\bibitem{GRM97}
+{\sc M.~Goossens, S.~Rahtz and F.~Mittelbach}
+\newblock {\em The LaTeX Graphics Companion}.
+\newblock Addison Wesley, 1997.
+
+\bibitem{GRMRV07}
+{\sc M.~Goossens, S.~Rahtz, F.~Mittelbach, D. Roegel, and H. Voss}
+\newblock {\em The LaTeX Graphics Companion, 2nd Edition}.
+\newblock Addison Wesley, 2007.
+
+\bibitem{Sak01}
+{\sc J. Sakarovitch},
+\newblock {\em El\'ements de th\'eorie des automates}.
+\newblock Vuibert, 2003. 
+\newblock Eng. trans. {\em Elements of Automata Theory}.
+\newblock Cambridge University Press, to appear.
+
+
+\bibitem{Voss07}
+{\sc H. Voss},
+\newblock {\em PSTricks -- Grafik f\"ur TeX und LaTeX}.
+\newblock Lehmanns/Dante e.V., 4th ed. 2007. 
+
+\end{thebibliography}
+
+Some examples of articles or slides that contain automata drawn with \VCSG
+can be found at the following URLs:
+\begin{itemize}
+\item \texttt{http://www.enst.fr/${\scriptstyle\pmb{\sim}}$jsaka/}
+\item \texttt{http:///igm.univ-mlv.fr/${\scriptstyle\pmb{\sim}}$lombardy/}
+\end{itemize}
+
+\printindex
+
+
+%\newpage
+%\input{VCManual_tab.tex}
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%

@@ -1,8 +1,8 @@
 \documentclass[12pt]{article}
 
 \usepackage{sbc-template}
-
 \usepackage{graphicx,url}
+\usepackage[all, 2cell]{xy} \UseAllTwocells \SilentMatrices
 
 %\usepackage[brazil]{babel}   
 \usepackage[latin1]{inputenc}  
@@ -72,14 +72,48 @@
   
   A formulação da programação inteira para o trabalho, pode ser definido da seguinte maneira:
   
-  \centering{
+  \begin{center}
   max $\sum_{i = 1}^{|V|}$ ci*xi
   
   $x_{i}$ + $x_{i}$ $\leq$1, \hspace{10mm} $\forall$ (i, j) $\in$ E
   
   $x_{i}$ $in$ {0, 1}, \hspace{10mm} i = 1, 2, ..., $|V|$
-  }
+  \end{center}
   
+  O problema de decisão para verificar se há um conjunto de vértices independentes de tamanho n é classificado como NP-Completo. 
+  Enquanto o Problema Máximo Conjunto Independente é classificado como NP-Difícil.
+  
+  O MISP é um problema muito similar ao problema do clique máximo, que resumidamente, busca encontrar o maior subconjunto de vértices adjacentes, 
+  em outras palavras, a cada par de vértices dentro do subconjunto, é necessário que haja uma aresta os interligando. É possível resolver o MISP através
+  do clique máximo, dado o grafo de entrada no MISP, basta acharmos o seu complemento e utilizá-lo como entra para o clique máximo. Também é válido a operação
+  inversa, utilizarmos o MISP para resolvermos o clique máximo. Com isso, dado um grafo G qualquer e seu complemento o grafo X, temos que:
+  
+  
+  \begin{center}
+    MISP(G) = CliqueMaximo(X) ou então, 
+    
+    CliqueMaximo(G) = MISP(X)
+  \end{center}
+  //falar do clique
+  
+\section{Trabalhos Relacionados}
+  A meta-heurística Ant Colony Optimization foi apresentado por Marco Dorigo /**Referencia**/ a partir de observações sobre o comportamento
+  de formigas reais a fim de descobrir como animais de pouca visão conseguiam se locomover e atingir seus destinos. Como o resultado das observações
+  foi modelada e desenvolvida a ACO. Ao longo do tempo foi desenvolvida extensões para a ACO, como por exemplo, Recursive Ant Colony Optimization por /*REFERENCIA*/ e 
+  Elitist Ant System por /*REFERENCIA*/.
+  
+  Foram encontrados diversos trabalhos com o Máximo Conjunto Independente, sendo o mais antigo do ano 1977, desenvolvido por RE Tarjan AE Trojanowski que apresentou
+  um algoritmo de solução. Também foi encontrado trabalhos que apresentavam soluções utilizando heurísticas, bem como o trabalho de MAURICIO G.C. RESENDE AND CELSO C. RIBEIRO 
+  /*REFERÊNCIA*/ que utilizaram a meta-heurística GRASP e Algortimos Evolucionários por Back e Khuri /*REFERENCIA*/
+
+  Direcionando as pesquisas para encontrar trabalhos que utilizaram a meta-heurística Ant Colony Optimization para a resolução do Máximo Conjunto Independente, foi encontrado
+  dois trabalhos que propôs esse desafio. /**Referenciar os 2**/. Para o presenta trabalho, utilizaremos propostas enunciadas neste trabalho, bem como a função probabilidade /ver nome
+  e parâmetros.
+  
+  Devido a sua semelhança, também foi pesquisado trabalhos envolvendo ACO e Clique Máximo, como destaque, houve os trabalhos /*referencia*/
+  
+
+\section{Proposta}
   Para a resolução do problema, poderíamos utilizar algoritmos determinísticos, porém ao utilizar algoritmos heurísticos provavelmente
   encontraremos boas soluções com menor tempo em relação aos algoritmos determinísticos e com o uso de heurísticas adequadas a queda na 
   qualidade das soluções não será tão sentida.
@@ -88,27 +122,34 @@
   o número de vértices e arestas, densidade e quantidade de cada vértices adjacentes de cada vértice.
   
   Para resolvermos o problema, precisamos utilizar três conjuntos ao longo do algoritmo, os conjuntos são: 
-  \centering{
-    S(t): Conjunto de Vértices presente na resposta em um determinado tempo t.
+  
+  
+  \begin{center}
+   S(t): Conjunto de Vértices presente na resposta em um determinado tempo t.
     
     I(t): Conjunto de Vértices que \textbf{não} podem estar mais na solução em um determinado tempo t.
     
     D(t): Conjunto de Vértices que \textbf{ainda} podem estar solução em um determinado tempo t.
-  }
-  
+  \end{center}
+
   Com nos três conjuntos, sabemos que S(t) + I(t) + D(t) = V para qualquer instante de tempo, e que a S(t) $\subseteq$ V*.
   //Figuras com os três conjuntos dentro de V e da figura de S(t) dentro de V*
   
+  A partir do grafo abaixo, explicaremos como funciona a heurística utilizada, que foi abstraída do trabalho /*REFERÊNCIA*/.
+  
+  //Grafo
+ 
+ 
+ 
+  //explicar que pega o vertice com mais vert não adjacentes
   
   
-  //falar da heuristica
-  //falar do clique
-  
-\section{Trabalhos Relacionados}
-
-\section{Proposta}
 
 \section{Avaliação}
+  Para a realização dos testes foi utilizado um computador com processador XXX de xx núcleos, com memória RAM xx, Memória cache 
+  e Sistema Operacional Ubuntu 16.04 64 bits.
+  
+  
 
 \section{Conclusões e Trabalhos Futuros}
 
