@@ -1,20 +1,26 @@
 \begin{thebibliography}{}
 
-\bibitem[Boulic and Renault 1991]{boulic:91}
-Boulic, R. and Renault, O. (1991).
-\newblock 3d hierarchies for animation.
-\newblock In Magnenat-Thalmann, N. and Thalmann, D., editors, {\em New Trends
-  in Animation and Visualization}. John Wiley {\&} Sons ltd.
+\bibitem[Choi et~al. 2007]{ACOMISP1}
+Choi, H., Ahn, N., and Park, S. (2007).
+\newblock An ant colony optimization approach for the maximum independent set
+  problem.
+\newblock {\em Journal of the Korean Institute of Industrial Engineers}, 33(4).
 
-\bibitem[Knuth 1984]{knuth:84}
-Knuth, D.~E. (1984).
-\newblock {\em The {\TeX} Book}.
-\newblock Addison-Wesley, 15th edition.
+\bibitem[Dorigo et~al. 1996]{Dorigo1}
+Dorigo, M., Maniezzo, V., and Colorni, A. (1996).
+\newblock {A}nt {S}ystem: Optimization by a colony of cooperating agents.
+\newblock {\em IEEE Transactions on Systems, Man, and Cybernetics - Part B},
+  26(1):29--41.
 
-\bibitem[Smith and Jones 1999]{smith:99}
-Smith, A. and Jones, B. (1999).
-\newblock On the complexity of computing.
-\newblock In Smith-Jones, A.~B., editor, {\em Advances in Computer Science},
-  pages 555--566. Publishing Press.
+\bibitem[Leguizamon et~al. 2011]{ACOMISP2}
+Leguizamon, G., Schutz, M., and Michalewicz, Z. (2011).
+\newblock An ant system for the maximum independent set problem.
+\newblock Disponivel em:
+  http://ls11-www.cs.tu-dortmund.de/downloads/papers/LeSz02.pdf.
+
+\bibitem[Tarjan and Trojanowski 1976]{MISP1}
+Tarjan, R.~E. and Trojanowski, A.~E. (1976).
+\newblock Finding a maximum independent set.
+\newblock {\em STAN-CS-76-550}.
 
 \end{thebibliography}

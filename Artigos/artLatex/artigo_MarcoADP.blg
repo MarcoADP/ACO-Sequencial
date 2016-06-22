@@ -1,46 +1,46 @@
-This is BibTeX, Version 0.99d (TeX Live 2015/dev/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: artigo_MarcoADP.aux
 The style file: sbc.bst
 Database file #1: sbc-template.bib
-You've used 3 entries,
+You've used 4 entries,
             1935 wiz_defined-function locations,
-            492 strings with 4056 characters,
-and the built_in function-call counts, 1265 in all, are:
-= -- 122
-> -- 45
-< -- 4
-+ -- 15
-- -- 13
-* -- 88
-:= -- 216
-add.period$ -- 11
-call.type$ -- 3
-change.case$ -- 20
-chr.to.int$ -- 3
-cite$ -- 3
-duplicate$ -- 59
-empty$ -- 101
-format.name$ -- 20
-if$ -- 264
+            498 strings with 4397 characters,
+and the built_in function-call counts, 1399 in all, are:
+= -- 133
+> -- 67
+< -- 1
++ -- 26
+- -- 22
+* -- 118
+:= -- 265
+add.period$ -- 12
+call.type$ -- 4
+change.case$ -- 31
+chr.to.int$ -- 4
+cite$ -- 4
+duplicate$ -- 49
+empty$ -- 84
+format.name$ -- 28
+if$ -- 256
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 4
-newline$ -- 18
-num.names$ -- 13
-pop$ -- 26
+missing$ -- 3
+newline$ -- 23
+num.names$ -- 12
+pop$ -- 23
 preamble$ -- 1
-purify$ -- 20
+purify$ -- 31
 quote$ -- 0
-skip$ -- 43
+skip$ -- 41
 stack$ -- 0
-substring$ -- 70
-swap$ -- 12
-text.length$ -- 1
+substring$ -- 71
+swap$ -- 3
+text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 16
+type$ -- 24
 warning$ -- 0
-while$ -- 11
+while$ -- 10
 width$ -- 0
-write$ -- 42
+write$ -- 52

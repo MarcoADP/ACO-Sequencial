@@ -4,7 +4,7 @@
 \usepackage{graphicx,url}
 \usepackage[all, 2cell]{xy} \UseAllTwocells \SilentMatrices
 
-%\usepackage[brazil]{babel}   
+\usepackage[brazil]{babel}   
 \usepackage[latin1]{inputenc}  
 
      
@@ -12,21 +12,13 @@
 
 \title{Algoritmo Heurístico Otimização de Colônia de Formigas e Programação Paralela para a resolução do Problema do Máximo Conjunto Independente}
 
-\author{	Luciana P. Nedel\inst{1}, Rafael H. Bordini\inst{2}, Flávio Rech
-  Wagner\inst{1}, Jomi F. Hübner\inst{3} }
+\author{Marco Aurélio Deoldoto Paulino\inst{1}}
 
 
-\address{Instituto de Informática -- Universidade Federal do Rio Grande do Sul
-  (UFRGS)\\
-  Caixa Postal 15.064 -- 91.501-970 -- Porto Alegre -- RS -- Brazil
-\nextinstitute
-  Department of Computer Science -- University of Durham\\
-  Durham, U.K.
-\nextinstitute
-  Departamento de Sistemas e Computação\\
-  Universidade Regional de Blumenal (FURB) -- Blumenau, SC -- Brazil
-  \email{\{nedel,flavio\}@inf.ufrgs.br, R.Bordini@durham.ac.uk,
-  jomi@inf.furb.br}
+\address{Departamento de Informática -- Universidade Estadual de Maringá
+  (UEM)\\
+  Maringá -- PR -- Brazil
+  \email{marco23\_aurelio@hotmail.com}
 }
 
 \begin{document} 
@@ -55,17 +47,23 @@
   considerado um problema de importância para a computação devido a sua aplicabilidade a várias áreas, 
   tais como, Reconhecimento de Padrões, Escalonamento,Biologia Molecular e \textit{Map Labeling}.
   
-  Para a elaboração do algoritmo solucionador do MISP, foi utilizado a técnico da Otimização de Colônia de Formigas, 
-  do inglês, Ant Colony Optimization (ACO), introduzido por Marco Dorigo /**Referencia**/. O ACO desde sua criação vem
-  resolvendo diversos problemas difíceis, como -- citar problemas mais recentes --.
+  Para a elaboração do algoritmo solucionador do MISP, foi utilizado a meta-heurística de propósito geral Otimização de Colônia de Formigas, 
+  do inglês, Ant Colony Optimization (ACO), introduzido por \cite{Dorigo1}. O ACO se propõe a resolver aos mais variados problemas,
+  tais como, os problemas do Caixeiro Viajante, Coloração de Grafos e Mochila Binária e Mochila Fracionária.
   
-  //Falar de algortimos paralelos
+  Como propósito do artigo, além do algortimo sequencial, foi produzido o algortimo em paralelo. Os algoritmos em paralelo vem com o 
+  objetivo de utilizar toda a potência de processadores multicores, visto que ao criar threads, divide-se o problema em partes, o que
+  permite terminar o problema em menor tempo e utiliza todo o potencial a seu serviço. Por outro lado, é necessário haver controles e uma maior
+  atenção para a produção de códigos corretos, principalmente que pensar em criar códigos paralelos é de maior dificuldade que códigos sequenciais.
   
-  Este artigo é organizado da seguinte forma. Na Seção 2, será descrito de forma detalhada o Problema do Máximo Conjunto
-  Independente. Na Seção 3, será apresentado trabalho relacionados, seja pela resolução do Problema do Máximo
-  Conjunto Independente, a utilização da Otimização de Colônia de Formigas ou por trabalhos utilizando algoritmo paralelos.
+  Este artigo é organizado da seguinte forma. Na Seção \ref{problema}, será descrito de forma detalhada o Problema do Máximo Conjunto
+  Independente. Na Seção \ref{relacionados}, será apresentado trabalho relacionados, seja pela resolução do Problema do Máximo
+  Conjunto Independente, a utilização da Otimização de Colônia de Formigas ou por trabalhos utilizando algoritmo paralelos. 
+  Após, será apresentado na Seção \ref{proposta} de resolução do MISP e a partir da proposta, será analisado na Seção \ref{avaliacao} os resultados
+  obtidos. Por fim, na Seção \ref{conclusao} será descrito as conclusões obtidas e possíveis trabalhos futuros.
 
 \section{Problema}
+  \label{problema}
   Dado um Grafo G = (V, E), em V representa o conjunto de vértices e E representa o conjunto de arestas do grafo. O Problema 
   do Máximo Conjunto Independente tem como objetivo encontrar um subconjunto V* $\subseteq$ V, em que $\forall$i, j $\in$ V*, 
   a aresta (i, j) $\notin$ E, além de que V* deve ser máximo.
@@ -85,8 +83,9 @@
   
   O MISP é um problema muito similar ao problema do clique máximo, que resumidamente, busca encontrar o maior subconjunto de vértices adjacentes, 
   em outras palavras, a cada par de vértices dentro do subconjunto, é necessário que haja uma aresta os interligando. É possível resolver o MISP através
-  do clique máximo, dado o grafo de entrada no MISP, basta acharmos o seu complemento e utilizá-lo como entra para o clique máximo. Também é válido a operação
-  inversa, utilizarmos o MISP para resolvermos o clique máximo. Com isso, dado um grafo G qualquer e seu complemento o grafo X, temos que:
+  do clique máximo, dado o grafo de entrada no MISP, basta acharmos o seu complemento e utilizá-lo como entra para o clique máximo. 
+  Também é válido a operação inversa, utilizarmos o MISP para resolvermos o clique máximo. 
+  Com isso, dado um grafo G qualquer e seu complemento o grafo X, temos que:
   
   
   \begin{center}
@@ -97,23 +96,25 @@
   //falar do clique
   
 \section{Trabalhos Relacionados}
-  A meta-heurística Ant Colony Optimization foi apresentado por Marco Dorigo /**Referencia**/ a partir de observações sobre o comportamento
+  \label{relacionados}
+  A meta-heurística Ant Colony Optimization foi apresentado por \cite{Dorigo1} a partir de observações sobre o comportamento
   de formigas reais a fim de descobrir como animais de pouca visão conseguiam se locomover e atingir seus destinos. Como o resultado das observações
-  foi modelada e desenvolvida a ACO. Ao longo do tempo foi desenvolvida extensões para a ACO, como por exemplo, Recursive Ant Colony Optimization por /*REFERENCIA*/ e 
-  Elitist Ant System por /*REFERENCIA*/.
+  foi modelada e desenvolvida a ACO. Ao longo do tempo foi desenvolvida extensões para a ACO, como por exemplo, Recursive Ant Colony Optimization e 
+  Elitist Ant System.
   
-  Foram encontrados diversos trabalhos com o Máximo Conjunto Independente, sendo o mais antigo do ano 1977, desenvolvido por RE Tarjan AE Trojanowski que apresentou
-  um algoritmo de solução. Também foi encontrado trabalhos que apresentavam soluções utilizando heurísticas, bem como o trabalho de MAURICIO G.C. RESENDE AND CELSO C. RIBEIRO 
+  Foram encontrados diversos trabalhos com o Máximo Conjunto Independente, sendo o mais antigo do ano 1977, desenvolvido por \cite{MISP1} apresentou
+  um algoritmo de solução eficiente para o problema. Também foi encontrado trabalhos que apresentavam soluções utilizando heurísticas, bem como o 
+  trabalho de 
+  MAURICIO G.C. RESENDE AND CELSO C. RIBEIRO 
   /*REFERÊNCIA*/ que utilizaram a meta-heurística GRASP e Algortimos Evolucionários por Back e Khuri /*REFERENCIA*/
 
   Direcionando as pesquisas para encontrar trabalhos que utilizaram a meta-heurística Ant Colony Optimization para a resolução do Máximo Conjunto Independente, foi encontrado
-  dois trabalhos que propôs esse desafio. /**Referenciar os 2**/. Para o presenta trabalho, utilizaremos propostas enunciadas neste trabalho, bem como a função probabilidade /ver nome
+  dois trabalhos que propôs esse desafio \cite{ACOMISP1} e \cite{ACOMISP2}. Para o presenta trabalho, utilizaremos propostas enunciadas neste trabalho, bem como a função probabilidade /ver nome
   e parâmetros.
-  
-  Devido a sua semelhança, também foi pesquisado trabalhos envolvendo ACO e Clique Máximo, como destaque, houve os trabalhos /*referencia*/
-  
+    
 
 \section{Proposta}
+  \label{proposta}
   Para a resolução do problema, poderíamos utilizar algoritmos determinísticos, porém ao utilizar algoritmos heurísticos provavelmente
   encontraremos boas soluções com menor tempo em relação aos algoritmos determinísticos e com o uso de heurísticas adequadas a queda na 
   qualidade das soluções não será tão sentida.
@@ -146,6 +147,7 @@
   
 
 \section{Avaliação}
+\label{avaliacao}
   Para a realização dos testes foi utilizado um computador com processador XXX de xx núcleos, com memória RAM xx, Memória cache 
   e Sistema Operacional Ubuntu 16.04 64 bits.
   
@@ -156,6 +158,7 @@
   Os resultados que foram obtidos, mostra que houve..
 
 \section{Conclusões e Trabalhos Futuros}
+\label{conclusao}
   Os resultados desse trabalho .... 
   
   A utilização de programação paralela se mostra bastante útil quando utilizada de forma correta e sua utilização nos mostra o ganho de perfomance
@@ -166,114 +169,6 @@
   Outra hipótese envolvendo programação paralela é a utilização de placas gráficas para a execução de códigos paralelos, área crescente no cenário e que possui 
   resultados animadores. A junção da programação paralela entre CPU e GPU já foi proposta e deve ser bastante explorada nos tempos atuais. 
   
-
-\section{Referências}
-
-\section{General Information}
-
-All full papers and posters (short papers) submitted to some SBC conference,
-including any supporting documents, should be written in English or in
-Portuguese. The format paper should be A4 with single column, 3.5 cm for upper
-margin, 2.5 cm for bottom margin and 3.0 cm for lateral margins, without
-headers or footers. The main font must be Times, 12 point nominal size, with 6
-points of space before each paragraph. Page numbers must be suppressed.
-
-Full papers must respect the page limits defined by the conference.
-Conferences that publish just abstracts ask for \textbf{one}-page texts.
-
-\section{First Page} \label{sec:firstpage}
-
-The first page must display the paper title, the name and address of the
-authors, the abstract in English and ``resumo'' in Portuguese (``resumos'' are
-required only for papers written in Portuguese). The title must be centered
-over the whole page, in 16 point boldface font and with 12 points of space
-before itself. Author names must be centered in 12 point font, bold, all of
-them disposed in the same line, separated by commas and with 12 points of
-space after the title. Addresses must be centered in 12 point font, also with
-12 points of space after the authors' names. E-mail addresses should be
-written using font Courier New, 10 point nominal size, with 6 points of space
-before and 6 points of space after.
-
-The abstract and ``resumo'' (if is the case) must be in 12 point Times font,
-indented 0.8cm on both sides. The word \textbf{Abstract} and \textbf{Resumo},
-should be written in boldface and must precede the text.
-
-\section{CD-ROMs and Printed Proceedings}
-
-In some conferences, the papers are published on CD-ROM while only the
-abstract is published in the printed Proceedings. In this case, authors are
-invited to prepare two final versions of the paper. One, complete, to be
-published on the CD and the other, containing only the first page, with
-abstract and ``resumo'' (for papers in Portuguese).
-
-\section{Sections and Paragraphs}
-
-Section titles must be in boldface, 13pt, flush left. There should be an extra
-12 pt of space before each title. Section numbering is optional. The first
-paragraph of each section should not be indented, while the first lines of
-subsequent paragraphs should be indented by 1.27 cm.
-
-\subsection{Subsections}
-
-The subsection titles must be in boldface, 12pt, flush left.
-
-\section{Figures and Captions}\label{sec:figs}
-
-
-Figure and table captions should be centered if less than one line
-(Figure~\ref{fig:exampleFig1}), otherwise justified and indented by 0.8cm on
-both margins, as shown in Figure~\ref{fig:exampleFig2}. The caption font must
-be Helvetica, 10 point, boldface, with 6 points of space before and after each
-caption.
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=.5\textwidth]{fig1.jpg}
-\caption{A typical figure}
-\label{fig:exampleFig1}
-\end{figure}
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=.3\textwidth]{fig2.jpg}
-\caption{This figure is an example of a figure caption taking more than one
-  line and justified considering margins mentioned in Section~\ref{sec:figs}.}
-\label{fig:exampleFig2}
-\end{figure}
-
-In tables, try to avoid the use of colored or shaded backgrounds, and avoid
-thick, doubled, or unnecessary framing lines. When reporting empirical data,
-do not use more decimal digits than warranted by their precision and
-reproducibility. Table caption must be placed before the table (see Table 1)
-and the font used must also be Helvetica, 10 point, boldface, with 6 points of
-space before and after each caption.
-
-\begin{table}[ht]
-\centering
-\caption{Variables to be considered on the evaluation of interaction
-  techniques}
-\label{tab:exTable1}
-\includegraphics[width=.7\textwidth]{table.jpg}
-\end{table}
-
-\section{Images}
-
-All images and illustrations should be in black-and-white, or gray tones,
-excepting for the papers that will be electronically available (on CD-ROMs,
-internet, etc.). The image resolution on paper should be about 600 dpi for
-black-and-white images, and 150-300 dpi for grayscale images.  Do not include
-images with excessive resolution, as they may take hours to print, without any
-visible difference in the result. 
-
-\section{References}
-
-Bibliographic references must be unambiguous and uniform.  We recommend giving
-the author names references in brackets, e.g. \cite{knuth:84},
-\cite{boulic:91}, and \cite{smith:99}.
-
-The references must be listed using 12 point font size, with 6 points of space
-before each reference. The first line of each reference should not be
-indented, while the subsequent should be indented by 0.5 cm.
 
 \bibliographystyle{sbc}
 \bibliography{sbc-template}
