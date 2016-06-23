@@ -314,7 +314,7 @@ void verificaResposta(Formiga *formigaAtual){
 */
 void *AntSystemColony(void *args){
    int c;
-   //int threadId = *(int *) args;
+   int threadId = *(int *) args;
    
    int formiga_thread = (int) NumeroFormigas / num_threads;
    
@@ -339,9 +339,11 @@ void *AntSystemColony(void *args){
       
       pthread_mutex_unlock(&lock);
 
-
-      atualizaFeromonio(&melhor_colonia[c]);
+      if(threadId == 0){
+         atualizaFeromonio(&melhor_colonia[c]);  
+      }
       
+
       pthread_barrier_wait(&barreira);
    }
    int *ia = malloc(sizeof(int));
