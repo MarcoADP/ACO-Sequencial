@@ -1,0 +1,403 @@
+===========
+p_hat1500-3.clq.b
+===========
+===========
+thread 1
+===========
+
+
+Nº Vertices => 12
+
+real	1m10.835s
+user	1m10.824s
+sys	0m0.012s
+
+
+Nº Vertices => 12
+
+real	1m9.634s
+user	1m9.612s
+sys	0m0.016s
+
+
+Nº Vertices => 12
+
+real	1m9.428s
+user	1m9.384s
+sys	0m0.040s
+
+
+Nº Vertices => 12
+
+real	1m9.599s
+user	1m9.548s
+sys	0m0.052s
+
+
+Nº Vertices => 12
+
+real	1m10.556s
+user	1m10.520s
+sys	0m0.036s
+
+
+Nº Vertices => 12
+
+real	1m9.965s
+user	1m9.920s
+sys	0m0.040s
+
+
+Nº Vertices => 12
+
+real	1m10.087s
+user	1m10.052s
+sys	0m0.032s
+
+
+Nº Vertices => 12
+
+real	1m9.838s
+user	1m9.804s
+sys	0m0.024s
+
+
+Nº Vertices => 12
+
+real	1m10.318s
+user	1m10.288s
+sys	0m0.024s
+
+
+Nº Vertices => 12
+
+real	1m9.715s
+user	1m9.680s
+sys	0m0.032s
+
+
+Nº Vertices => 12
+
+real	1m10.199s
+user	1m10.160s
+sys	0m0.036s
+===========
+thread 2
+===========
+
+
+Nº Vertices => 12
+
+real	0m40.642s
+user	1m18.700s
+sys	0m0.068s
+
+
+Nº Vertices => 12
+
+real	0m40.566s
+user	1m18.444s
+sys	0m0.092s
+
+
+Nº Vertices => 12
+
+real	0m40.701s
+user	1m18.592s
+sys	0m0.068s
+
+
+Nº Vertices => 12
+
+real	0m40.495s
+user	1m18.216s
+sys	0m0.052s
+
+
+Nº Vertices => 12
+
+real	0m40.440s
+user	1m17.968s
+sys	0m0.088s
+
+
+Nº Vertices => 12
+
+real	0m40.700s
+user	1m18.668s
+sys	0m0.084s
+
+
+Nº Vertices => 12
+
+real	0m41.013s
+user	1m19.276s
+sys	0m0.060s
+
+
+Nº Vertices => 12
+
+real	0m40.401s
+user	1m18.236s
+sys	0m0.064s
+
+
+Nº Vertices => 12
+
+real	0m40.837s
+user	1m18.652s
+sys	0m0.076s
+
+
+Nº Vertices => 12
+
+real	0m40.867s
+user	1m18.796s
+sys	0m0.092s
+
+
+Nº Vertices => 12
+
+real	0m40.332s
+user	1m18.072s
+sys	0m0.036s
+===========
+thread 3
+===========
+
+
+Nº Vertices => 12
+
+real	0m36.006s
+user	1m35.708s
+sys	0m0.128s
+
+
+Nº Vertices => 12
+
+real	0m36.249s
+user	1m36.124s
+sys	0m0.100s
+
+
+Nº Vertices => 12
+
+real	0m36.083s
+user	1m35.668s
+sys	0m0.148s
+
+
+Nº Vertices => 12
+
+real	0m36.065s
+user	1m36.004s
+sys	0m0.124s
+
+
+Nº Vertices => 12
+
+real	0m36.140s
+user	1m36.300s
+sys	0m0.124s
+
+
+Nº Vertices => 12
+
+real	0m35.787s
+user	1m35.292s
+sys	0m0.132s
+
+
+Nº Vertices => 12
+
+real	0m36.066s
+user	1m35.884s
+sys	0m0.108s
+
+
+Nº Vertices => 12
+
+real	0m36.216s
+user	1m36.196s
+sys	0m0.160s
+
+
+Nº Vertices => 12
+
+real	0m36.196s
+user	1m35.744s
+sys	0m0.080s
+
+
+Nº Vertices => 12
+
+real	0m36.263s
+user	1m36.304s
+sys	0m0.092s
+
+
+Nº Vertices => 12
+
+real	0m36.067s
+user	1m35.420s
+sys	0m0.144s
+===========
+thread 4
+===========
+
+
+Nº Vertices => 12
+
+real	0m28.605s
+user	1m46.276s
+sys	0m0.152s
+
+
+Nº Vertices => 12
+
+real	0m28.706s
+user	1m47.028s
+sys	0m0.100s
+
+
+Nº Vertices => 12
+
+real	0m28.652s
+user	1m46.704s
+sys	0m0.164s
+
+
+Nº Vertices => 12
+
+real	0m28.798s
+user	1m47.144s
+sys	0m0.204s
+
+
+Nº Vertices => 12
+
+real	0m28.514s
+user	1m45.968s
+sys	0m0.112s
+
+
+Nº Vertices => 12
+
+real	0m28.713s
+user	1m46.652s
+sys	0m0.156s
+
+
+Nº Vertices => 12
+
+real	0m28.760s
+user	1m46.736s
+sys	0m0.184s
+
+
+Nº Vertices => 12
+
+real	0m28.700s
+user	1m46.288s
+sys	0m0.140s
+
+
+Nº Vertices => 12
+
+real	0m28.661s
+user	1m47.172s
+sys	0m0.160s
+
+
+Nº Vertices => 12
+
+real	0m28.542s
+user	1m46.476s
+sys	0m0.184s
+
+
+Nº Vertices => 12
+
+real	0m28.834s
+user	1m46.876s
+sys	0m0.112s
+===========
+thread 5
+===========
+
+
+Nº Vertices => 12
+
+real	0m31.064s
+user	1m44.844s
+sys	0m0.144s
+
+
+Nº Vertices => 12
+
+real	0m30.834s
+user	1m43.732s
+sys	0m0.124s
+
+
+Nº Vertices => 12
+
+real	0m30.861s
+user	1m44.524s
+sys	0m0.176s
+
+
+Nº Vertices => 12
+
+real	0m30.977s
+user	1m44.768s
+sys	0m0.132s
+
+
+Nº Vertices => 12
+
+real	0m30.398s
+user	1m42.844s
+sys	0m0.104s
+
+
+Nº Vertices => 12
+
+real	0m30.510s
+user	1m43.708s
+sys	0m0.112s
+
+
+Nº Vertices => 12
+
+real	0m30.815s
+user	1m44.628s
+sys	0m0.160s
+
+
+Nº Vertices => 12
+
+real	0m30.673s
+user	1m44.516s
+sys	0m0.212s
+
+
+Nº Vertices => 12
+
+real	0m30.807s
+user	1m44.552s
+sys	0m0.160s
+
+
+Nº Vertices => 12
+
+real	0m30.700s
+user	1m44.540s
+sys	0m0.172s
+
+
+Nº Vertices => 12
+
+real	0m30.957s
+user	1m44.436s
+sys	0m0.196s
