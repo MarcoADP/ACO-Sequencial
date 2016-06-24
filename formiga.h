@@ -156,13 +156,13 @@ Formiga selecionaFormiga(Formiga listaFormiga[], int num_formiga){
 void mostraRespostaColonia(Formiga* formiga){
    int i, j;
    int vert = formiga->qtdVertice;
-   printf("Nº Vertices => %d\n", vert);
-   printf("Vertices => ");
+   printf("\n\nNº Vertices => %d\n", vert);
+   /*printf("Vertices => ");
    for(i = 0; i < Nr_vert; i++){
       if(formiga->listaVertice[i] == 1){
          j = i + 1;
          printf(" %d ", j);
       }
-   }
-   printf("\n\n");
+   }*/
+   //printf("\n\n");
 }

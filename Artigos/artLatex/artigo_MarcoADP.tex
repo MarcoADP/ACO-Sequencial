@@ -6,6 +6,7 @@
 
 \usepackage[brazil]{babel}   
 \usepackage[latin1]{inputenc}  
+\usepackage{subfigure}
 
      
 \sloppy
@@ -43,18 +44,24 @@
 \end{resumo}
 
 \section{Introdução}
-  O Problema do Máximo Conjunto Independente, traduzido de Maximum Set Independent Problem (MISP), pode ser 
-  considerado um problema de importância para a computação devido a sua aplicabilidade a várias áreas, 
-  tais como, Reconhecimento de Padrões, Escalonamento,Biologia Molecular e \textit{Map Labeling}.
+  O Problema do Máximo Conjunto Independente, traduzido de Maximum Set Independent Problem (MISP), é um problema na Teoria dos Grafos cujo objetivo
+  é encontrar o maior conjunto possível de vértices que não possuem arestas entre si. O MISP pode ser considerado um problema de importância 
+  para a computação devido a sua aplicabilidade a várias áreas, tais como, Reconhecimento de Padrões, Escalonamento,Biologia Molecular e 
+  \textit{Map Labeling}. Neste artigo iremos propor uma solução para o MISP utilizando a meta-heurística Otimização de Colônia de Formigas e programação
+  paralela. Para fins de avaliação de perfomance, será produzida uma versão sequencial da solução.
   
-  Para a elaboração do algoritmo solucionador do MISP, foi utilizado a meta-heurística de propósito geral Otimização de Colônia de Formigas, 
-  do inglês, Ant Colony Optimization (ACO), introduzido por \cite{Dorigo1}. O ACO se propõe a resolver aos mais variados problemas,
-  tais como, os problemas do Caixeiro Viajante, Coloração de Grafos e Mochila Binária e Mochila Fracionária.
+  A meta-heurística de propósito geral Otimização de Colônia de Formigas, do inglês, Ant Colony Optimization (ACO), introduzido por \cite{Dorigo1}, 
+  se baseiou no comportamento das colônias de formigas para a elaboração da meta-heurística. As questões observadas foram , como animais praticamente cegos 
+  conseguem chegar em seus destinos, como funciona a substância química feromônio que utilizam para demarcar o caminho. Porém a representação da formiga e
+  do feromônio não é necessariamente fiel a realidade, por exemplo, o tempo é representado discretamente e o feromônio pode ser atualizado ao 
+  final do caminho. O ACO se propõe a resolver aos mais variados problemas, tais como, os problemas do Caixeiro Viajante, Coloração de Grafos 
+  e Mochila Binária e Mochila Fracionária.
   
-  Como propósito do artigo, além do algortimo sequencial, foi produzido o algortimo em paralelo. Os algoritmos em paralelo vem com o 
-  objetivo de utilizar toda a potência de processadores multicores, visto que ao criar threads, divide-se o problema em partes, o que
-  permite terminar o problema em menor tempo e utiliza todo o potencial a seu serviço. Por outro lado, é necessário haver controles e uma maior
-  atenção para a produção de códigos corretos, principalmente que pensar em criar códigos paralelos é de maior dificuldade que códigos sequenciais.
+  Utilizado neste trabalho, o algortimo em paralelo vem com o objetivo de utilizar toda a potência de processadores multicores, visto que ao dividir
+  o fluxo de execução em vários fluxos, permite terminar o problema em menor tempo, além de utilizar todo o potencial de sua máquina. Por outro lado, 
+  é necessário haver maior controle e atenção para a produção de códigos paralelos corretos, principalmente que a criação de códigos paralelos é de 
+  maior dificuldade que códigos sequenciais, visto que a grande maioria dos programadores estão acostumados a apenas programar sequencial e a elaboração
+  de código paralelo possue maior complexidade em relação aos códigos sequenciais.
   
   Este artigo é organizado da seguinte forma. Na Seção \ref{problema}, será descrito de forma detalhada o Problema do Máximo Conjunto
   Independente. Na Seção \ref{relacionados}, será apresentado trabalho relacionados, seja pela resolução do Problema do Máximo
@@ -64,11 +71,17 @@
 
 \section{Problema}
   \label{problema}
+  De acordo a Teoria dos Grafos, o Conjunto Independente é um conjunto de vértices em um grafo, em que estes vértices não podem possuir
+  arestas entre si. Enquanto o problema do Máximo Conjunto Independente tem como objetivo encontrar o maior conjunto independente de um grafo. 
+  Também existe outros problemas envolvendo conjuntos independentes, por exemplo, o problema de decisão para verificar se há um conjunto
+  independente de tamanho n e o maximal conjunto independente que não são subconjuntos de outros conjuntos independentes. A formulação matemática
+  do MISP será mostrado adiante.
+  
   Dado um Grafo G = (V, E), em V representa o conjunto de vértices e E representa o conjunto de arestas do grafo. O Problema 
   do Máximo Conjunto Independente tem como objetivo encontrar um subconjunto V* $\subseteq$ V, em que $\forall$i, j $\in$ V*, 
   a aresta (i, j) $\notin$ E, além de que V* deve ser máximo.
   
-  A formulação da programação inteira para o trabalho, pode ser definido da seguinte maneira:
+  A formulação da programação inteira para o MISP, pode ser definido da seguinte maneira:
   
   \begin{center}
   max $\sum_{i = 1}^{|V|}$ ci*xi
@@ -79,7 +92,7 @@
   \end{center}
   
   O problema de decisão para verificar se há um conjunto de vértices independentes de tamanho n é classificado como NP-Completo. 
-  Enquanto o Problema Máximo Conjunto Independente é classificado como NP-Difícil.
+  Enquanto o Problema Máximo Conjunto Independente é classificado como um problema de Otimização NP-Difícil.
   
   O MISP é um problema muito similar ao problema do clique máximo, que resumidamente, busca encontrar o maior subconjunto de vértices adjacentes, 
   em outras palavras, a cada par de vértices dentro do subconjunto, é necessário que haja uma aresta os interligando. É possível resolver o MISP através
@@ -89,11 +102,12 @@
   
   
   \begin{center}
-    MISP(G) = CliqueMaximo(X) ou então, 
+    MISP(G) = CliqueMaximo(X), 
+    
+    ou então, 
     
     CliqueMaximo(G) = MISP(X)
   \end{center}
-  //falar do clique
   
 \section{Trabalhos Relacionados}
   \label{relacionados}
@@ -104,9 +118,7 @@
   
   Foram encontrados diversos trabalhos com o Máximo Conjunto Independente, sendo o mais antigo do ano 1977, desenvolvido por \cite{MISP1} apresentou
   um algoritmo de solução eficiente para o problema. Também foi encontrado trabalhos que apresentavam soluções utilizando heurísticas, bem como o 
-  trabalho de 
-  MAURICIO G.C. RESENDE AND CELSO C. RIBEIRO 
-  /*REFERÊNCIA*/ que utilizaram a meta-heurística GRASP e Algortimos Evolucionários por Back e Khuri /*REFERENCIA*/
+  trabalho de \cite{MISP2} que utilizaram a meta-heurística GRASP e Algortimos Evolucionários por \cite{MISP3}.
 
   Direcionando as pesquisas para encontrar trabalhos que utilizaram a meta-heurística Ant Colony Optimization para a resolução do Máximo Conjunto Independente, foi encontrado
   dois trabalhos que propôs esse desafio \cite{ACOMISP1} e \cite{ACOMISP2}. Para o presenta trabalho, utilizaremos propostas enunciadas neste trabalho, bem como a função probabilidade /ver nome
@@ -125,29 +137,80 @@
   Para resolvermos o problema, precisamos utilizar três conjuntos ao longo do algoritmo, os conjuntos são: 
   
   
-  \begin{center}
-   S(t): Conjunto de Vértices presente na resposta em um determinado tempo t.
-    
-    I(t): Conjunto de Vértices que \textbf{não} podem estar mais na solução em um determinado tempo t.
-    
-    D(t): Conjunto de Vértices que \textbf{ainda} podem estar solução em um determinado tempo t.
-  \end{center}
+  \begin{itemize}
+   \item S(t): Conjunto de Vértices presente na resposta em um determinado tempo t.
+   \item I(t): Conjunto de Vértices que \textbf{não} podem estar mais na solução em um determinado tempo t.
+   \item D(t): Conjunto de Vértices que \textbf{ainda} podem estar solução em um determinado tempo t.
+  \end{itemize}
 
-  Com nos três conjuntos, sabemos que S(t) + I(t) + D(t) = V para qualquer instante de tempo, e que a S(t) $\subseteq$ V*.
-  //Figuras com os três conjuntos dentro de V e da figura de S(t) dentro de V*
+  Como vemos na Figura \ref{fig:subfig_a}, os três conjuntos devem compor completamente o conjunto V, ou seja, S(t) + I(t) + D(t) = V 
+  em qualquer instante de tempo e um vértice não pode estar contido em mais de um conjunto. Na Figura \ref{fig:subfig_b}, temos que a S(t) $\subseteq$ V*, 
+  ou seja, tendo V* como a solução final, a cada instante de tempo, o conjunto S(t) deve ser um subconjunto de V*, assim sendo, seja qual instante de
+  tempo for, todos os elementos de S deverão estar contidos em V* no final.
   
-  A partir do grafo abaixo, explicaremos como funciona a heurística utilizada, que foi abstraída do trabalho /*REFERÊNCIA*/.
   
-  //Grafo
+  \begin{figure}[ht]
+  \centering
+  \subfigure[Composição dos conjuntos utilizados na solução.]{
+  \includegraphics[width=4cm, height = 4cm]{conjunto.eps}
+  \label{fig:subfig_a}
+  }
+  \subfigure[Composição do conjunto solução em um determinado tempo t.]{
+  \includegraphics[width=4cm, height = 4cm]{siv.eps}
+  \label{fig:subfig_b}
+  }
+  % Você pode adicionar mais subfigures aqui!
+  \label{fig:conjuntos}
+  \caption{Composições dos conjuntos.\subref{fig:subfig_a} e \subref{fig:subfig_b}}
+  \end{figure}
+
  
- 
- 
-  //explicar que pega o vertice com mais vert não adjacentes
+  Dado o grafo descrito na Figura \ref{fig:grafo} vamos explicar a heurística utilizada. No grafo temos um total de oito vértices. 
+  Como suposição, vamos tomar que em determinado tempo t, no conjunto solução, temos S(t) = $\{$A$\}$. Como o vértice A está no conjunto solução,
+  todos os vértices adjacentes a ele não pode mais estar na solução, logo precisamos descartá-los, assim sendo, I(t) = $\{$B, C$\}$. Para acharmos
+  o conjunto dos vértices em que ainda podem estar na solução, temos D(t) = V - S(t) - I(t), logo D(t) = $\{$D, E, F, G$\}$.
+  
+  \begin{figure}[ht]
+  \centering
+  \includegraphics[width=.8\textwidth]{grafo.eps}
+  \caption{Grafo de Entrada para o MISP}
+  \label{fig:grafo}
+  \end{figure}
+  
+  Agora iremos encontrar o próximo vértice a ser adicionado ao conjunto solução. Para escolhermos o vértices, iremos calcular o número de vértices
+  na qual o vértice em questão não são adjacentes, relembrando que estamos apenas trabalhando com os vértices contido no conjunto de vértices que ainda
+  podem estar na solução. Esse número representa o valor da função heurística.
+  \begin{itemize}
+   \item $\tau$$_{D}$(S(t)) = \textbar $\{$E, G$\}$ \textbar = 2 
+   \item $\tau$$_{E}$(S(t)) = \textbar $\{$D$\}$ \textbar = 1
+   \item $\tau$$_{F}$(S(t)) = \textbar $\{$ $\}$ \textbar = 0
+   \item $\tau$$_{G}$(S(t)) = \textbar $\{$D$\}$ \textbar = 1
+  \end{itemize}
+  Agora que sabemos o valor da função heurística de cada vértice, iremos escolher o vértice com o maior valor, que no exemplo, foi o vértice D. 
+  Com isso, iremos adicionar o vértice D na solução, e os vértices adjacentes a D no conjunto de vértices que não podem estar na solução e repetir o
+  processo com os vértices restantes disponíveis para a solução. O processo irá terminar em um tempo t' em que o conjunto D(t') = $\{$ $\}$, lembrando que
+  em qualquer tempo t, temos que ter a seguinte igualdade: V = S(t) + I(t) + D(t).
   
   
 
 \section{Avaliação}
 \label{avaliacao}
+  \begin{table}[]
+	\centering
+	\caption{My caption}
+	\label{my-label}
+	\begin{tabular}{|c|c|c|}
+	\hline
+	Instancias & Resultado & Tempo \\ \hline
+		  &           &       \\ \hline
+		  &           &       \\ \hline
+		  &           &       \\ \hline
+	\end{tabular}
+	\end{table}
+
+  
+  
+  
   Para a realização dos testes foi utilizado um computador com processador XXX de xx núcleos, com memória RAM xx, Memória cache 
   e Sistema Operacional Ubuntu 16.04 64 bits.
   

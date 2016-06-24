@@ -1,0 +1,400 @@
+===========
+thread 1
+===========
+
+
+Nº Vertices => 31
+
+real	0m31.744s
+user	0m31.692s
+sys	0m0.032s
+
+
+Nº Vertices => 31
+
+real	0m31.762s
+user	0m31.728s
+sys	0m0.032s
+
+
+Nº Vertices => 31
+
+real	0m31.805s
+user	0m31.784s
+sys	0m0.016s
+
+
+Nº Vertices => 31
+
+real	0m31.736s
+user	0m31.712s
+sys	0m0.020s
+
+
+Nº Vertices => 31
+
+real	0m31.949s
+user	0m31.916s
+sys	0m0.028s
+
+
+Nº Vertices => 31
+
+real	0m32.727s
+user	0m32.692s
+sys	0m0.028s
+
+
+Nº Vertices => 31
+
+real	0m33.497s
+user	0m33.460s
+sys	0m0.032s
+
+
+Nº Vertices => 31
+
+real	0m33.192s
+user	0m33.172s
+sys	0m0.020s
+
+
+Nº Vertices => 31
+
+real	0m31.964s
+user	0m31.936s
+sys	0m0.024s
+
+
+Nº Vertices => 31
+
+real	0m31.666s
+user	0m31.644s
+sys	0m0.020s
+
+
+Nº Vertices => 31
+
+real	0m31.793s
+user	0m31.784s
+sys	0m0.004s
+===========
+thread 2
+===========
+
+
+Nº Vertices => 31
+
+real	0m18.188s
+user	0m35.736s
+sys	0m0.056s
+
+
+Nº Vertices => 31
+
+real	0m18.248s
+user	0m35.852s
+sys	0m0.052s
+
+
+Nº Vertices => 31
+
+real	0m18.132s
+user	0m35.664s
+sys	0m0.064s
+
+
+Nº Vertices => 31
+
+real	0m18.151s
+user	0m35.704s
+sys	0m0.044s
+
+
+Nº Vertices => 31
+
+real	0m18.332s
+user	0m36.012s
+sys	0m0.044s
+
+
+Nº Vertices => 31
+
+real	0m18.185s
+user	0m35.752s
+sys	0m0.048s
+
+
+Nº Vertices => 31
+
+real	0m18.258s
+user	0m35.884s
+sys	0m0.056s
+
+
+Nº Vertices => 31
+
+real	0m18.167s
+user	0m35.700s
+sys	0m0.056s
+
+
+Nº Vertices => 31
+
+real	0m18.305s
+user	0m36.092s
+sys	0m0.040s
+
+
+Nº Vertices => 31
+
+real	0m18.099s
+user	0m35.648s
+sys	0m0.060s
+
+
+Nº Vertices => 31
+
+real	0m18.216s
+user	0m35.768s
+sys	0m0.096s
+===========
+thread 3
+===========
+
+
+Nº Vertices => 31
+
+real	0m18.060s
+user	0m47.436s
+sys	0m0.132s
+
+
+Nº Vertices => 31
+
+real	0m17.943s
+user	0m46.956s
+sys	0m0.112s
+
+
+Nº Vertices => 31
+
+real	0m17.993s
+user	0m47.216s
+sys	0m0.100s
+
+
+Nº Vertices => 31
+
+real	0m18.309s
+user	0m48.004s
+sys	0m0.096s
+
+
+Nº Vertices => 31
+
+real	0m18.170s
+user	0m47.708s
+sys	0m0.064s
+
+
+Nº Vertices => 31
+
+real	0m18.222s
+user	0m47.792s
+sys	0m0.080s
+
+
+Nº Vertices => 31
+
+real	0m18.259s
+user	0m47.852s
+sys	0m0.084s
+
+
+Nº Vertices => 31
+
+real	0m18.122s
+user	0m47.700s
+sys	0m0.080s
+
+
+Nº Vertices => 31
+
+real	0m18.199s
+user	0m47.860s
+sys	0m0.080s
+
+
+Nº Vertices => 31
+
+real	0m18.233s
+user	0m47.768s
+sys	0m0.060s
+
+
+Nº Vertices => 31
+
+real	0m18.145s
+user	0m47.640s
+sys	0m0.100s
+===========
+thread 4
+===========
+
+
+Nº Vertices => 31
+
+real	0m14.896s
+user	0m55.184s
+sys	0m0.124s
+
+
+Nº Vertices => 31
+
+real	0m14.896s
+user	0m55.456s
+sys	0m0.064s
+
+
+Nº Vertices => 31
+
+real	0m14.849s
+user	0m55.188s
+sys	0m0.108s
+
+
+Nº Vertices => 31
+
+real	0m14.784s
+user	0m55.152s
+sys	0m0.108s
+
+
+Nº Vertices => 31
+
+real	0m14.824s
+user	0m55.456s
+sys	0m0.096s
+
+
+Nº Vertices => 31
+
+real	0m14.766s
+user	0m55.468s
+sys	0m0.100s
+
+
+Nº Vertices => 31
+
+real	0m14.729s
+user	0m55.484s
+sys	0m0.088s
+
+
+Nº Vertices => 31
+
+real	0m14.781s
+user	0m55.344s
+sys	0m0.136s
+
+
+Nº Vertices => 31
+
+real	0m14.808s
+user	0m55.584s
+sys	0m0.136s
+
+
+Nº Vertices => 31
+
+real	0m14.732s
+user	0m55.352s
+sys	0m0.112s
+
+
+Nº Vertices => 31
+
+real	0m14.771s
+user	0m55.604s
+sys	0m0.076s
+===========
+thread 5
+===========
+
+
+Nº Vertices => 31
+
+real	0m16.015s
+user	0m53.332s
+sys	0m0.076s
+
+
+Nº Vertices => 31
+
+real	0m16.003s
+user	0m53.220s
+sys	0m0.092s
+
+
+Nº Vertices => 31
+
+real	0m15.963s
+user	0m53.308s
+sys	0m0.168s
+
+
+Nº Vertices => 31
+
+real	0m15.883s
+user	0m52.936s
+sys	0m0.088s
+
+
+Nº Vertices => 31
+
+real	0m16.099s
+user	0m53.340s
+sys	0m0.128s
+
+
+Nº Vertices => 31
+
+real	0m16.126s
+user	0m53.412s
+sys	0m0.116s
+
+
+Nº Vertices => 31
+
+real	0m16.038s
+user	0m53.348s
+sys	0m0.140s
+
+
+Nº Vertices => 31
+
+real	0m16.073s
+user	0m53.460s
+sys	0m0.104s
+
+
+Nº Vertices => 31
+
+real	0m16.052s
+user	0m53.292s
+sys	0m0.092s
+
+
+Nº Vertices => 31
+
+real	0m16.016s
+user	0m53.344s
+sys	0m0.104s
+
+
+Nº Vertices => 31
+
+real	0m16.178s
+user	0m53.420s
+sys	0m0.124s
