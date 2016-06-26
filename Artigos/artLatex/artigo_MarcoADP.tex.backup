@@ -7,6 +7,10 @@
 \usepackage[brazil]{babel}   
 \usepackage[latin1]{inputenc}  
 \usepackage{subfigure}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
 
      
 \sloppy
@@ -27,20 +31,19 @@
 \maketitle
 
 \begin{abstract}
-  This meta-paper describes the style to be used in articles and short papers
-  for SBC conferences. For papers in English, you should add just an abstract
-  while for the papers in Portuguese, we also ask for an abstract in
-  Portuguese (``resumo''). In both cases, abstracts should not have more than
-  10 lines and must be in the first page of the paper.
+  This article aims in developing parallelized algorithm to find viable solutions to the Maximum Independent Set Problem(MISP) 
+  using heuristic algorithm with meta-heuristic Ant Colony Optimization by \cite{Dorigo1}. To verify the efficiency of the parallel 
+  code produced in comparison to a sequential version of the same is performed. From the data obtained a reflection on the effectiveness
+  in the use of multiple threads to solve large problems it will be done.
 \end{abstract}
      
 \begin{resumo} 
-  Este trabalho tem como objetivo na elaboração de algoritmo sequencial e
-  paralelizado para encontrar soluções viáveis do problema do Máximo Conjunto Independente 
-  utilizando algoritmos da família Colônia de Formigas introduzida por Marco Dorigo.
-  Além da elaboração, é realizada a análise e comparação entre os algoritmos confeccionados,
-  proporcionando dados sobre a efetividade na utilização de múltiplas threads para o algoritmo
-  apresentado e também ao problema solucionado.
+  Este artigo tem como objetivo na elaboração de algoritmo paralelizado para encontrar 
+  soluções viáveis ao Problema do Máximo Conjunto Independente(MISP) utilizando algoritmo heurístico com a 
+  meta-heuristica Otimização de Colônia de Formigas introduzida por \cite{Dorigo1}. Para verificar a eficiência do código
+  paralelo produzido, será realizada a comparação com uma versão sequencial do mesmo. A partir dos dados
+  obtidos será feito uma reflexão sobre a efetividade na utilização de múltiplas threads para a resolução
+  de problemas de grande porte.
 \end{resumo}
 
 \section{Introdução}
@@ -63,10 +66,16 @@
   maior dificuldade que códigos sequenciais, visto que a grande maioria dos programadores estão acostumados a apenas programar sequencial e a elaboração
   de código paralelo possue maior complexidade em relação aos códigos sequenciais.
   
+  Para a confeção do código em paralelo será utilizado a linguagem de programação C com a biblioteca pthread. Será utilizada a abordagem de 
+  memória compartilhada, onde os dados serão visíveis a todos os fluxos, portanto será necessário o gerenciamento de sincronismo, seja por 
+  semáfogos, barreiras, monitores ou \textit{lock}. Há disponíveis algumas linguagens desenvolvidas no paradigma de programação concorrente, 
+  como, Erlang, Limbo e Occam, porém, foi escolhida uma linguagem de programação sequencial devido a familiaridade com a sintaxe da mesma.
+  
   Este artigo é organizado da seguinte forma. Na Seção \ref{problema}, será descrito de forma detalhada o Problema do Máximo Conjunto
   Independente. Na Seção \ref{relacionados}, será apresentado trabalho relacionados, seja pela resolução do Problema do Máximo
   Conjunto Independente, a utilização da Otimização de Colônia de Formigas ou por trabalhos utilizando algoritmo paralelos. 
-  Após, será apresentado na Seção \ref{proposta} de resolução do MISP e a partir da proposta, será analisado na Seção \ref{avaliacao} os resultados
+  Na seção \ref{metodologia} será apresentada como e foi realizado os testes além das especificações da máquina em que foi realizada os testes.
+  Após, será apresentado na Seção \ref{proposta} de resolução do MISP e a partir da proposta, será analisado na Seção \ref{resultados} os resultados
   obtidos. Por fim, na Seção \ref{conclusao} será descrito as conclusões obtidas e possíveis trabalhos futuros.
 
 \section{Problema}
@@ -109,6 +118,10 @@
     CliqueMaximo(G) = MISP(X)
   \end{center}
   
+  Na literatura é mais comum encontrarmos soluções e trabalhos envolvendo o clique e relacionados, como o Clique Máximo, porém devido a possibilidade
+  de redução de um problema ao outro, foi de grande valia para o desenvolvimento deste trabalho alguns artigos com o clique como tema, tanto é
+  que as instâncias encontradas para a realização dos testes foram criadas para testar solução para o Clique Máximo.
+  
 \section{Trabalhos Relacionados}
   \label{relacionados}
   A meta-heurística Ant Colony Optimization foi apresentado por \cite{Dorigo1} a partir de observações sobre o comportamento
@@ -120,9 +133,14 @@
   um algoritmo de solução eficiente para o problema. Também foi encontrado trabalhos que apresentavam soluções utilizando heurísticas, bem como o 
   trabalho de \cite{MISP2} que utilizaram a meta-heurística GRASP e Algortimos Evolucionários por \cite{MISP3}.
 
-  Direcionando as pesquisas para encontrar trabalhos que utilizaram a meta-heurística Ant Colony Optimization para a resolução do Máximo Conjunto Independente, foi encontrado
-  dois trabalhos que propôs esse desafio \cite{ACOMISP1} e \cite{ACOMISP2}. Para o presenta trabalho, utilizaremos propostas enunciadas neste trabalho, bem como a função probabilidade /ver nome
+  Direcionando as pesquisas para encontrar trabalhos que utilizaram a meta-heurística Ant Colony Optimization para a resolução do 
+  Máximo Conjunto Independente, foi encontrado dois trabalhos que propôs esse desafio \cite{ACOMISP1} e \cite{ACOMISP2}. 
+  Para o presenta trabalho, utilizaremos propostas enunciadas neste trabalho, bem como a função probabilidade.
   e parâmetros.
+  
+  Devido a semelhança com o MISP, houve pesquisas sobre o problema Clique Máximo e o resultado de maior relevância encontrado foi
+  \textit{DIMACS Implementation Challenges} criado pela \textit{Rutgers University}, em que o segundo desafio proposto foi a elaboração
+  de soluções para o Clique Máximo, o website contendo maiores informações: http://dimacs.rutgers.edu/Challenges/.
     
 
 \section{Proposta}
@@ -130,6 +148,13 @@
   Para a resolução do problema, poderíamos utilizar algoritmos determinísticos, porém ao utilizar algoritmos heurísticos provavelmente
   encontraremos boas soluções com menor tempo em relação aos algoritmos determinísticos e com o uso de heurísticas adequadas a queda na 
   qualidade das soluções não será tão sentida.
+  
+  O código foi produzido na linguagem de programação C com a biblioteca pthread, foi escolhido essa opção ao invés de uma linguagem
+  de programação desenvolvida no paradigma de programação concorrente devido ao maior conhecimento com a linguagem C, bem como suas
+  características e sintaxe. A abordagem utilizada é de memória compartilhada, ou seja, dados como o vetor feromônio estão visíveis
+  para todos os fluxos de execução, exigindo assim um gerenciamento dos dados, no caso, usaremos uma barreira para que todos os fluxos
+  de um ciclo cheguem ao fim da execução do laço para que o próximo laço seja liberado. Também foi utilizando um mutex para gerenciar
+  o vetor de melhor formiga de cada ciclo
   
   O único conhecimento que temos para resolver o problema é o grafo, e assim temos acesso a sua constituição, como por exemplo, 
   o número de vértices e arestas, densidade e quantidade de cada vértices adjacentes de cada vértice.
@@ -149,14 +174,14 @@
   tempo for, todos os elementos de S deverão estar contidos em V* no final.
   
   
-  \begin{figure}[ht]
+  \begin{figure}[H]
   \centering
   \subfigure[Composição dos conjuntos utilizados na solução.]{
-  \includegraphics[width=4cm, height = 4cm]{conjunto.eps}
+  \includegraphics[width=5cm, height = 5cm]{conjunto.eps}
   \label{fig:subfig_a}
   }
   \subfigure[Composição do conjunto solução em um determinado tempo t.]{
-  \includegraphics[width=4cm, height = 4cm]{siv.eps}
+  \includegraphics[width=5cm, height = 5cm]{siv.eps}
   \label{fig:subfig_b}
   }
   % Você pode adicionar mais subfigures aqui!
@@ -170,9 +195,9 @@
   todos os vértices adjacentes a ele não pode mais estar na solução, logo precisamos descartá-los, assim sendo, I(t) = $\{$B, C$\}$. Para acharmos
   o conjunto dos vértices em que ainda podem estar na solução, temos D(t) = V - S(t) - I(t), logo D(t) = $\{$D, E, F, G$\}$.
   
-  \begin{figure}[ht]
+  \begin{figure}[H]
   \centering
-  \includegraphics[width=.8\textwidth]{grafo.eps}
+  \includegraphics[width=12cm, height = 6cm]{grafo.eps}
   \caption{Grafo de Entrada para o MISP}
   \label{fig:grafo}
   \end{figure}
@@ -191,43 +216,194 @@
   processo com os vértices restantes disponíveis para a solução. O processo irá terminar em um tempo t' em que o conjunto D(t') = $\{$ $\}$, lembrando que
   em qualquer tempo t, temos que ter a seguinte igualdade: V = S(t) + I(t) + D(t).
   
+  \begin{algorithm}[H]
+      \begin{algorithmic}[H]
+	  \While{(c $<$ ciclos)}
+	      \For{(f = 1; f $<$ formigas; f++)}
+		\State $listaFormiga[f] \gets construirSolucao()$
+		\State $verificaSolucao(listaFormiga[f])$
+	      \EndFor
+	      \State $melhorColonia[c] \gets selecionaFormiga(listaFormiga)$
+	      \State $atualizaFeromonio(melhorColonia[c])$
+	  \EndWhile
+	  \State $melhorGeral \gets selecionaFormiga(melhorColonia)$
+	  \State $return melhorGeral$
+      \end{algorithmic}
+      \label{alg:aco}
+      \caption{Pseudocódigo da Otimização de Colônia de Formigas}
+  \end{algorithm}
   
+  No algoritmo \ref{alg:aco} vemos a estrutura padrão da Otimização de Colônia de Formigas, esse pseudocódigo pode ser utilizado para quaisquer
+  problemas, a diferença está contida em como modelamos as estruturas utilizadas, como por exemplo, as formigas, a respostas e as funções utilizadas
+  No algoritmo \ref{alg:prob} está representada a função de probabilidade que tem como utilidade determinar o próximo vértice a ser adicionado na lista solução.
+  Por fim, no algortimo \ref{alg:fer} é mostrado a função para atualização da taxa de feromônio dos vértices do problema, que envolve 
+  basicamente duas variáveis, a taxa de evaporação $\rho$ e a taxa$\_$feromonio que está diretamente vinculada a taxa de evaporação e tem como
+  objetivo aumentar o feromônio nos vértices que pertencem ao conjunto solução da melhor formiga da colônia.
+  
+  \begin{algorithm}[H]
+      \begin{algorithmic}[H]
+	 
+	  \State $feromonio \gets vetorFeromonio[V]$
+	  \State $heuristica \gets \tau_{V}(S(t))$
+	  \State $probabilidade \gets feromonio^\alpha + heuristica^\beta$
+	  \State $return probabilidade$
+      \label{alg:prob}
+      \caption{Função probabilidade}
+      \end{algorithmic}
+  \end{algorithm}
+  
+  \begin{algorithm}[H]
+   \begin{algorithmic}[H]
+      \State $taxa\_feromonio \gets 1 + (2 * \rho)$
+      \For(i = 1; i $<$ Nr$\_$vertices; i++)
+	\State $vetorFeromonio[i] \gets vetorFeromonio[i] * (1 - \rho)$
+      \EndFor
+      
+      \For(i = 1; i $<$ Vertices$\_$solucao; i++)
+	\State $vetorFeromonio[i] \gets vetorFeromonio[i] * taxa\_feromonio$
+      \EndFor
+    \label{alg:fer}
+    \caption{Função Atualiza Feromônio}
+   \end{algorithmic}
+  \end{algorithm}
+ 
+  Tanto a versão paralela quanto a versão sequencial da solução produzida, bem como, as instâncias encontradas e artigos relacionados ao
+  tema está disponível em: https://github.com/MarcoADP/ACO-Sequencial.
+ 
+  Agora que foi mostrada a ideia por trás da proposta de solução para o MISP, iremos apresentar na próxima seção os métodos e os meios utilizados
+  para a obtenção dos resultados construídos a partir da proposta desenvolvida neste artigo.
 
-\section{Avaliação}
-\label{avaliacao}
-  \begin{table}
-   \centering
-   \begin{tabular}{| c | c | c |}
-   \hline | 
-    ×
-   \end{tabular}
 
+\section{Metodologia}
+  \label{metodologia}
+  Para os testes e a elaboração do dados utilizamos da seguinte metodologia, cada instância foi executada utilizando de uma a cinco threads, e o 
+  resultado adquirido para cada thread foi obtido através da média entre dez execuções, observando-se que foi executado doze veze, o pior e o 
+  melhor resultado encontrados foram descartados. Também foi realizado o método de doze execuções para o código sequencial.
+  
+  A máquina utilizada para a realização dos teste foi um Notebook Dell Vostro 5470 com os seguintes componentes:
+  \begin{itemize}
+   \item Processador: i5 4210 Dual Core
+      \subitem Thread: 4
+      \subitem L2 Cache: 0.5 MB
+      \subitem L3 Cache: 3 MB
+   \item Memória RAM: 4 GB
+   \item SO: Linux Ubuntu 16.04 64 bits
+  \end{itemize}
+  
+  De todas as instâncias de grafos obtidas durante a fase de pesquisa, foram testadas no total de cinco das sessenta e novas instâncias. 
+  Esta coletânea de grafos foi obtida do website do \textit{Institut de Recherches Interdisciplinaires et de Développements en Intelligence Artificielle}
+  da Universidade Livre de Bruxelas, em que Marco Dorigo, é um dos diretores. O acesso aos grafos está disponível em: 
+  http://iridia.ulb.ac.be/~fmascia/maximum_clique/DIMACS-benchmark.
+  
+  
+\section{Resultados}
+  \label{resultados}
+  
+  As instâncias utilizadas nos testes estão descritas na tabela \ref{inst} com o número de vértices e arestas. Assim como observaremos
+  nos resultados obtidos, grafos com mais arestas ou vértices não garantem necessariamente maior tempo de execução ou então um conjunto
+  máximo independente maior.
+  
+  \begin{table}[H]
+  \centering
+  \caption{As instâncias utilizas neste trabalho}
+  \label{inst}
+  \begin{tabular}{|c|c|c|}
+  \hline
+  Instância    & Vértices & Arestas \\ \hline
+  p\_hat1500-2 & 1500     & 568960  \\ \hline
+  keller6      & 3361     & 4619898 \\ \hline
+  p\_hat1500-3 & 1550     & 847244  \\ \hline
+  keller5      & 776      & 225990  \\ \hline
+  hamming10-4  & 1024     & 434 176 \\ \hline
+  \end{tabular}
   \end{table}
+  
+  A seguir, na tabela \ref{tab:resultados} temos os resultados obtidos a partir dos cincos grafos enunciados anteriormente, bem como as
+  valores utilizados para as variáveis nos testes.
+  \begin{itemize}
+   \item Ciclos: 100
+   \item Formigas: 120
+   \item Alpha: 2
+   \item Beta: 1
+   \item Rho: 0.1
+  \end{itemize}
 
+  \begin{table}[H]
+  \centering
+  \caption{Resultados obtidos}
+  \label{tab:resultados}
+  \begin{tabular}{c|c|c|c|c|c|c}
+  \hline
+  Instância    & Resultado & Sequencial & 1 Thread   & 2 Threads  & 4 Threads  & 8 Threads  \\ \hline
+  p\_hat1500-2 & 62        & 11m20.303s & 11m21.890  & 6m21.890s  & 4m47.258s  & 4m50.436s  \\ \hline
+  keller6      & 63        & 10m14.038s & 10m07.492s & 05m47.471s & 04m43.365s & 04m42.479s \\ \hline
+  p\_hat1500-3 & 12        & 1m25.282s  & 1m23.475   & 0m48.768s  & 0m34.015s  & 0m34.567s  \\ \hline
+  keller5      & 31        & 0m38.686s  & 0m38.110s  & 0m21.850s  & 0m17.258s  & 0m17.928s  \\ \hline
+  hamming10-4  & 20        & 0m38.397s  & 0m38.007   & 0m21.545   & 0m17.093   & 0m18.398   \\ \hline
+  \end{tabular}
+  \end{table}
   
+  Com os resultados obtidos, podemos produzir uma análise em relação ao código paralelo e o código sequencial,
+  e assim como produzirmos o gráfico do Speedup que está apresentado na figura \ref{speedup}. 
   
+  \begin{figure}[ht]
+   \centering
+   \label{speedup}
+   \includegraphics[width=.8\textwidth]{speedup.eps}
+   \caption{Gráfico Speedup}
+  \end{figure}
+
+  A primeira conclusão que podemos obter da figura \ref{speedup}, é que o tempo com 8 threads é muito similar
+  ao tempo com 4 threads, isso se deve ao fato que a máquina utilizada nos experimento possui a capacidade de executar
+  quatro threads paralelamente, portanto, ao executarmos com um número maior de threads não haverá ganho de perfomance.
+  O tempo sequencial e o tempo paralelo foram idênticos em todos os testes, a relação entre os tempo variou entre 1.00 para os 
+  grafos hamming10-4 e p$\_$hat1500-2 e 1.02 para os grafos p$\_$hat1500-3 e keller5, resultados próximos a reta linear. Para 2 threads
+  a eficiência sofreu um decréscimo, para o melhor caso, a eficiência foi de 0.89 ou 89\% e o pior caso houve uma eficiência de 87\%, 
+  na figura \ref{eficiencia} iremos ter maiores sobre a eficiência. Por fim, para 4 threads houve um maior decréscimo no speedup, isso
+  deve-se pelo fato, que o processador da máquina ser um dual-core, ou seja, possuir dois núcleos físicos, é suportado quatro threads 
+  devido a emulação de dois núcleos virtuais, que apesar de ocorrer um ganhou de eficiência em relação a um processador sem tal emulação,
+  o ganho não é equivalente a um processador quad-core (quatro núcleos físicos), portanto é natural que o speedup não atinja um valor tão
+  próximo ao speedup ideal.
   
-  Para a realização dos testes foi utilizado um computador com processador XXX de xx núcleos, com memória RAM xx, Memória cache 
-  e Sistema Operacional Ubuntu 16.04 64 bits.
+  \begin{figure}[ht]
+   \centering
+   \label{eficiencia}
+   \includegraphics[width=.8\textwidth]{eficiencia.eps}
+   \caption{Gráfio Eficiência}
+  \end{figure}
   
-  No código sequencial ocorreu tantas miss caches, uso de memória. Enquanto no código em paralelo
+  A eficiência do código paralelo conforme mostra a figura \ref{eficiencia} obtive um bom resultado para 1 e 2 threads, com resultado
+  em torno de 100\% e 89\% respectivamente. Para 4 threads não foi conseguido obter uma eficiência tão boa quanto para 1 e 2 threads devido
+  a máquina utilizada nos experimentos possuírem apenas 2 núcleos físicos e que os núcleos virtuais não possuem o desempenho, como já dito
+  anteriormente. Para 8 threads a eficiência se mostrou similar a 4 threads devido, ao também já mencionado, o suporte máximo a 4 threads
+  paralelamente.
   
-  //gráfico
-  
-  Os resultados que foram obtidos, mostra que houve..
+  Os resultados obtidos nas figuras \ref{speedup} e \ref{eficiencia} mostram resultados similares aos cinco grafos testados, independente da
+  quantidade de vértices, arestas e de tempo gasto para a execução dos mesmos, a realização de mais testes com outros grafos disponíveis
+  na coleção de grafos tendem a ser sem importância visto que as chances de resultarem em dados parecidos aos grafos trabalhos é grande, 
+  portanto, tais testes não foram executados.
 
 \section{Conclusões e Trabalhos Futuros}
 \label{conclusao}
-  Os resultados desse trabalho .... 
+  Os resultados desse trabalho mostraram que códigos paralelos feitos de foram correta é uma ferramente imprescindível para uma melhor
+  utilização de máquinas com processadores multicores, pois assim pode-se utilizar de todas as threads disponíveis, ganhando em perfomance.
+  Porém a codificação em paralelo não é tão comum e trivial quanto a codificação em sequencial, o que acarreta em um uso menos maciço
+  mesmo que a técnica se mostre o quão eficiente como realmente é. Além disso, também ocorre a produção de códigos paralelos equivocados
+  devido a falta de conhecimento e a dificuldade gerada durante a confecção do mesmo.
   
-  A utilização de programação paralela se mostra bastante útil quando utilizada de forma correta e sua utilização nos mostra o ganho de perfomance
-  na execução dos problemas e ainda é uma forma eficiente de utilizar toda potência de um computador multi-core. /verificar
+  A meta-heurística Otimização de Colônia de Formigas conforme já vem ocorrendo, se mostrou bastante eficiente na resolução do problema
+  proposto no trabalho. O ACO desde sua introdução vem ganhando notoriedade por sua eficiência na resolução de problemas dos mais variados
+  tipos. Outra importante característica é a sua portabilidade, resultando em versões modificadas visando um melhor resultado para algum
+  problema específico.
   
-  Devido a inexperiência com a programação paralela, um trabalho futuro desejado seria a revisão do código e a melhoria do mesmo, devido ao aumento de conhecimento na área.
+  Futuramente, uma boa hipótese de trabalho é a realização de testes em computadores com um número maior de núcleos físicos para observar
+  a eficiência para um número maio threads. Outra hipótese é que ao ganhar uma maior bagagem ná area de algortimos paralelos, é a revisão
+  do código paralelo confeccionado e detectar correções e melhorias possíveis.
   
-  Outra hipótese envolvendo programação paralela é a utilização de placas gráficas para a execução de códigos paralelos, área crescente no cenário e que possui 
-  resultados animadores. A junção da programação paralela entre CPU e GPU já foi proposta e deve ser bastante explorada nos tempos atuais. 
-  
+  Outras hipóteses são a criação de um código paralelo com memória distribuída e a realização de testes em \textit{clusters}. Por fim, também
+  é promissor promover um trabalho envolvendo programação paralela entre CPU e GPU, visto que a programação paralela em GPUs vem ganhando
+  bastante espaço devido ao grande poder de processamento das placas gráficas atuais e o grande número de fluxos paralelos que pode ser 
+  gerenciado paralelamente.
 
 \bibliographystyle{sbc}
 \bibliography{sbc-template}

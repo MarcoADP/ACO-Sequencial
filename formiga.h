@@ -1,4 +1,4 @@
-#include <stdio.h>
+   #include <stdio.h>
 #include <stdlib.h>
 
 
@@ -154,7 +154,7 @@ Formiga selecionaFormiga(Formiga listaFormiga[], int num_formiga){
    mostra melhor formiga da colonia
 */
 void mostraRespostaColonia(Formiga* formiga){
-   int i, j;
+   //int i, j;
    int vert = formiga->qtdVertice;
    printf("\n\nNº Vertices => %d\n", vert);
    /*printf("Vertices => ");

@@ -1,0 +1,436 @@
+hamming10-4.clq.b
+===========
+SEQUENCIAL
+===========
+
+
+Nº Vertices => 20
+
+real	0m37.688s
+user	0m37.656s
+sys	0m0.028s
+
+
+Nº Vertices => 20
+
+real	0m38.146s
+user	0m38.096s
+sys	0m0.044s
+
+
+Nº Vertices => 20
+
+real	0m38.481s
+user	0m38.448s
+sys	0m0.028s
+
+
+Nº Vertices => 20
+
+real	0m40.643s
+user	0m40.560s
+sys	0m0.040s
+
+
+Nº Vertices => 20
+
+real	0m37.766s
+user	0m37.740s
+sys	0m0.020s
+
+
+Nº Vertices => 20
+
+real	0m38.638s
+user	0m38.608s
+sys	0m0.024s
+
+
+Nº Vertices => 20
+
+real	0m40.599s
+user	0m40.544s
+sys	0m0.048s
+
+
+Nº Vertices => 20
+
+real	0m39.120s
+user	0m39.096s
+sys	0m0.020s
+
+
+Nº Vertices => 20
+
+real	0m38.130s
+user	0m38.104s
+sys	0m0.020s
+
+
+Nº Vertices => 20
+
+real	0m38.104s
+user	0m38.080s
+sys	0m0.016s
+
+
+Nº Vertices => 20
+
+real	0m38.607s
+user	0m38.580s
+sys	0m0.020s
+
+
+Nº Vertices => 20
+
+real	0m38.313s
+user	0m38.296s
+sys	0m0.012s
+===========
+thread 1
+===========
+
+
+Nº Vertices => 20
+
+real	0m37.849s
+user	0m37.732s
+sys	0m0.056s
+
+
+Nº Vertices => 20
+
+real	0m37.657s
+user	0m37.600s
+sys	0m0.048s
+
+
+Nº Vertices => 20
+
+real	0m39.292s
+user	0m39.256s
+sys	0m0.028s
+
+
+Nº Vertices => 20
+
+real	0m38.116s
+user	0m38.084s
+sys	0m0.024s
+
+
+Nº Vertices => 20
+
+real	0m37.658s
+user	0m37.616s
+sys	0m0.036s
+
+
+Nº Vertices => 20
+
+real	0m37.701s
+user	0m37.676s
+sys	0m0.016s
+
+
+Nº Vertices => 20
+
+real	0m38.063s
+user	0m38.024s
+sys	0m0.032s
+
+
+Nº Vertices => 20
+
+real	0m38.051s
+user	0m38.020s
+sys	0m0.024s
+
+
+Nº Vertices => 20
+
+real	0m38.677s
+user	0m38.628s
+sys	0m0.044s
+
+
+Nº Vertices => 20
+
+real	0m37.674s
+user	0m37.644s
+sys	0m0.020s
+
+
+Nº Vertices => 20
+
+real	0m37.651s
+user	0m37.616s
+sys	0m0.028s
+
+
+Nº Vertices => 20
+
+real	0m38.357s
+user	0m38.304s
+sys	0m0.040s
+===========
+thread 2
+===========
+
+
+Nº Vertices => 20
+
+real	0m21.319s
+user	0m42.068s
+sys	0m0.056s
+
+
+Nº Vertices => 20
+
+real	0m21.511s
+user	0m42.372s
+sys	0m0.060s
+
+
+Nº Vertices => 20
+
+real	0m21.202s
+user	0m41.800s
+sys	0m0.084s
+
+
+Nº Vertices => 20
+
+real	0m21.269s
+user	0m41.972s
+sys	0m0.080s
+
+
+Nº Vertices => 20
+
+real	0m21.579s
+user	0m42.380s
+sys	0m0.104s
+
+
+Nº Vertices => 20
+
+real	0m21.892s
+user	0m43.128s
+sys	0m0.108s
+
+
+Nº Vertices => 20
+
+real	0m21.195s
+user	0m41.792s
+sys	0m0.076s
+
+
+Nº Vertices => 20
+
+real	0m22.226s
+user	0m44.040s
+sys	0m0.100s
+
+
+Nº Vertices => 20
+
+real	0m23.376s
+user	0m45.752s
+sys	0m0.112s
+
+
+Nº Vertices => 20
+
+real	0m21.820s
+user	0m42.924s
+sys	0m0.080s
+
+
+Nº Vertices => 20
+
+real	0m21.733s
+user	0m42.880s
+sys	0m0.072s
+
+
+Nº Vertices => 20
+
+real	0m21.589s
+user	0m42.668s
+sys	0m0.104s
+===========
+thread 4
+===========
+
+
+Nº Vertices => 20
+
+real	0m17.300s
+user	1m5.412s
+sys	0m0.128s
+
+
+Nº Vertices => 20
+
+real	0m16.744s
+user	1m4.204s
+sys	0m0.184s
+
+
+Nº Vertices => 20
+
+real	0m16.871s
+user	1m3.956s
+sys	0m0.120s
+
+
+Nº Vertices => 20
+
+real	0m17.550s
+user	1m6.804s
+sys	0m0.132s
+
+
+Nº Vertices => 20
+
+real	0m17.334s
+user	1m5.016s
+sys	0m0.112s
+
+
+Nº Vertices => 20
+
+real	0m17.166s
+user	1m4.424s
+sys	0m0.144s
+
+
+Nº Vertices => 20
+
+real	0m16.888s
+user	1m4.216s
+sys	0m0.164s
+
+
+Nº Vertices => 20
+
+real	0m16.831s
+user	1m4.240s
+sys	0m0.140s
+
+
+Nº Vertices => 20
+
+real	0m16.793s
+user	1m3.816s
+sys	0m0.176s
+
+
+Nº Vertices => 20
+
+real	0m17.380s
+user	1m6.320s
+sys	0m0.180s
+
+
+Nº Vertices => 20
+
+real	0m17.443s
+user	1m5.648s
+sys	0m0.220s
+
+
+Nº Vertices => 20
+
+real	0m17.166s
+user	1m3.724s
+sys	0m0.164s
+===========
+thread 8
+===========
+
+
+Nº Vertices => 20
+
+real	0m17.560s
+user	1m2.532s
+sys	0m0.224s
+
+
+Nº Vertices => 20
+
+real	0m17.411s
+user	1m2.608s
+sys	0m0.292s
+
+
+Nº Vertices => 20
+
+real	0m18.366s
+user	1m2.772s
+sys	0m0.212s
+
+
+Nº Vertices => 20
+
+real	0m19.775s
+user	1m4.860s
+sys	0m0.204s
+
+
+Nº Vertices => 20
+
+real	0m17.719s
+user	1m2.420s
+sys	0m0.228s
+
+
+Nº Vertices => 20
+
+real	0m18.385s
+user	1m2.460s
+sys	0m0.216s
+
+
+Nº Vertices => 20
+
+real	0m18.367s
+user	1m2.464s
+sys	0m0.212s
+
+
+Nº Vertices => 20
+
+real	0m18.879s
+user	1m1.984s
+sys	0m0.224s
+
+
+Nº Vertices => 20
+
+real	0m18.232s
+user	1m2.340s
+sys	0m0.196s
+
+
+Nº Vertices => 20
+
+real	0m17.249s
+user	1m2.456s
+sys	0m0.224s
+
+
+Nº Vertices => 20
+
+real	0m17.670s
+user	1m2.476s
+sys	0m0.244s
+
+
+Nº Vertices => 20
+
+real	0m18.170s
+user	1m2.404s
+sys	0m0.188s

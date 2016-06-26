@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.6)  23 JUN 2016 20:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.6)  25 JUN 2016 21:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -270,22 +270,58 @@ Package: subfigure 2002/03/15 v2.1.5 subfigure package
 \subfig@top=\skip49
 \subfig@bottom=\skip50
 )
-(./artigo_MarcoADP.aux)
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count107
+\float@exts=\toks26
+\float@box=\box31
+\@float@everytoks=\toks27
+\@floatcapt=\box32
+)
+(/usr/share/texlive/texmf-dist/tex/latex/algorithms/algorithm.sty
+Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
+nment
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+\@float@every@algorithm=\toks28
+\c@algorithm=\count108
+)
+(/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algorithmicx.sty
+Package: algorithmicx 2005/04/27 v1.2 Algorithmicx
+
+Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
+\c@ALG@line=\count109
+\c@ALG@rem=\count110
+\c@ALG@nested=\count111
+\ALG@tlm=\skip51
+\ALG@thistlm=\skip52
+\c@ALG@Lnr=\count112
+\c@ALG@blocknr=\count113
+\c@ALG@storecount=\count114
+\c@ALG@tmpcounter=\count115
+\ALG@tmplength=\skip53
+) (/usr/share/texlive/texmf-dist/tex/latex/algorithmicx/algpseudocode.sty
+Package: algpseudocode 
+
+Document Style - pseudocode environments for use with the `algorithmicx' style
+) (./artigo_MarcoADP.aux)
 \openout1 = `artigo_MarcoADP.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 25.
-LaTeX Font Info:    ... okay on input line 25.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 25.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
+LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 29.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
@@ -326,17 +362,17 @@ File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count107
+\scratchcounter=\count116
 \scratchdimen=\dimen159
-\scratchbox=\box31
-\nofMPsegments=\count108
-\nofMParguments=\count109
-\everyMPshowfont=\toks26
-\MPscratchCnt=\count110
+\scratchbox=\box33
+\nofMPsegments=\count117
+\nofMParguments=\count118
+\everyMPshowfont=\toks29
+\MPscratchCnt=\count119
 \MPscratchDim=\dimen160
-\MPnumerator=\count111
-\makeMPintoPDFobject=\count112
-\everyMPtoPDFconversion=\toks27
+\MPnumerator=\count120
+\makeMPintoPDFobject=\count121
+\everyMPtoPDFconversion=\toks30
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -382,40 +418,41 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 25.
+(Font)              <12> on input line 29.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 25.
+(Font)              <8> on input line 29.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 25.
-Package xypdf Info: Line width: 0.39998pt on input line 25.
+(Font)              <6> on input line 29.
+Package xypdf Info: Line width: 0.39998pt on input line 29.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <16> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 27.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 31.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 27.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 27.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 31.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 31.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 29.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 33.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <13> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 46.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 49.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Underfull \hbox (badness 1014) in paragraph at lines 123--126
+Underfull \hbox (badness 1014) in paragraph at lines 136--140
 \OT1/ptm/m/n/12 heur[]^^Pstica Ant Co-lony Op-ti-mi-za-tion para a resolu[][]ao
  do M[]aximo Con-junto In-de-
  []
 
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 141.
+[3]
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 171.
 
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 141.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 171.
 Package epstopdf Info: Source file: <conjunto.eps>
 (epstopdf)                    date: 2016-06-23 19:48:51
 (epstopdf)                    size: 13972 bytes
@@ -424,15 +461,15 @@ Package epstopdf Info: Source file: <conjunto.eps>
 (epstopdf)                    size: 7911 bytes
 (epstopdf)             Command: <repstopdf --outfile=conjunto-eps-converted-to.
 pdf conjunto.eps>
-(epstopdf)             \includegraphics on input line 157.
+(epstopdf)             \includegraphics on input line 187.
 Package epstopdf Info: Output file is already uptodate.
 
-<conjunto-eps-converted-to.pdf, id=20, 481.8pt x 494.84875pt>
+<conjunto-eps-converted-to.pdf, id=23, 481.8pt x 494.84875pt>
 File: conjunto-eps-converted-to.pdf Graphic file (type pdf)
 
 <use conjunto-eps-converted-to.pdf>
-Package pdftex.def Info: conjunto-eps-converted-to.pdf used on input line 157.
-(pdftex.def)             Requested size: 113.81114pt x 113.80527pt.
+Package pdftex.def Info: conjunto-eps-converted-to.pdf used on input line 187.
+(pdftex.def)             Requested size: 142.26208pt x 142.26413pt.
 Package epstopdf Info: Source file: <siv.eps>
 (epstopdf)                    date: 2016-06-23 18:54:30
 (epstopdf)                    size: 11329 bytes
@@ -441,24 +478,27 @@ Package epstopdf Info: Source file: <siv.eps>
 (epstopdf)                    size: 6603 bytes
 (epstopdf)             Command: <repstopdf --outfile=siv-eps-converted-to.pdf s
 iv.eps>
-(epstopdf)             \includegraphics on input line 161.
+(epstopdf)             \includegraphics on input line 191.
 Package epstopdf Info: Output file is already uptodate.
 
-<siv-eps-converted-to.pdf, id=21, 481.8pt x 494.84875pt>
+<siv-eps-converted-to.pdf, id=24, 481.8pt x 494.84875pt>
 File: siv-eps-converted-to.pdf Graphic file (type pdf)
 
 <use siv-eps-converted-to.pdf>
-Package pdftex.def Info: siv-eps-converted-to.pdf used on input line 161.
-(pdftex.def)             Requested size: 113.81114pt x 113.80527pt.
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 164.
+Package pdftex.def Info: siv-eps-converted-to.pdf used on input line 191.
+(pdftex.def)             Requested size: 142.26208pt x 142.26413pt.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 194.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
 File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 )
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 164.
- [3]
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 194.
+
+Underfull \vbox (badness 1248) has occurred while \output is active []
+
+ [4]
 Package epstopdf Info: Source file: <grafo.eps>
 (epstopdf)                    date: 2016-06-23 18:02:36
 (epstopdf)                    size: 114347 bytes
@@ -467,17 +507,70 @@ Package epstopdf Info: Source file: <grafo.eps>
 (epstopdf)                    size: 48319 bytes
 (epstopdf)             Command: <repstopdf --outfile=grafo-eps-converted-to.pdf
  grafo.eps>
-(epstopdf)             \includegraphics on input line 175.
+(epstopdf)             \includegraphics on input line 205.
 Package epstopdf Info: Output file is already uptodate.
 
-<grafo-eps-converted-to.pdf, id=25, 805.0075pt x 403.5075pt>
+<grafo-eps-converted-to.pdf, id=28, 805.0075pt x 403.5075pt>
 File: grafo-eps-converted-to.pdf Graphic file (type pdf)
 
 <use grafo-eps-converted-to.pdf>
-Package pdftex.def Info: grafo-eps-converted-to.pdf used on input line 175.
-(pdftex.def)             Requested size: 341.43437pt x 171.14055pt.
- [4 <./conjunto-eps-converted-to.pdf> <./siv-eps-converted-to.pdf> <./grafo-eps
--converted-to.pdf>] (./artigo_MarcoADP.bbl
+Package pdftex.def Info: grafo-eps-converted-to.pdf used on input line 205.
+(pdftex.def)             Requested size: 341.42966pt x 170.71571pt.
+ [5 <./conjunto-eps-converted-to.pdf> <./siv-eps-converted-to.pdf> <./grafo-eps
+-converted-to.pdf>] [6]
+Underfull \hbox (badness 1297) in paragraph at lines 298--302
+[]\OT1/ptm/m/n/12 De to-das as inst[]ancias de gra-fos ob-ti-das du-rante a fas
+e de pes-quisa, fo-
+ []
+
+
+Underfull \hbox (badness 1237) in paragraph at lines 298--302
+\OT1/ptm/m/n/12 ram tes-ta-das no to-tal de cinco das ses-senta e no-vas inst[]
+ancias. Esta co-let[]anea
+ []
+
+[7]
+Overfull \hbox (67.55832pt too wide) in paragraph at lines 340--349
+ [][] 
+ []
+
+Package epstopdf Info: Source file: <speedup.eps>
+(epstopdf)                    date: 2016-06-25 19:08:33
+(epstopdf)                    size: 24292 bytes
+(epstopdf)             Output file: <speedup-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-06-25 19:09:07
+(epstopdf)                    size: 7379 bytes
+(epstopdf)             Command: <repstopdf --outfile=speedup-eps-converted-to.p
+df speedup.eps>
+(epstopdf)             \includegraphics on input line 357.
+Package epstopdf Info: Output file is already uptodate.
+<speedup-eps-converted-to.pdf, id=56, 361.35pt x 252.945pt>
+File: speedup-eps-converted-to.pdf Graphic file (type pdf)
+
+<use speedup-eps-converted-to.pdf>
+Package pdftex.def Info: speedup-eps-converted-to.pdf used on input line 357.
+(pdftex.def)             Requested size: 341.43437pt x 239.00726pt.
+ [8 <./speedup-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <eficiencia.eps>
+(epstopdf)                    date: 2016-06-25 19:42:16
+(epstopdf)                    size: 22823 bytes
+(epstopdf)             Output file: <eficiencia-eps-converted-to.pdf>
+(epstopdf)                    date: 2016-06-25 19:42:47
+(epstopdf)                    size: 6719 bytes
+(epstopdf)             Command: <repstopdf --outfile=eficiencia-eps-converted-t
+o.pdf eficiencia.eps>
+(epstopdf)             \includegraphics on input line 376.
+Package epstopdf Info: Output file is already uptodate.
+
+<eficiencia-eps-converted-to.pdf, id=65, 361.35pt x 252.945pt>
+File: eficiencia-eps-converted-to.pdf Graphic file (type pdf)
+
+<use eficiencia-eps-converted-to.pdf>
+Package pdftex.def Info: eficiencia-eps-converted-to.pdf used on input line 376
+.
+(pdftex.def)             Requested size: 341.43437pt x 239.00726pt.
+ [9 <./eficiencia-eps-converted-to.pdf>]
+(./artigo_MarcoADP.bbl
 Underfull \hbox (badness 1147) in paragraph at lines 22--26
 []\OT1/ptm/m/n/12 Leguizamon, G., Schutz, M., and Mi-cha-lewicz, Z. (2011).  An
  ant sys-tem for
@@ -495,31 +588,32 @@ Underfull \hbox (badness 3657) in paragraph at lines 28--33
   Dis-po-ni-vel em:
  []
 
-[5]) [6] (./artigo_MarcoADP.aux) ) 
+) [10] (./artigo_MarcoADP.aux) ) 
 Here is how much of TeX's memory you used:
- 6126 strings out of 494929
- 81079 string characters out of 6180143
- 206890 words of memory out of 5000000
- 9274 multiletter control sequences out of 15000+600000
+ 6757 strings out of 494929
+ 90250 string characters out of 6180143
+ 216968 words of memory out of 5000000
+ 9885 multiletter control sequences out of 15000+600000
  23560 words of font info for 54 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
  38i,9n,28p,3285b,312s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvip
-s/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cme
-x10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-
-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/time
-s/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on artigo_MarcoADP.pdf (6 pages, 191002 bytes).
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/
+base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex1
+0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/font
+s/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/h
+elvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on artigo_MarcoADP.pdf (10 pages, 233087 bytes).
 PDF statistics:
- 90 PDF objects out of 1000 (max. 8388607)
- 61 compressed objects within 1 object stream
+ 120 PDF objects out of 1000 (max. 8388607)
+ 82 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

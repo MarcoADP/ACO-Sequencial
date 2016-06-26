@@ -1,0 +1,436 @@
+MANN_a45.clq.b
+===========
+SEQUENCIAL
+===========
+
+
+Nº Vertices => 3
+
+real	0m0.957s
+user	0m0.600s
+sys	0m0.016s
+
+
+Nº Vertices => 3
+
+real	0m0.615s
+user	0m0.588s
+sys	0m0.024s
+
+
+Nº Vertices => 3
+
+real	0m0.613s
+user	0m0.576s
+sys	0m0.036s
+
+
+Nº Vertices => 3
+
+real	0m0.617s
+user	0m0.600s
+sys	0m0.016s
+
+
+Nº Vertices => 3
+
+real	0m0.612s
+user	0m0.584s
+sys	0m0.024s
+
+
+Nº Vertices => 3
+
+real	0m0.615s
+user	0m0.596s
+sys	0m0.016s
+
+
+Nº Vertices => 3
+
+real	0m0.613s
+user	0m0.592s
+sys	0m0.020s
+
+
+Nº Vertices => 3
+
+real	0m0.613s
+user	0m0.584s
+sys	0m0.028s
+
+
+Nº Vertices => 3
+
+real	0m0.616s
+user	0m0.604s
+sys	0m0.008s
+
+
+Nº Vertices => 3
+
+real	0m0.614s
+user	0m0.600s
+sys	0m0.012s
+
+
+Nº Vertices => 3
+
+real	0m0.618s
+user	0m0.588s
+sys	0m0.028s
+
+
+Nº Vertices => 3
+
+real	0m0.617s
+user	0m0.588s
+sys	0m0.028s
+===========
+thread 1
+===========
+
+
+Nº Vertices => 3
+
+real	0m0.618s
+user	0m0.604s
+sys	0m0.012s
+
+
+Nº Vertices => 3
+
+real	0m0.624s
+user	0m0.576s
+sys	0m0.044s
+
+
+Nº Vertices => 3
+
+real	0m0.686s
+user	0m0.660s
+sys	0m0.024s
+
+
+Nº Vertices => 3
+
+real	0m0.621s
+user	0m0.600s
+sys	0m0.016s
+
+
+Nº Vertices => 3
+
+real	0m0.621s
+user	0m0.596s
+sys	0m0.024s
+
+
+Nº Vertices => 3
+
+real	0m0.620s
+user	0m0.560s
+sys	0m0.056s
+
+
+Nº Vertices => 3
+
+real	0m0.622s
+user	0m0.600s
+sys	0m0.016s
+
+
+Nº Vertices => 3
+
+real	0m0.625s
+user	0m0.564s
+sys	0m0.056s
+
+
+Nº Vertices => 3
+
+real	0m0.620s
+user	0m0.596s
+sys	0m0.016s
+
+
+Nº Vertices => 3
+
+real	0m0.621s
+user	0m0.572s
+sys	0m0.044s
+
+
+Nº Vertices => 3
+
+real	0m0.618s
+user	0m0.608s
+sys	0m0.008s
+
+
+Nº Vertices => 3
+
+real	0m0.620s
+user	0m0.592s
+sys	0m0.024s
+===========
+thread 2
+===========
+
+
+Nº Vertices => 3
+
+real	0m0.553s
+user	0m0.984s
+sys	0m0.072s
+
+
+Nº Vertices => 3
+
+real	0m0.405s
+user	0m0.652s
+sys	0m0.100s
+
+
+Nº Vertices => 3
+
+real	0m0.533s
+user	0m0.936s
+sys	0m0.080s
+
+
+Nº Vertices => 3
+
+real	0m0.546s
+user	0m0.976s
+sys	0m0.068s
+
+
+Nº Vertices => 3
+
+real	0m0.405s
+user	0m0.688s
+sys	0m0.068s
+
+
+Nº Vertices => 3
+
+real	0m0.408s
+user	0m0.664s
+sys	0m0.088s
+
+
+Nº Vertices => 3
+
+real	0m0.552s
+user	0m0.996s
+sys	0m0.056s
+
+
+Nº Vertices => 3
+
+real	0m0.542s
+user	0m0.980s
+sys	0m0.056s
+
+
+Nº Vertices => 3
+
+real	0m0.545s
+user	0m0.984s
+sys	0m0.060s
+
+
+Nº Vertices => 3
+
+real	0m0.547s
+user	0m0.972s
+sys	0m0.076s
+
+
+Nº Vertices => 3
+
+real	0m0.514s
+user	0m0.904s
+sys	0m0.076s
+
+
+Nº Vertices => 3
+
+real	0m0.548s
+user	0m0.988s
+sys	0m0.060s
+===========
+thread 4
+===========
+
+
+Nº Vertices => 3
+
+real	0m0.381s
+user	0m1.116s
+sys	0m0.140s
+
+
+Nº Vertices => 3
+
+real	0m0.380s
+user	0m1.116s
+sys	0m0.132s
+
+
+Nº Vertices => 3
+
+real	0m0.380s
+user	0m1.136s
+sys	0m0.120s
+
+
+Nº Vertices => 3
+
+real	0m0.377s
+user	0m1.120s
+sys	0m0.132s
+
+
+Nº Vertices => 3
+
+real	0m0.379s
+user	0m1.096s
+sys	0m0.160s
+
+
+Nº Vertices => 3
+
+real	0m0.380s
+user	0m1.120s
+sys	0m0.136s
+
+
+Nº Vertices => 3
+
+real	0m0.376s
+user	0m1.068s
+sys	0m0.180s
+
+
+Nº Vertices => 3
+
+real	0m0.378s
+user	0m1.116s
+sys	0m0.132s
+
+
+Nº Vertices => 3
+
+real	0m0.377s
+user	0m1.120s
+sys	0m0.128s
+
+
+Nº Vertices => 3
+
+real	0m0.380s
+user	0m1.136s
+sys	0m0.116s
+
+
+Nº Vertices => 3
+
+real	0m0.378s
+user	0m1.116s
+sys	0m0.132s
+
+
+Nº Vertices => 3
+
+real	0m0.379s
+user	0m1.084s
+sys	0m0.168s
+===========
+thread 8
+===========
+
+
+Nº Vertices => 3
+
+real	0m0.513s
+user	0m0.932s
+sys	0m0.204s
+
+
+Nº Vertices => 3
+
+real	0m0.506s
+user	0m0.996s
+sys	0m0.124s
+
+
+Nº Vertices => 3
+
+real	0m0.496s
+user	0m0.988s
+sys	0m0.140s
+
+
+Nº Vertices => 3
+
+real	0m0.492s
+user	0m1.000s
+sys	0m0.128s
+
+
+Nº Vertices => 3
+
+real	0m0.519s
+user	0m0.948s
+sys	0m0.184s
+
+
+Nº Vertices => 3
+
+real	0m0.502s
+user	0m0.976s
+sys	0m0.168s
+
+
+Nº Vertices => 3
+
+real	0m0.494s
+user	0m0.924s
+sys	0m0.208s
+
+
+Nº Vertices => 3
+
+real	0m0.504s
+user	0m0.992s
+sys	0m0.152s
+
+
+Nº Vertices => 3
+
+real	0m0.496s
+user	0m0.916s
+sys	0m0.188s
+
+
+Nº Vertices => 3
+
+real	0m0.498s
+user	0m0.980s
+sys	0m0.140s
+
+
+Nº Vertices => 3
+
+real	0m0.496s
+user	0m0.964s
+sys	0m0.148s
+
+
+Nº Vertices => 3
+
+real	0m0.500s
+user	0m0.928s
+sys	0m0.196s
