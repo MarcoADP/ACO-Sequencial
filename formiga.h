@@ -154,15 +154,15 @@ Formiga selecionaFormiga(Formiga listaFormiga[], int num_formiga){
    mostra melhor formiga da colonia
 */
 void mostraRespostaColonia(Formiga* formiga){
-   //int i, j;
+   int i, j;
    int vert = formiga->qtdVertice;
    printf("\n\nNº Vertices => %d\n", vert);
-   /*printf("Vertices => ");
+   printf("Vertices => ");
    for(i = 0; i < Nr_vert; i++){
       if(formiga->listaVertice[i] == 1){
          j = i + 1;
          printf(" %d ", j);
       }
-   }*/
+   }
    //printf("\n\n");
 }
