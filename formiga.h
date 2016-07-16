@@ -8,9 +8,14 @@ typedef struct{
 	int qtdVertice;
 	int qtdVerticeIndisponiveis;
 	int verticeRestantes;
-	int * listaVertice;
+	int *listaVertice;
    int *vetorResposta;
 } Formiga;
+
+typedef struct{
+   int qtdVertice;
+   int *listaVertice;
+} Mensagem;
 
 int Nr_vert, Nr_edges;
 //int *vetorResposta;
@@ -75,8 +80,8 @@ void inicializarVertices(){
 */
 void atualizaFeromonio(Formiga *formiga){
    int i;
-   double taxa_feromonio = 1 + (2 * rho) ;
    int valor = formiga->qtdVertice;
+   double taxa_feromonio = 1 + (2 * rho); 
 
    //rho = definido pelo user ou padrão 0.1
 
@@ -89,6 +94,24 @@ void atualizaFeromonio(Formiga *formiga){
       int indice = formiga->listaVertice[i] - 1;
       vetorFeromonio[indice] = vetorFeromonio[indice] *  taxa_feromonio;
    } 
+}
+
+void atualizaFeromonioComVetor(int *vetor){
+   int i, tam = vetor[0];
+   int indice;
+   double taxa_feromonio = 1 + (2 * rho);
+
+   //rho = definido pelo user ou padrão 0.1
+   for(i = 0; i < Nr_vert; i++){
+      vetorFeromonio[i] = vetorFeromonio[i] * (1 - rho);
+   }
+
+   //taxa = 2* rho
+   for(i = 1; i <= tam; i++){
+      //printf("%d -- %d\n", i, vetor[i]);
+      indice = vetor[i] - 1;
+      vetorFeromonio[indice] = vetorFeromonio[indice] * taxa_feromonio;
+   }
 }
 
 /*
@@ -154,15 +177,24 @@ Formiga selecionaFormiga(Formiga listaFormiga[], int num_formiga){
    mostra melhor formiga da colonia
 */
 void mostraRespostaColonia(Formiga* formiga){
-   int i, j;
+   //int i, j;
    int vert = formiga->qtdVertice;
-   printf("\n\nNº Vertices => %d\n", vert);
-   printf("Vertices => ");
+   printf("\nNº Vertices => %d\n", vert);
+   /*printf("Vertices => ");
    for(i = 0; i < Nr_vert; i++){
       if(formiga->listaVertice[i] == 1){
          j = i + 1;
          printf(" %d ", j);
       }
    }
-   //printf("\n\n");
+   printf("\n");*/
+}
+
+void mostraVetor(int* vetor){
+   int i, tam = vetor[0];
+   printf("\nVETOR => ");
+   for(i = 1; i <= tam; i++){
+      printf(" %d ", vetor[i]);
+   }
+   printf("\n");
 }

@@ -31,7 +31,6 @@
 //pthread_barrier_t barreira = PTHREAD_COND_INITIALIZER;
 //pthread_barrier_t barreira;
 
-
 int wrank, wsize;
 MPI_Status status;
 
@@ -314,86 +313,124 @@ void verificaResposta(Formiga *formigaAtual){
    }
 }
 
-int escolheDestino(int id, int tamanho){
-	if(id == (tamanho - 1)){
-		return 0;
-	}
-	return id+1;
-}
-
-int escolheOrigem(int id, int tamanho){
-	if(id == 0){
-		return tamanho - 1;
-	}
-	return id-1;
+int tamanhoVetor(int vetor[]){
+   int tamanho = 0;
+   while(vetor[tamanho] != 0){
+      printf("%d\n", vetor[tamanho]);
+      tamanho++;
+   }
+   printf("\n\n");
+   return tamanho;
 }
 
 /*
    ACO
 */
 void AntSystemColony(){
-   	int c;
-   	//printf("WRANK => %d\n", wrank);
-   	//printf("CICLOS => %d\n", ciclos);
-   	//printf("FORMIGAS => %d\n", NumeroFormigas);
-   	//int threadId = *(int *) args;
-   	
-   	int formiga_thread = (int) NumeroFormigas / wsize;
-   	//printf("FORMIGAS POR PROCESSO => %d\n", formiga_thread);
+   int c;
+   //printf("WRANK => %d\n", wrank);
+	//printf("CICLOS => %d\n", ciclos);
+	//printf("FORMIGAS => %d\n", NumeroFormigas);
+	//int threadId = *(int *) args;
+	
+	int formiga_thread = (int) NumeroFormigas / wsize;
+	//printf("FORMIGAS POR PROCESSO => %d\n", formiga_thread);
 
-   	Formiga listaFormiga[formiga_thread];
-
-	int destino = escolheDestino(wrank, wsize);
-	int origem = escolheOrigem(wrank, wsize);
-	int mensagem = -1;
-   	
-
-   	for(c = 0; c < ciclos; c++){
-    	printf("\nWrank: %d -- Ciclo: %d\n", wrank, c);
-  		//printf("\nCiclo: %d\n", c);
-  		inicializarAlgoritmo(listaFormiga, formiga_thread);
-      	srand (time(0)+clock()+random());
-      	int i;
-  		for(i = 0; i < formiga_thread; i++){
-        	//printf("Formiga: %d\n", i);
-        	construirSolucao(&listaFormiga[i]);
-        	verificaResposta(&listaFormiga[i]);      
-      	}
-      	//pthread_mutex_lock(&lock);
-     
-     	//revisar essas condições
-      	melhor_colonia[c] = selecionaFormiga(listaFormiga, formiga_thread);
-      	if(melhor_colonia[c].qtdVertice > melhor_geral.qtdVertice){
-        	melhor_geral = melhor_colonia[c];
-      	}
-      	mostraRespostaColonia(&melhor_colonia[c]);
-      	//Começar a enviar por wrank = 0 ou primeiro que chegar?
-      	//Recebe
-      	//Enviar
-      	//Vai chegar novamente no 0
-
-      	if(wrank == 0){
-      		//printf("Wrank => %d\n", wrank);
-      		MPI_Send(&mensagem, 1, MPI_INT, destino, 0, MPI_COMM_WORLD);
-      	}
-      	
-      	MPI_Recv(&mensagem, 1, MPI_INT, origem, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
-      	//printf("Wrank => %d\n", wrank);
-      	if(wrank != 0){
-  			MPI_Send(&mensagem, 1, MPI_INT, destino, 0, MPI_COMM_WORLD);
-      	}
-      	//printf("O Processo: %d recebeu de %d, o seu wrank: %d\n\n", wrank, origem, mensagem);
-      	//printf("Wrank => %d\n", wrank);
-      	MPI_Barrier(MPI_COMM_WORLD);
-
-	    //pthread_mutex_unlock(&lock);
-
-	    //if(threadId == 0){
-	    //   atualizaFeromonio(&melhor_colonia[c]);  
-	    //}
-	      
-	    //pthread_barrier_wait(&barreira);
+	Formiga listaFormiga[formiga_thread];
+	//int destino = escolheDestino(wrank, wsize);
+	//int origem = escolheOrigem(wrank, wsize);
+	//int mensagem = -1;
+      
+   for(c = 0; c < ciclos; c++){
+      //printf("\nWrank: %d -- Ciclo: %d\n", wrank, c);
+		if(wrank == 0){
+         printf("Ciclo: %d\n", c);
+      }
+      //printf("\nCiclo: %d\n", c);
+		inicializarAlgoritmo(listaFormiga, formiga_thread);
+   	srand (time(0)+clock()+random());
+   	int i, a;
+		for(i = 0; i < formiga_thread; i++){
+     	//printf("Formiga: %d\n", i);
+     	construirSolucao(&listaFormiga[i]);
+     	verificaResposta(&listaFormiga[i]);      
    	}
+   	//pthread_mutex_lock(&lock);
+  
+  	   //revisar essas condições
+   	melhor_colonia[c] = selecionaFormiga(listaFormiga, formiga_thread);
+      int tamanhoResposta = melhor_colonia[c].qtdVertice;
+      int mensagem[tamanhoResposta+1];
+      mensagem[0] = tamanhoResposta; 
+      for(a = 0; a < tamanhoResposta; a++){
+         mensagem[a+1] = melhor_colonia[c].vetorResposta[a];
+      }
+      //mostraRespostaColonia(&melhor_colonia[c]);
+      if(wrank == 0){
+         int indice, id_maior = 0;
+         int mensagemRecebida[wsize][Nr_vert];
+         int maior = tamanhoResposta;
+         for(indice = 1; indice < wsize; indice++){
+            MPI_Recv(&mensagemRecebida[indice], Nr_vert, MPI_INT, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+            //printf("%d -- %d\n", maior, mensagemRecebida[indice][0]);
+            if(mensagemRecebida[indice][0] >= maior){
+               maior = mensagemRecebida[indice][0];
+               id_maior = indice;
+            }
+         }
+         melhor_colonia[c].qtdVertice = maior;
+         melhor_colonia[c].vetorResposta = mensagemRecebida[id_maior];
+         if(maior > melhor_geral.qtdVertice){
+            melhor_geral = melhor_colonia[c];
+         }
+         atualizaFeromonioComVetor(mensagemRecebida[id_maior]);
+         //mostraVetor(mensagemRecebida[id_maior]);
+         for(indice = 1; indice < wsize; indice++){
+            MPI_Send(&mensagemRecebida[id_maior], maior+1, MPI_INT, indice, 0, MPI_COMM_WORLD);
+         }
+         //MPI_Bcast(&mensagemRecebida[id_maior], wsize, MPI_INT, 0, MPI_COMM_WORLD);
+      } else {
+         MPI_Send(&mensagem, tamanhoResposta, MPI_INT, 0, 0, MPI_COMM_WORLD);
+         //MPI_Bcast(&mensagem, wsize, MPI_INT, 0, MPI_COMM_WORLD);
+         MPI_Recv(&mensagem, Nr_vert, MPI_INT, 0, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+         melhor_colonia[c].qtdVertice = mensagem[0];
+         melhor_colonia[c].vetorResposta = mensagem;
+         //mostraVetor(mensagem);
+      }
+      if(wrank != 0){
+         atualizaFeromonioComVetor(mensagem);
+      }
+
+
+      MPI_Barrier(MPI_COMM_WORLD);
+   	
+      //Começar a enviar por wrank = 0 ou primeiro que chegar?
+   	//Recebe
+   	//Enviar
+   	//Vai chegar novamente no 0
+
+   	/*if(wrank == 0){
+   		//printf("Wrank => %d\n", wrank);
+   		MPI_Send(&mensagem, 1, MPI_INT, destino, 0, MPI_COMM_WORLD);
+   	}
+   	
+   	MPI_Recv(&mensagem, 1, MPI_INT, origem, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+   	//printf("Wrank => %d\n", wrank);
+   	if(wrank != 0){
+			MPI_Send(&mensagem, 1, MPI_INT, destino, 0, MPI_COMM_WORLD);
+   	}
+   	//printf("O Processo: %d recebeu de %d, o seu wrank: %d\n\n", wrank, origem, mensagem);
+   	//printf("Wrank => %d\n", wrank);
+   	MPI_Barrier(MPI_COMM_WORLD);
+
+      //pthread_mutex_unlock(&lock);
+
+      //if(threadId == 0){
+      //   atualizaFeromonio(&melhor_colonia[c]);  
+      //}
+
+      //pthread_barrier_wait(&barreira);*/
+	}
    //int *ia = malloc(sizeof(int));
    //return ia;
 }
@@ -502,8 +539,8 @@ int main(int argc, char *argv[]){
 
 
 	inicializarVertices();
-   	melhor_geral.qtdVertice = 0;
-   	melhor_colonia = (Formiga *) calloc (ciclos, sizeof (Formiga));
+	melhor_geral.qtdVertice = 0;
+   melhor_colonia = (Formiga *) calloc (ciclos, sizeof (Formiga));
 	AntSystemColony();
 
 	//barreira
@@ -521,7 +558,9 @@ int main(int argc, char *argv[]){
 	//comparar os resultados (dele x recebido)
 
 	//printf("O Processo: %d recebeu de %d, o seu wrank: %d\n\n", wrank, origem, mensagem);
-
+   if(wrank == 0){
+      mostraRespostaColonia(&melhor_geral);
+   }
 	MPI_Finalize();
 
    //==================
