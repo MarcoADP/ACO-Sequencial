@@ -324,6 +324,42 @@ int tamanhoVetor(int vetor[]){
 }
 
 /*
+   Criar tipo para enviar a Formiga
+   Baseado na função criada pelo Matheus Albertos
+*/
+void buildType(Formiga *formigaAUX, MPI_Datatype *MPI_FORMIGA){
+   printf("NR_VERT => %d\n", Nr_vert);
+   int blocklens[5] = {1,1, 1, Nr_vert, Nr_vert};
+   MPI_Datatype types[5] = {MPI_INT, MPI_INT, MPI_INT, MPI_INT, MPI_INT};    
+   MPI_Aint offsets[5];
+
+   MPI_Aint end_listaVertice_inicio, end_listaVertice_fim;
+   MPI_Aint end_vetorResposta_inicio, end_vetorResposta_fim;
+   
+   MPI_Get_address(&(*formigaAUX).verticeRestantes, &end_listaVertice_inicio);
+   MPI_Get_address((*formigaAUX).listaVertice , &end_listaVertice_fim);
+   
+
+   MPI_Get_address(&(*formigaAUX).listaVertice, &end_vetorResposta_inicio);
+   MPI_Get_address((*formigaAUX).vetorResposta , &end_vetorResposta_fim);
+
+   printf("Lista => Inicio: %ld -- Fim: %ld -- DIF: %ld\n", end_listaVertice_inicio, end_listaVertice_fim, end_listaVertice_fim - end_listaVertice_inicio);
+   printf("Vetor => Inicio: %ld -- Fim: %ld -- DIF: %ld\n", end_vetorResposta_inicio, end_vetorResposta_fim, end_vetorResposta_fim - end_vetorResposta_inicio);
+
+
+   offsets[0] = 0;
+   offsets[1] = sizeof(int);
+   offsets[2] = sizeof(int);
+   //offsets[3] = sizeof(int);
+   //offsets[4] = sizeof(int);
+   offsets[3] = end_listaVertice_fim - end_listaVertice_inicio;
+   offsets[4] = end_vetorResposta_fim - end_vetorResposta_inicio;
+
+   MPI_Type_create_struct(5, blocklens, offsets, types, &(*MPI_FORMIGA));
+   MPI_Type_commit(&(*MPI_FORMIGA)); 
+}
+
+/*
    ACO
 */
 void AntSystemColony(){
@@ -337,12 +373,24 @@ void AntSystemColony(){
 	//printf("FORMIGAS POR PROCESSO => %d\n", formiga_thread);
 
 	Formiga listaFormiga[formiga_thread];
+
+   //Formiga Mensageira
+   Formiga formigaRecebidas[wsize];
+   Formiga formiga_mensageira;
+   formiga_mensageira.listaVertice = malloc(Nr_vert*sizeof(int));
+   formiga_mensageira.vetorResposta = malloc(Nr_vert*sizeof(int));
+
+   //CONFIGURAÇÕES MPI
+   MPI_Status status;
+   MPI_Datatype MPI_FORMIGA;
+   buildType(&formiga_mensageira, &MPI_FORMIGA); 
+
 	//int destino = escolheDestino(wrank, wsize);
 	//int origem = escolheOrigem(wrank, wsize);
 	//int mensagem = -1;
       
    for(c = 0; c < ciclos; c++){
-      //printf("\nWrank: %d -- Ciclo: %d\n", wrank, c);
+      printf("\nWrank: %d -- Ciclo: %d\n", wrank, c);
 		/*if(wrank == 0){
          printf("Ciclo: %d\n", c);
       }*/
@@ -359,7 +407,35 @@ void AntSystemColony(){
   
   	   //revisar essas condições
    	melhor_colonia[c] = selecionaFormiga(listaFormiga, formiga_thread);
-      int tamanhoResposta = melhor_colonia[c].qtdVertice;
+      //mostraRespostaColonia(&melhor_colonia[c], wrank);
+
+      if(wrank == 0){
+         int indice;
+         for(indice = 1; indice < wsize; indice++){
+            MPI_Recv(&formiga_mensageira, 1, MPI_FORMIGA, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+            //formigaRecebidas[indice] = formiga_mensageira;
+            mostraRespostaColonia(&formiga_mensageira, wrank);
+            //printf("QTD VERTICES => %d\n", formiga_mensageira.qtdVertice);
+            //printf("AAA => %ld\n", sizeof(formiga_mensageira.vetorResposta));
+            //if(formiga_mensageira.qtdVertice > melhor_colonia[c].qtdVertice){
+            //   melhor_colonia[c] = formiga_mensageira;
+            //}
+         }
+      } else {
+         formiga_mensageira = melhor_colonia[c];
+         //printf("BBB %ld -- %ld\n", sizeof(melhor_colonia[c].vetorResposta), sizeof(formiga_mensageira.vetorResposta));
+         MPI_Send(&formiga_mensageira, 1, MPI_FORMIGA, 0, 0, MPI_COMM_WORLD);
+         //mostraRespostaColonia(&formiga_mensageira, wrank);
+      }
+
+
+
+      MPI_Barrier(MPI_COMM_WORLD);
+
+
+
+
+      /*int tamanhoResposta = melhor_colonia[c].qtdVertice;
       int mensagem[tamanhoResposta+1];
       mensagem[0] = tamanhoResposta; 
       for(a = 0; a < tamanhoResposta; a++){
@@ -384,7 +460,7 @@ void AntSystemColony(){
             melhor_geral = melhor_colonia[c];
          }
          atualizaFeromonioComVetor(mensagemRecebida[id_maior]);
-         //mostraVetor(mensagemRecebida[id_maior]);
+         mostraVetor(mensagemRecebida[id_maior]);
          for(indice = 1; indice < wsize; indice++){
             MPI_Send(&mensagemRecebida[id_maior], maior+1, MPI_INT, indice, 0, MPI_COMM_WORLD);
          }
@@ -402,7 +478,7 @@ void AntSystemColony(){
       }
 
 
-      MPI_Barrier(MPI_COMM_WORLD);
+      MPI_Barrier(MPI_COMM_WORLD);*/
    	
       //Começar a enviar por wrank = 0 ou primeiro que chegar?
    	//Recebe
@@ -559,7 +635,7 @@ int main(int argc, char *argv[]){
 
 	//printf("O Processo: %d recebeu de %d, o seu wrank: %d\n\n", wrank, origem, mensagem);
    if(wrank == 0){
-      mostraRespostaColonia(&melhor_geral);
+      //mostraRespostaColonia(&melhor_geral);
    }
 	MPI_Finalize();
 
