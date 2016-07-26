@@ -12,13 +12,13 @@ typedef struct{
    int *vetorResposta;
 } Formiga;
 
-typedef struct{
+typedef struct {
+   //int rank;
    int qtdVertice;
-   int *listaVertice;
+   int *vetorResposta;
 } Mensagem;
 
 int Nr_vert, Nr_edges;
-//int *vetorResposta;
 double *vetorFeromonio;
 int numVerticeResposta = 0;
 int NumeroFormigas = 10;
@@ -54,6 +54,8 @@ void inicializarAlgoritmo(Formiga listaFormiga[], int numero){
       listaFormiga[i].qtdVertice = 0;
       listaFormiga[i].qtdVerticeIndisponiveis = 0;
       listaFormiga[i].verticeRestantes = Nr_vert;
+      //listaFormiga[i].listaVertice = malloc(Nr_vert * sizeof(int));
+      //listaFormiga[i].vetorResposta = malloc(Nr_vert * sizeof(int));
       listaFormiga[i].listaVertice = (int *) calloc(Nr_vert, sizeof(int));
       listaFormiga[i].vetorResposta = (int *) calloc(Nr_vert, sizeof(int));
    }
@@ -96,8 +98,8 @@ void atualizaFeromonio(Formiga *formiga){
    } 
 }
 
-void atualizaFeromonioComVetor(int *vetor){
-   int i, tam = vetor[0];
+void atualizaFeromonioComVetor(int vetor[], int tam){
+   int i;
    int indice;
    double taxa_feromonio = 1 + (2 * rho);
 
@@ -173,28 +175,44 @@ Formiga selecionaFormiga(Formiga listaFormiga[], int num_formiga){
    return formigaMaior;
 }
 
+void copiaVetor(int destino[], int origem[], int tam){
+   int i;
+   for(i = 0; i < tam; i++){
+      destino[i] = origem[i];
+   }
+}
+
 /*
    mostra melhor formiga da colonia
 */
 void mostraRespostaColonia(Formiga* formiga){
-   //int i, j;
+   int i, j;
    int vert = formiga->qtdVertice;
    printf("\nNº Vertices => %d\n", vert);
-   /*printf("Vertices => ");
+   printf("Vertices => ");
    for(i = 0; i < Nr_vert; i++){
-      if(formiga->listaVertice[i] == 1){
+      if(formiga->listaVertice[i] == 1 ){
          j = i + 1;
          printf(" %d ", j);
       }
    }
-   printf("\n");*/
+   printf("\n");
 }
 
-void mostraVetor(int* vetor){
-   int i, tam = vetor[0];
-   printf("\nVETOR => ");
-   for(i = 1; i <= tam; i++){
+void mostraVetor(int vetor[], int tam){
+   int i;
+   printf("\nVETOR =>    ");
+   for(i = 0; i < tam; i++){
       printf(" %d ", vetor[i]);
+   }
+   printf("\n");
+}
+
+void mostraMensagem(Mensagem *mensagem){
+   int i, tam = mensagem->qtdVertice;
+   printf("\nNº Vertices => %d\n", tam);
+   for(i = 0; i < tam; i++){
+      printf(" %4d ", mensagem->vetorResposta[i]);
    }
    printf("\n");
 }
