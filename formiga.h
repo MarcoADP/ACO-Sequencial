@@ -98,21 +98,25 @@ void atualizaFeromonio(Formiga *formiga){
    } 
 }
 
-void atualizaFeromonioComVetor(int vetor[], int tam){
+void atualizaFeromonioComVetor(int *vetor, int tam){
    int i;
    int indice;
    double taxa_feromonio = 1 + (2 * rho);
 
    //rho = definido pelo user ou padrão 0.1
    for(i = 0; i < Nr_vert; i++){
+      //printf("1 for\n");
       vetorFeromonio[i] = vetorFeromonio[i] * (1 - rho);
    }
 
    //taxa = 2* rho
-   for(i = 1; i <= tam; i++){
+   for(i = 1; i < tam; i++){
       //printf("%d -- %d\n", i, vetor[i]);
+      //printf("2 for\n");
+      //printf("%d\n", tam);
       indice = vetor[i] - 1;
       vetorFeromonio[indice] = vetorFeromonio[indice] * taxa_feromonio;
+
    }
 }
 
@@ -201,7 +205,7 @@ void mostraRespostaColonia(Formiga* formiga){
 
 void mostraVetor(int vetor[], int tam){
    int i;
-   printf("\nVETOR =>    ");
+   printf("\nVETOR =>    %d\n", tam);
    for(i = 0; i < tam; i++){
       printf(" %d ", vetor[i]);
    }

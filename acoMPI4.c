@@ -343,6 +343,9 @@ void AntSystemColony(){
   
    	melhor_colonia[c] = selecionaFormiga(listaFormiga, formiga_thread);
       copiaVetor(RESPOSTA, melhor_colonia[c].vetorResposta, melhor_colonia[c].qtdVertice);
+      vertMaior = melhor_colonia[c].qtdVertice;
+      indMaior = wrank;
+      //mostraVetor(RESPOSTA, melhor_colonia[c].qtdVertice);
       if(wrank == 0){
          int indice, vert;
          indMaior = 0;
@@ -354,32 +357,45 @@ void AntSystemColony(){
                vertMaior = vert;
             } 
          }
-         MPI_Bcast(&indMaior, wsize, MPI_INT, 0, MPI_COMM_WORLD);
-         MPI_Bcast(&vertMaior, wsize, MPI_INT, 0, MPI_COMM_WORLD);
+         //MPI_Bcast(&indMaior, wsize, MPI_INT, 0, MPI_COMM_WORLD);
+         //MPI_Bcast(&vertMaior, wsize, MPI_INT, 0, MPI_COMM_WORLD);
       } else {
          MPI_Send(&melhor_colonia[c].qtdVertice, 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
-         MPI_Bcast(&indMaior, wsize, MPI_INT, 0, MPI_COMM_WORLD);
-         MPI_Bcast(&vertMaior, wsize, MPI_INT, 0, MPI_COMM_WORLD);;
+         //MPI_Bcast(&indMaior, wsize, MPI_INT, 0, MPI_COMM_WORLD);
+         //MPI_Bcast(&vertMaior, wsize, MPI_INT, 0, MPI_COMM_WORLD);;
       }  
 
-      if(indMaior == wrank){
-         for(a = 0; a < wsize; a++){
-            if(a != wrank){
-               MPI_Send(&RESPOSTA, vertMaior, MPI_INT, a, 0, MPI_COMM_WORLD);
-            }
-         }
-      } else{
-         MPI_Recv(&RESPOSTA, vertMaior, MPI_INT, indMaior, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
-      }     
+      if(wsize > 1){
 
-      MPI_Barrier(MPI_COMM_WORLD);
+         MPI_Bcast(&indMaior, wsize, MPI_INT, 0, MPI_COMM_WORLD);
+         MPI_Bcast(&vertMaior, wsize, MPI_INT, 0, MPI_COMM_WORLD);
+
+         //printf("ASFASDFD\n");
+         if(indMaior == wrank){
+            for(a = 0; a < wsize; a++){
+               if(a != wrank){
+                  MPI_Send(&RESPOSTA, vertMaior, MPI_INT, a, 0, MPI_COMM_WORLD);
+               }
+            }
+         } else{
+            MPI_Recv(&RESPOSTA, vertMaior, MPI_INT, indMaior, MPI_ANY_TAG, MPI_COMM_WORLD, &status);
+            //printf("AAAAAAAADSD\n");
+            //mostraVetor(RESPOSTA, vertMaior);
+         }     
+      }
+      //MPI_Barrier(MPI_COMM_WORLD);
 
       if(vertMaior > melhorRespostaVert){
          melhorRespostaVert = vertMaior;
       }
+      //mostraVetor(RESPOSTA, vertMaior);
       atualizaFeromonioComVetor(RESPOSTA, vertMaior);
       
 	}
+
+   MPI_Barrier(MPI_COMM_WORLD);
+
+   
 }
 
 /*
@@ -490,10 +506,12 @@ int main(int argc, char *argv[]){
    melhor_colonia = (Formiga *) calloc (ciclos, sizeof (Formiga));
 	AntSystemColony();
 
-   if(wrank == 0){
+  if(wrank == 0){
       //printf("aaaaaaaa\n");
       //mostraRespostaColonia(&melhor_geral);
       printf("Nº Vertices => %d\n", melhorRespostaVert);
    }
+
+   MPI_Finalize();
    return 0;
 }
