@@ -1,0 +1,391 @@
+\documentclass[12pt]{article}
+
+\usepackage{sbc-template}
+\usepackage{graphicx,url}
+\usepackage[all, 2cell]{xy} \UseAllTwocells \SilentMatrices
+
+\usepackage[brazil]{babel}   
+\usepackage[latin1]{inputenc}  
+\usepackage{subfigure}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode} 
+
+     
+\sloppy
+
+\title{Algoritmo Heurístico Otimização de Colônia de Formigas e Programação Paralela para a resolução do Problema do Máximo Conjunto Independente utilizando a biblioteca OpenMPI}
+
+\author{Marco Aurélio Deoldoto Paulino\inst{1}}
+
+
+\address{Departamento de Informática -- Universidade Estadual de Maringá
+  (UEM)\\
+  Maringá -- PR -- Brazil
+  \email{marco23\_aurelio@hotmail.com}
+}
+
+
+\begin{document} 
+
+\maketitle
+
+\begin{abstract}
+  This meta-paper describes the style to be used in articles and short papers
+  for SBC conferences. For papers in English, you should add just an abstract
+  while for the papers in Portuguese, we also ask for an abstract in
+  Portuguese (``resumo''). In both cases, abstracts should not have more than
+  10 lines and must be in the first page of the paper.
+\end{abstract}
+     
+\begin{resumo} 
+  Este meta-artigo descreve o estilo a ser usado na confecção de artigos e
+  resumos de artigos para publicação nos anais das conferências organizadas
+  pela SBC. É solicitada a escrita de resumo e abstract apenas para os artigos
+  escritos em português. Artigos em inglês deverão apresentar apenas abstract.
+  Nos dois casos, o autor deve tomar cuidado para que o resumo (e o abstract)
+  não ultrapassem 10 linhas cada, sendo que ambos devem estar na primeira
+  página do artigo.
+\end{resumo}
+
+\section{Introdução}
+\label{introducao}
+  O Problema do Máximo Conjunto Independente, do inglês \textit{Maximum Set Independent Problem} (MISP), é um problema na Teoria dos Grafos cujo objetivo
+  é encontrar o maior conjunto possível de vértices que não possuem arestas entre si. O MISP pode ser considerado um problema de importância 
+  para a computação devido a sua aplicabilidade a várias áreas, tais como, Reconhecimento de Padrões, Escalonamento, Biologia Molecular e 
+  \textit{Map Labeling}. Neste artigo iremos propor uma solução para o MISP utilizando a meta-heurística Otimização de Colônia de Formigas e o paradigma de 
+  programação paralela com padrão de comunicação  \textit{Message Passing Interface} (MPI). A versão produzida será comparada com a versão sequencial e com a versão
+  paralela com a biblioteca pthread produzida por \cite{ADP1}.
+  
+  A meta-heurística de propósito geral Otimização de Colônia de Formigas, do inglês, Ant Colony Optimization (ACO), introduzido por \cite{Dorigo1}, 
+  se baseiou no comportamento das colônias de formigas para a elaboração da meta-heurística. As questões observadas foram , como animais praticamente cegos 
+  conseguem chegar em seus destinos, como funciona a substância química feromônio que utilizam para demarcar o caminho. Porém a representação da formiga e
+  do feromônio não é necessariamente fiel a realidade, por exemplo, o tempo é representado discretamente e o feromônio pode ser atualizado ao 
+  final do caminho. O ACO se propõe a resolver aos mais variados problemas, tais como, os problemas do Caixeiro Viajante, Coloração de Grafos 
+  e Mochila Binária e Mochila Fracionária.
+  
+  O algortimo em paralelo utilizando o padrão de comunicação MPI tem como objetivo a divisão de processamento entre diversos processos, estes processos podem 
+  estar em uma única máquina ou em máquinas diferentes interconectadas. A função do MPI é justamente trocar mensagens entre os processos. O MPI tem suportabilidade
+  com a comunicação assíncrona e programação modular, através de mecanismos de comunicadores que permitem ao usuário MPI definir módulos que encapsulem estruturas de comunicação interna.
+  Com a divisão de processamento entre vários processos somado com processadores multicores e a possibilidade da utilização de \textit{cluters} permite um ganho de potência para a 
+  execução de processos mais complexos. Por outro lado, a elaboração de código em paralelo é mais complexo em relação aos códigos sequencias e com a biblioteca OpenMPI é necessário
+  maior cuidado para gerenciar a comunicação entre os processos e um balanceamento correto de carga entre os processos.
+  
+  Será utilizada a abordagem de memória distribuída neste trabalho, ou seja, cada processo terá a sua própria porção de memória alocada, ao contrário da abordagem de memória compartilhada
+  utilizada em \cite{ADP1} que todas as threads possuíam a mesma porção de memória e com isso era necessário o gerenciamento de sincronismo. A maior dificuldade neste trabalho será na
+  uniformidade do vetor de feromônio para cada processo, visto que a proposta de trabalho é ter um vetor feromônio global.
+  
+  Este artigo é organizado da seguinte forma. Na Seção \ref{problema}, será descrito de forma detalhada o Problema do Máximo Conjunto
+  Independente. Na Seção \ref{relacionados}, será apresentado trabalho relacionados, seja pela resolução do Problema do Máximo
+  Conjunto Independente, a utilização da Otimização de Colônia de Formigas ou por trabalhos utilizando algoritmo paralelos. 
+  Na seção \ref{proposta} será apresentada a resolução proposta para o MISP, seguindo na seção \ref{metodologia} será apresentada como e foi realizado os testes além das especificações 
+  do ambiente em que foi realizada os testes. Na Seção \ref{resultados} os resultados obtidos. Por fim, na Seção \ref{conclusao} será descrito as conclusões obtidas e 
+  possíveis trabalhos futuros.
+
+
+
+\section{Problema}
+\label{problema}
+  De acordo a Teoria dos Grafos, o Conjunto Independente é um conjunto de vértices em um grafo, em que estes vértices não podem possuir
+  arestas entre si. A partir do Conjunto Independente foi elaborado alguns problemas a serem resolvidos, como o problema de decisão para verificar se há
+  um conjunto independente de tamanho n e o maximal conjunto independente, que consiste em encontrar um conjunto independente que não seja subconjunto de outros conjuntos
+  independentes e o Máximo Conjunto Independente. 
+  
+  Neste trabalho iremos abordar o problema do Máximo Conjunto Independente, do inglês \textit{Maximum Set Independent Problem} (MISP). O MISP tem como objetivo encontrar
+  o maior conjunto independente de um grafo. Dado um Grafo G = (V, E), em V representa o conjunto de vértices e E representa o conjunto de arestas do grafo. O Problema 
+  do Máximo Conjunto Independente tem como objetivo encontrar um subconjunto V* $\subseteq$ V, em que $\forall$i, j $\in$ V*, 
+  a aresta (i, j) $\notin$ E, além de que V* deve ser máximo.
+  
+  A formulação da programação inteira para o MISP, pode ser definido da seguinte maneira:
+  
+  \begin{center}
+  max $\sum_{i = 1}^{|V|}$ ci*xi
+  
+  $x_{i}$ + $x_{i}$ $\leq$1, \hspace{10mm} $\forall$ (i, j) $\in$ E
+  
+  $x_{i}$ $in$ {0, 1}, \hspace{10mm} i = 1, 2, ..., $|V|$
+  \end{center}
+  
+  O MISP encontra-se classificado como um problema de Otimização NP-Difícil, que é uma classe de problemas tão difíceis quanto os problemas mais difíceis em NP,  
+  enquanto o problema de decisão é dito como um problema NP-Completo, que são os problemas mas difíceis em NP. A classe NP-Completo está contida na classe NP-Difícil.
+  
+  O MISP é um problema muito similar ao problema do clique máximo, que resumidamente, busca encontrar o maior subconjunto de vértices adjacentes, 
+  em outras palavras, a cada par de vértices dentro do subconjunto, é necessário que haja uma aresta os interligando. É possível resolver o MISP através
+  do clique máximo, dado o grafo de entrada no MISP, basta acharmos o seu complemento e utilizá-lo como entra para o clique máximo. 
+  Também é válido a operação inversa, utilizarmos o MISP para resolvermos o clique máximo. 
+  Com isso, dado um grafo G qualquer e seu complemento o grafo X, temos que:
+  
+  
+  \begin{center}
+    MISP(G) = CliqueMaximo(X), 
+    
+    ou então, 
+    
+    CliqueMaximo(G) = MISP(X)
+  \end{center}
+  
+  Na literatura é mais comum encontrarmos soluções e trabalhos envolvendo o problema do clique e relacionados, como o Clique Máximo, devido a essa maior disponibilidade
+  e a possibilidade de redução do problema do clique máximo ao MISP, e vice versa, foi de grande valia para o desenvolvimento deste trabalho artigos com o clique como tema, inclusive
+  as instâncias encontradas para a realização dos testes foram criadas originalmente para testar soluções para o Clique Máximo.
+
+\section{Trabalhos Relacionados}
+\label{relacionados}
+  A meta-heurística Ant Colony Optimization foi apresentado por \cite{Dorigo1} a partir de observações sobre o comportamento
+  de formigas reais a fim de descobrir como animais de pouca visão conseguiam se locomover e atingir seus destinos. Como o resultado das observações
+  foi modelada e desenvolvida a ACO. Ao longo do tempo foi desenvolvida extensões para a ACO, como por exemplo, Recursive Ant Colony Optimization e 
+  Elitist Ant System.
+  
+  Foram encontrados diversos trabalhos com o Máximo Conjunto Independente, sendo o mais antigo do ano 1977, desenvolvido por \cite{MISP1} apresentou
+  um algoritmo de solução eficiente para o problema. Também foi encontrado trabalhos que apresentavam soluções utilizando heurísticas, bem como o 
+  trabalho de \cite{MISP2} que utilizaram a meta-heurística GRASP e Algortimos Evolucionários por \cite{MISP3}.
+  
+  Para o estudo do padrão de comunicação MPI, foi utilizado o livro de \cite{MPI1}, que contém conteúdo bastante abrangente sobre o funcionamento do MPI.
+
+  Direcionando as pesquisas para encontrar trabalhos que utilizaram a meta-heurística Ant Colony Optimization para a resolução do 
+  Máximo Conjunto Independente, foi encontrado dois trabalhos que propôs esse desafio \cite{ACOMISP1} e \cite{ACOMISP2}. 
+  Para o presente trabalho, utilizaremos propostas enunciadas neste trabalho, bem como a função probabilidade.
+  e parâmetros. Enquanto o trabalho de \cite{ACOMISP2} utilizou técnicas de paralelas com memória compartilhada, não foi encontrada na literatura, trabalhos
+  envolvendo MISP com abordagem de memória distribuída, portanto, este trabalho se encontra como o primeiro trabalho a propor tal estratégia.
+  
+  Devido a semelhança com o MISP, houve pesquisas sobre o problema Clique Máximo e o resultado de maior relevância encontrado foi
+  \textit{DIMACS Implementation Challenges} criado pela \textit{Rutgers University}, em que o segundo desafio proposto foi a elaboração
+  de soluções para o Clique Máximo, o website contendo maiores informações: http://dimacs.rutgers.edu/Challenges/.
+ 
+\section{Proposta}
+\label{proposta}
+  Para a resolução do MISP é possível utilizar algoritmos determinísticos, apesar da garantia de encontrar a solução ótima, o tempo de 
+  cálculo para a descoberta do resultado seria grande. Para contrapor o gasto de tempo com soluções boas, a solução é utilizar
+  algoritmos heurísticos que utilizam de uma determinada informação do problema para realizar escolhas, se tal informação for boa,
+  será encontrado soluções boas muito próximas a solução ótima.
+  
+  A informação utilizada para calcular a função heurística foi o número de vértices adjacentes para cada vértice. Para determinamos
+  o valor da heurística precisamos utilizar três conjuntos:
+  
+  \begin{itemize}
+   \item S(t): Conjunto de Vértices presente na resposta em um determinado tempo t.
+   \item I(t): Conjunto de Vértices que \textbf{não} podem estar mais na solução em um determinado tempo t.
+   \item D(t): Conjunto de Vértices que \textbf{ainda} podem estar solução em um determinado tempo t.
+  \end{itemize}
+  
+  Estes três conjuntos compõem totalmente o conjunto de todos os vértices do problema, ou seja, a união entre os três conjuntos
+  devem resultar no conjunto de todos os vértices, além de que nenhum vértice pode estar em mais de um conjunto em um determinado
+  tempo t. Ao final do processamentos devemos ter o conjunto D vazio e o conjunto S será a solução encontrada para a instância dada.
+  Apresentado as informações necessárias para calcular a função heurística, agora será mostrada um exemplo prático do cálculo.
+  
+  \begin{figure}[ht]
+  \centering
+  \includegraphics[width=8cm, height = 4cm]{grafo.eps}
+  \caption{Grafo de Entrada para o MISP}
+  \label{fig:grafo}
+  \end{figure}
+  
+  Dado o grafo mostrada na figuna \ref{fig:grafo}. No determinado tempo t, temos no conjunto solução S(t) = $\{$A$\}$. Como o vértice A
+  está no conjunto solução, todos os vértices adjacentes a ele não pode estar mais na solução, logo, I(t) = $\{$B, C$\}$ e o cálculo
+  da função heurística só ocorre para os vértices que ainda podem estar na solução, que são D(t) = $\{$D, E, F, G$\}$. O cálculo ocorre
+  da seguinte maneira, para cada vértice presente em D(t), calculamos o número de vértices que o mesmo \textbf{não} é
+  adjacente, com isso utilizamos a informação que foi dita necessária para calcularmos a função heurística.
+  
+  \begin{itemize}
+   \item $\tau$$_{D}$(S(t)) = \textbar $\{$E, G$\}$ \textbar = 2 
+   \item $\tau$$_{E}$(S(t)) = \textbar $\{$D$\}$ \textbar = 1
+   \item $\tau$$_{F}$(S(t)) = \textbar $\{$ $\}$ \textbar = 0
+   \item $\tau$$_{G}$(S(t)) = \textbar $\{$D$\}$ \textbar = 1
+  \end{itemize}
+  
+  Agora que calculamos o valor da função heurística de cada vértice, a escolha do vértice a ser adicionado ao conjunto solução é o vértice
+  que possuir a função heurística de maior valor, neste exemplo foi o vértice D. Após adicionar o vértice escolhido na solução, devemos
+  atualizar os demais conjuntos, para o conjunto D(t+1) devem ser removidas os vértices adjacentes ao vértice D e os mesmos devem ser
+  adicionados ao conjunto I(t+1), lembrando que em qualquer período de tempo, todos os vértices devem pertencer ao um único conjunto.
+  O procedimento deve prosseguir até o momento de tempo t' em que não resta mais elementos no conjunto D(t'), tendo no conjunto S(t') a 
+  solução do problema.
+  
+  \begin{algorithm}[H]
+      \begin{algorithmic}[1]
+	  \While{(c $<$ ciclos)}
+	      \For{(f = 1; f $<$ formigas; f++)}
+		\State $listaFormiga[f] \gets construirSolucao()$
+		\State $verificaSolucao(listaFormiga[f])$
+	      \EndFor
+	      \State $melhorColonia[c] \gets selecionaFormiga(listaFormiga)$
+	      \State $atualizaFeromonio(melhorColonia[c])$
+	  \EndWhile
+	  \State $melhorGeral \gets selecionaFormiga(melhorColonia)$
+	  \State $return melhorGeral$
+      \end{algorithmic}
+      \label{alg:aco}
+      \caption{Pseudocódigo da Otimização de Colônia de Formigas}
+  \end{algorithm}
+  
+  No algoritmo 1 vemos a estrutura padrão da Otimização de Colônia de Formigas, esse pseudocódigo pode ser utilizado para quaisquer
+  problemas, a diferença está contida em como modelamos as estruturas utilizadas, como por exemplo, as formigas, a respostas e as funções utilizadas
+  No algoritmo 2 está representada a função de probabilidade que tem como utilidade determinar o próximo vértice a ser adicionado na lista solução.
+  Por fim, no algortimo 3 é mostrado a função para atualização da taxa de feromônio dos vértices do problema, que envolve 
+  basicamente duas variáveis, a taxa de evaporação $\rho$ e a taxa$\_$feromonio que está diretamente vinculada a taxa de evaporação e tem como
+  objetivo aumentar o feromônio nos vértices que pertencem ao conjunto solução da melhor formiga da colônia.
+  
+  \begin{algorithm}[H]
+      \begin{algorithmic}[H]
+	 
+	  \State $feromonio \gets vetorFeromonio[V]$
+	  \State $heuristica \gets \tau_{V}(S(t))$
+	  \State $probabilidade \gets feromonio^\alpha + heuristica^\beta$
+	  \State $return probabilidade$
+      \label{alg:prob}
+      \caption{Função probabilidade}
+      \end{algorithmic}
+  \end{algorithm}
+  
+  \begin{algorithm}[H]
+   \begin{algorithmic}[H]
+      \State $taxa\_feromonio \gets 1 + (2 * \rho)$
+      \For(i = 1; i $<$ Nr$\_$vertices; i++)
+	\State $vetorFeromonio[i] \gets vetorFeromonio[i] * (1 - \rho)$
+      \EndFor
+      
+      \For(i = 1; i $<$ Vertices$\_$solucao; i++)
+	\State $vetorFeromonio[i] \gets vetorFeromonio[i] * taxa\_feromonio$
+      \EndFor
+    \label{alg:fer}
+    \caption{Função Atualiza Feromônio}
+   \end{algorithmic}
+  \end{algorithm}
+  
+  Para realizar a versão paralela com abordagem de memória compartilhada, conforme podemos ver no algortimo 4 é necessário realizar 
+  uma adição de operações para realizar a comunicação entre os processos, em que após todos os processos computarem sua resposta no 
+  ciclo c, todos devem enviar sua resposta ao processo de rank 0, em que o mesmo calcula qual resposta de todos é a melhor, após 
+  encontrar o melhor resultado, o processo 0 enviará a todos os outros processos a melhor resposta e todos os processos irão atualizar 
+  o seu vetor Feromônio que deve ser igual para todos os processos. O cálculo da função probabilidade probabilidade e para 
+  atualizar feromônio permanecem o mesmo conceito do algoritmo sequencial.
+
+  \begin{algorithm}[H]
+      \begin{algorithmic}[1]
+	  \State $formiga\_processo \gets formigas/numero\_processos$
+	  \While{(c $<$ ciclos)}
+	      \For{(f = 1; f $<$ formiga$\_$processo; f++)}
+		\State $listaFormiga[f] \gets construirSolucao()$
+		\State $verificaSolucao(listaFormiga[f])$
+	      \EndFor
+	      \State $melhorColonia[c] \gets selecionaFormiga(listaFormiga)$
+	      \For{(p = 1; p $<$ numero$\_$processo; p++)}
+		\State $Send(melhorColonia[c], 0)$
+	      \EndFor
+	      \If{wrank == 0}
+		\For{(p = 1; p $<$ numero$\_$processo; p++)}
+		\State $Receive(Resposta[p], p)$
+		\If{Resposta[p] $>$ melhorColonia[c]}
+		  \State $melhorColonia[c] \gets Resposta[p]$
+		\EndIf
+		\EndFor
+	      \EndIf
+	      \State $Broadcast(melhorColonia[c], 0)$
+	      \State $atualizaFeromonio(melhorColonia[c])$
+	  \EndWhile
+	  \State $melhorGeral \gets selecionaFormiga(melhorColonia)$
+	  \State $return melhorGeral$
+      \end{algorithmic}
+      \label{alg:acoMPI}
+      \caption{Pseudocódigo da Otimização de Colônia de Formigas Paralelizado}
+  \end{algorithm}
+  
+  Tanto a versão paralela quanto a versão sequencial da solução produzida, bem como, as instâncias encontradas e artigos relacionados ao
+  tema está disponível em: https://github.com/MarcoADP/ACO-Sequencial.
+ 
+  Agora que foi mostrada a ideia por trás da proposta de solução para o MISP, iremos apresentar na próxima seção os métodos e os meios utilizados
+  para a obtenção dos resultados construídos a partir da proposta desenvolvida neste artigo.
+
+  
+\section{Metodologia}
+\label{metodologia}
+  Para os testes e a elaboração do dados utilizamos da seguinte metodologia, cada instância foi executada utilizando um, dois, quatro e oito processos,
+  e o resultado adquirido para cada processo foi obtido através da média entre dez execuções, observando-se que foi executado doze vezes,
+  o pior e o melhor resultado encontrados foram descartados. 
+  
+  Foi utilizado o laboratório de Informática do Departamento de Informática da Universidade Estadual de Maringá com máquinas com as seguintes
+  configurações:
+  
+  \begin{itemize}
+   \item Processador: i7 3370K Quad Core
+      \subitem Thread: 8
+      \subitem L2 Cache: 1 MB
+      \subitem L3 Cache: 8 MB
+   \item Memória RAM: 4 GB
+   \item SO: Linux Ubuntu 12.04 32 bits
+  \end{itemize}
+  
+  De todas as instâncias de grafos obtidas durante a fase de pesquisa, foram testadas no total de cinco das sessenta e novas instâncias. 
+  Esta coletânea de grafos foi obtida do website do \textit{Institut de Recherches Interdisciplinaires et de Développements en Intelligence Artificielle}
+  da Universidade Livre de Bruxelas, em que Marco Dorigo, é um dos diretores. O acesso aos grafos está disponível em: 
+  $http://iridia.ulb.ac.be/~fmascia/maximum_clique/DIMACS-benchmark.$
+
+
+\section{Resultados}
+\label{resultados}
+
+  As instâncias utilizadas nos testes estão descritas na tabela \ref{inst} com o número de vértices e arestas. Assim como observaremos
+  nos resultados obtidos, grafos com mais arestas ou vértices não garantem necessariamente maior tempo de execução ou então um conjunto
+  máximo independente maior.
+  
+  \begin{table}[H]
+  \centering
+  \caption{As instâncias utilizas neste trabalho}
+  \label{inst}
+  \begin{tabular}{|c|c|c|c|}
+  \hline
+  Instância    & Vértices & Arestas & Resultado\\ \hline
+  p\_hat1500-2 & 1500     & 568960  & 62\\ \hline
+  keller6      & 3361     & 4619898 & 63\\ \hline
+  p\_hat1000-2 & 1000     & 244799  & 53\\ \hline
+  \end{tabular}
+  \end{table}
+  
+  A seguir, na tabela REFERENCIAS temos os resultados obtidos a partir dos cincos grafos enunciados anteriormente, bem como as
+  valores utilizados para as variáveis nos testes.
+  \begin{itemize}
+   \item Ciclos: 100
+   \item Formigas: 120
+   \item Alpha: 2
+   \item Beta: 1
+   \item Rho: 0.1
+  \end{itemize}
+
+  GRAFICO DE BARRAS
+  
+  Com os resultados obtidos, podemos produzir uma análise em relação ao código paralelo e o código sequencial,
+  e assim como produzirmos o gráfico do Speedup que está apresentado na figura \ref{speedup}. ARRUMAR O GRAFICO
+  
+  \begin{figure}[ht]
+   \centering
+   \label{speedup}
+   \includegraphics[width=.8\textwidth]{speedup.eps}
+   \caption{Gráfico Speedup}
+  \end{figure}
+  
+  A primeira conclusão que podemos obter da figura \ref{speedup}, é que o speedup encontrado foi o ideal, como para essa versão do 
+  código não foi necessário utilizar mecanismos de sincronização como barreira e locks, os processos não necessitavam esperar a não
+  ser quando estavam esperando mensagem de outro processo como o processo de rank 0 necessitava receber a melhor formiga de todos os 
+  processos para a escolha da maior, bem como, todos os processos precisavam esperar o processo de rank 0 enviar a melhor formiga
+  para assim atualizarem o seu feromônio, essa possibilidade de não precisar utilizar tais sincronismos garantiam que uma melhora
+  no tempo. Para todas as instâncias utilizadas o speedup foi semelhante, o que podemos inferir que o código se comporta da mesma
+  maneira para quaisquer instância, garantindo um bom resultado de speedup.
+  
+  A partir do speedup podemos também inferir que sua eficiência foi positiva, atingindo resultado ideal para todos os números de 
+  processos e para quaisquer instâncias, conforme podemos ver na figura \ref{eficiencia}.
+  
+  \begin{figure}[ht]
+   \centering
+   \label{eficiencia}
+   \includegraphics[width=.8\textwidth]{eficiencia.eps}
+   \caption{Gráfio Eficiência}
+  \end{figure}
+  
+
+  
+\section{Conclusões e Trabalhos Futuros}
+\label{conclusao}
+
+
+\bibliographystyle{sbc}
+\bibliography{sbc-template}
+
+\end{document}

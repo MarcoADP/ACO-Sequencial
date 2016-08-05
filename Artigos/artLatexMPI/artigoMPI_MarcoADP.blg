@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: artigoMPI_MarcoADP.aux
+The style file: sbc.bst
+Database file #1: sbc-template.bib
+Warning--empty year in MISP3
+Warning--empty note in ADP1
+Warning--empty year in MISP2
+You've used 8 entries,
+            1935 wiz_defined-function locations,
+            519 strings with 5045 characters,
+and the built_in function-call counts, 2515 in all, are:
+= -- 241
+> -- 112
+< -- 5
++ -- 44
+- -- 36
+* -- 198
+:= -- 484
+add.period$ -- 23
+call.type$ -- 8
+change.case$ -- 57
+chr.to.int$ -- 8
+cite$ -- 11
+duplicate$ -- 90
+empty$ -- 149
+format.name$ -- 48
+if$ -- 458
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 5
+newline$ -- 42
+num.names$ -- 24
+pop$ -- 45
+preamble$ -- 1
+purify$ -- 58
+quote$ -- 0
+skip$ -- 74
+stack$ -- 0
+substring$ -- 123
+swap$ -- 5
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 46
+warning$ -- 3
+while$ -- 18
+width$ -- 0
+write$ -- 97
+(There were 3 warnings)

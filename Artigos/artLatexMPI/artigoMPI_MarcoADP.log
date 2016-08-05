@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.6)  5 AUG 2016 14:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.6.6)  5 AUG 2016 17:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**artigo_MarcoADP.tex
-(./artigo_MarcoADP.tex
+**artigoMPI_MarcoADP.tex
+(./artigoMPI_MarcoADP.tex
 LaTeX2e <2016/02/01>
 Babel <3.9q> and hyphenation patterns for 4 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -306,22 +306,22 @@ Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
 Package: algpseudocode 
 
 Document Style - pseudocode environments for use with the `algorithmicx' style
-) (./artigo_MarcoADP.aux)
-\openout1 = `artigo_MarcoADP.aux'.
+) (./artigoMPI_MarcoADP.aux)
+\openout1 = `artigoMPI_MarcoADP.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 29.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 30.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
@@ -418,87 +418,41 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 29.
+(Font)              <12> on input line 30.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 29.
+(Font)              <8> on input line 30.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 29.
-Package xypdf Info: Line width: 0.39998pt on input line 29.
+(Font)              <6> on input line 30.
+Package xypdf Info: Line width: 0.39998pt on input line 30.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <16> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 31.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 32.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 31.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 31.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 32.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 32.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 33.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 34.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <13> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 49.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 52.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Underfull \hbox (badness 1014) in paragraph at lines 136--140
+Underfull \hbox (badness 1014) in paragraph at lines 145--150
 \OT1/ptm/m/n/12 heur[]^^Pstica Ant Co-lony Op-ti-mi-za-tion para a resolu[][]ao
  do M[]aximo Con-junto In-de-
  []
 
 [3]
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 171.
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 166.
 
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 171.
-Package epstopdf Info: Source file: <conjunto.eps>
-(epstopdf)                    date: 2016-06-23 19:48:51
-(epstopdf)                    size: 13972 bytes
-(epstopdf)             Output file: <conjunto-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-06-23 19:52:15
-(epstopdf)                    size: 7911 bytes
-(epstopdf)             Command: <repstopdf --outfile=conjunto-eps-converted-to.
-pdf conjunto.eps>
-(epstopdf)             \includegraphics on input line 187.
-Package epstopdf Info: Output file is already uptodate.
-
-<conjunto-eps-converted-to.pdf, id=23, 481.8pt x 494.84875pt>
-File: conjunto-eps-converted-to.pdf Graphic file (type pdf)
-
-<use conjunto-eps-converted-to.pdf>
-Package pdftex.def Info: conjunto-eps-converted-to.pdf used on input line 187.
-(pdftex.def)             Requested size: 142.26208pt x 142.26413pt.
-Package epstopdf Info: Source file: <siv.eps>
-(epstopdf)                    date: 2016-06-23 18:54:30
-(epstopdf)                    size: 11329 bytes
-(epstopdf)             Output file: <siv-eps-converted-to.pdf>
-(epstopdf)                    date: 2016-06-23 19:14:48
-(epstopdf)                    size: 6603 bytes
-(epstopdf)             Command: <repstopdf --outfile=siv-eps-converted-to.pdf s
-iv.eps>
-(epstopdf)             \includegraphics on input line 191.
-Package epstopdf Info: Output file is already uptodate.
-
-<siv-eps-converted-to.pdf, id=24, 481.8pt x 494.84875pt>
-File: siv-eps-converted-to.pdf Graphic file (type pdf)
-
-<use siv-eps-converted-to.pdf>
-Package pdftex.def Info: siv-eps-converted-to.pdf used on input line 191.
-(pdftex.def)             Requested size: 142.26208pt x 142.26413pt.
-LaTeX Font Info:    Try loading font information for OT1+phv on input line 194.
-
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
-File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
-)
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 194.
-
-Underfull \vbox (badness 1248) has occurred while \output is active []
-
- [4]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 166.
 Package epstopdf Info: Source file: <grafo.eps>
 (epstopdf)                    date: 2016-06-23 18:02:36
 (epstopdf)                    size: 114347 bytes
@@ -507,33 +461,39 @@ Package epstopdf Info: Source file: <grafo.eps>
 (epstopdf)                    size: 48319 bytes
 (epstopdf)             Command: <repstopdf --outfile=grafo-eps-converted-to.pdf
  grafo.eps>
-(epstopdf)             \includegraphics on input line 205.
+(epstopdf)             \includegraphics on input line 178.
 Package epstopdf Info: Output file is already uptodate.
 
-<grafo-eps-converted-to.pdf, id=28, 805.0075pt x 403.5075pt>
+<grafo-eps-converted-to.pdf, id=23, 805.0075pt x 403.5075pt>
 File: grafo-eps-converted-to.pdf Graphic file (type pdf)
 
 <use grafo-eps-converted-to.pdf>
-Package pdftex.def Info: grafo-eps-converted-to.pdf used on input line 205.
-(pdftex.def)             Requested size: 341.42966pt x 170.71571pt.
- [5 <./conjunto-eps-converted-to.pdf> <./siv-eps-converted-to.pdf> <./grafo-eps
--converted-to.pdf>] [6]
-Underfull \hbox (badness 1297) in paragraph at lines 298--302
+Package pdftex.def Info: grafo-eps-converted-to.pdf used on input line 178.
+(pdftex.def)             Requested size: 227.61157pt x 113.81252pt.
+LaTeX Font Info:    Try loading font information for OT1+phv on input line 179.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1phv.fd
+File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
+)
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <10> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 179.
+ [4 <./grafo-eps-converted-to.pdf>] [5]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [6]
+Underfull \hbox (badness 1297) in paragraph at lines 316--320
 []\OT1/ptm/m/n/12 De to-das as inst[]ancias de gra-fos ob-ti-das du-rante a fas
 e de pes-quisa, fo-
  []
 
 
-Underfull \hbox (badness 1237) in paragraph at lines 298--302
+Underfull \hbox (badness 1237) in paragraph at lines 316--320
 \OT1/ptm/m/n/12 ram tes-ta-das no to-tal de cinco das ses-senta e no-vas inst[]
 ancias. Esta co-let[]anea
  []
 
 [7]
-Overfull \hbox (67.55832pt too wide) in paragraph at lines 340--349
- [][] 
- []
-
 Package epstopdf Info: Source file: <speedup.eps>
 (epstopdf)                    date: 2016-06-25 19:08:33
 (epstopdf)                    size: 24292 bytes
@@ -542,15 +502,18 @@ Package epstopdf Info: Source file: <speedup.eps>
 (epstopdf)                    size: 7379 bytes
 (epstopdf)             Command: <repstopdf --outfile=speedup-eps-converted-to.p
 df speedup.eps>
-(epstopdf)             \includegraphics on input line 357.
+(epstopdf)             \includegraphics on input line 360.
 Package epstopdf Info: Output file is already uptodate.
-<speedup-eps-converted-to.pdf, id=56, 361.35pt x 252.945pt>
+ <speedup-eps-converted-to.pdf, id=42, 361.35pt x 252.945pt>
 File: speedup-eps-converted-to.pdf Graphic file (type pdf)
 
 <use speedup-eps-converted-to.pdf>
-Package pdftex.def Info: speedup-eps-converted-to.pdf used on input line 357.
+Package pdftex.def Info: speedup-eps-converted-to.pdf used on input line 360.
 (pdftex.def)             Requested size: 341.43437pt x 239.00726pt.
- [8 <./speedup-eps-converted-to.pdf>]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [8]
 Package epstopdf Info: Source file: <eficiencia.eps>
 (epstopdf)                    date: 2016-06-25 19:42:16
 (epstopdf)                    size: 22823 bytes
@@ -559,61 +522,64 @@ Package epstopdf Info: Source file: <eficiencia.eps>
 (epstopdf)                    size: 6719 bytes
 (epstopdf)             Command: <repstopdf --outfile=eficiencia-eps-converted-t
 o.pdf eficiencia.eps>
-(epstopdf)             \includegraphics on input line 376.
+(epstopdf)             \includegraphics on input line 378.
 Package epstopdf Info: Output file is already uptodate.
 
-<eficiencia-eps-converted-to.pdf, id=65, 361.35pt x 252.945pt>
+<eficiencia-eps-converted-to.pdf, id=46, 361.35pt x 252.945pt>
 File: eficiencia-eps-converted-to.pdf Graphic file (type pdf)
 
 <use eficiencia-eps-converted-to.pdf>
-Package pdftex.def Info: eficiencia-eps-converted-to.pdf used on input line 376
+Package pdftex.def Info: eficiencia-eps-converted-to.pdf used on input line 378
 .
 (pdftex.def)             Requested size: 341.43437pt x 239.00726pt.
- [9 <./eficiencia-eps-converted-to.pdf>]
-(./artigo_MarcoADP.bbl
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [9 <./speedup-eps-converted-to.pdf>] (./artigoMPI_MarcoADP.bbl
 Underfull \hbox (badness 1147) in paragraph at lines 22--26
 []\OT1/ptm/m/n/12 Leguizamon, G., Schutz, M., and Mi-cha-lewicz, Z. (2011).  An
  ant sys-tem for
  []
 
 
-Underfull \hbox (badness 5431) in paragraph at lines 28--33
+Underfull \hbox (badness 5431) in paragraph at lines 33--38
 []\OT1/ptm/m/n/12 Resense, M. G., Smith, S. H., and Feo, T. A.  A gre-edy ran-d
 o-mi-zed
  []
 
 
-Underfull \hbox (badness 3657) in paragraph at lines 28--33
+Underfull \hbox (badness 3657) in paragraph at lines 33--38
 \OT1/ptm/m/n/12 adap-tive se-arch pro-ce-dure for ma-xi-mum in-de-pen-dent set.
   Dis-po-ni-vel em:
  []
 
-) [10] (./artigo_MarcoADP.aux) ) 
+) [10 <./eficiencia-eps-converted-to.pdf>] (./artigoMPI_MarcoADP.aux) ) 
 Here is how much of TeX's memory you used:
- 6757 strings out of 494929
- 90250 string characters out of 6180143
- 216968 words of memory out of 5000000
- 9885 multiletter control sequences out of 15000+600000
+ 6759 strings out of 494929
+ 90160 string characters out of 6180143
+ 218987 words of memory out of 5000000
+ 9889 multiletter control sequences out of 15000+600000
  23560 words of font info for 54 fonts, out of 8000000 for 9000
  16 hyphenation exceptions out of 8191
- 38i,9n,28p,3285b,312s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/
-base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex1
-0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/font
-s/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/h
-elvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf
--dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on artigo_MarcoADP.pdf (10 pages, 233087 bytes).
+ 38i,8n,28p,3288b,312s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/sh
+are/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/tim
+es/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+
+Output written on artigoMPI_MarcoADP.pdf (10 pages, 219807 bytes).
 PDF statistics:
- 120 PDF objects out of 1000 (max. 8388607)
- 82 compressed objects within 1 object stream
+ 106 PDF objects out of 1000 (max. 8388607)
+ 74 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 26 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

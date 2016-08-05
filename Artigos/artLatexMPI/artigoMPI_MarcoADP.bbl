@@ -1,0 +1,49 @@
+\begin{thebibliography}{}
+
+\bibitem[Back and Khuri ]{MISP3}
+Back, T. and Khuri, S.
+\newblock An evolutionary heuristic for the maximum independent set problem.
+\newblock Disponivel em:
+  http://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=350004.
+
+\bibitem[Choi et~al. 2007]{ACOMISP1}
+Choi, H., Ahn, N., and Park, S. (2007).
+\newblock An ant colony optimization approach for the maximum independent set
+  problem.
+\newblock {\em Journal of the Korean Institute of Industrial Engineers}, 33(4).
+
+\bibitem[Dorigo et~al. 1996]{Dorigo1}
+Dorigo, M., Maniezzo, V., and Colorni, A. (1996).
+\newblock {A}nt {S}ystem: Optimization by a colony of cooperating agents.
+\newblock {\em IEEE Transactions on Systems, Man, and Cybernetics - Part B},
+  26(1):29--41.
+
+\bibitem[Leguizamon et~al. 2011]{ACOMISP2}
+Leguizamon, G., Schutz, M., and Michalewicz, Z. (2011).
+\newblock An ant system for the maximum independent set problem.
+\newblock Disponivel em:
+  http://ls11-www.cs.tu-dortmund.de/downloads/papers/LeSz02.pdf.
+
+\bibitem[Paulino 2016]{ADP1}
+Paulino, M. A.~D. (2016).
+\newblock Algoritmo heuristico otimizacao de colonia de formigas e programacao
+  paralela para a resolucao do problema do maximo conjunto independente.
+
+\bibitem[Resense et~al. ]{MISP2}
+Resense, M.~G., Smith, S.~H., and Feo, T.~A.
+\newblock A greedy randomized adaptive search procedure for maximum independent
+  set.
+\newblock Disponivel em:
+  http://pubsonline.informs.org/doi/abs/10.1287/opre.42.5.860.
+
+\bibitem[Snir 1998]{MPI1}
+Snir, M. (1998).
+\newblock {\em MPI--the Complete Reference: The MPI core}, volume~1.
+\newblock MIT press.
+
+\bibitem[Tarjan and Trojanowski 1976]{MISP1}
+Tarjan, R.~E. and Trojanowski, A.~E. (1976).
+\newblock Finding a maximum independent set.
+\newblock {\em STAN-CS-76-550}.
+
+\end{thebibliography}
